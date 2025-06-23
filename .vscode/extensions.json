@@ -1,0 +1,26 @@
+{
+  "recommendations": [
+    "naumovs.color-highlight",
+    "esbenp.prettier-vscode",
+    "ms-azuretools.vscode-docker",
+    "ms-vscode-remote.remote-containers",
+    "dbaeumer.vscode-eslint",
+    "antiantisepticeye.vscode-color-picker",
+  ],
+  "unwantedRecommendations": [
+    "GitHub.copilot",
+    "GitHub.copilot-chat",
+    "eamodio.gitlens",
+    "feiskyer.chatgpt-copilot",
+    "Metatype.copilot-vscode",
+    "BadBoy17G.clara-copilot",
+    "parallel-universe.gpt-copilot",
+    "TabNine.tabnine-vscode",
+    "Blackboxapp.blackbox",
+    "DanielSanMedium.dscodegpt",
+    "genieai.chatgpt-vscode",
+    "Codeium.codeium",
+    "aminer.codegeex",
+    "Bito.Bito"
+  ]
+}
