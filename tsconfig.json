@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowArbitraryExtensions": true
+  },
+  "references": [
+    { "path": "./apps/api" },
+    { "path": "./apps/web" },
+    { "path": "./apps/db" }
+  ],
+  "include": [],
+  "exclude": ["node_modules", "dist", "build"]
+}

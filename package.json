@@ -1,0 +1,17 @@
+{
+  "name": "saas-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "libs/*"
+  ],
+  "scripts": {},
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^20.13.1",
+    "typescript": "~5.4.5"
+  },
+  "packageManager": "pnpm@9.3.0",
+  "package-manager-strict": "false"
+}

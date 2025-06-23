@@ -1,0 +1,24 @@
+{
+  "root": true,
+  "rules": {
+    "linebreak-style": ["off", "windows"],
+    "no-console": "warn",
+    "no-debugger": "off",
+    "no-unused-vars": "warn",
+    "lines-between-class-members": "off",
+    "import/prefer-default-export": "off",
+    "class-methods-use-this": "off",
+    "no-restricted-syntax": "off",
+    "no-param-reassign": "off",
+    "prefer-destructuring": "off",
+    "consistent-return": "off",
+    "import/extensions": "off",
+    "import/no-unresolved": "off",
+    "import/no-extraneous-dependencies": "off",
+    "default-case": "off",
+    "no-underscore-dangle": "off",
+    "@typescript-eslint/no-empty-function": "off",
+    "@typescript-eslint/no-useless-constructor": "off",
+    "no-new": "off"
+  }
+}
