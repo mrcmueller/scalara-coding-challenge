@@ -1,0 +1,49 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+model Adressen {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  strasse String
+  hausnummer String
+  postleitzahl    String
+  stadt   String
+  land  String @default("Deutschland")
+}
+
+model Immobilien {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  slug     String @unique
+  name     String 
+  beschreibung String
+  adresse String @db.ObjectId
+}
+
+model Kontakte {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  slug     String @unique
+  vorname  String 
+  nachname String 
+  adresse String @db.ObjectId   
+}
+
+model Beziehung {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  slug     String @unique
+  immobilie String @db.ObjectId
+  kontakt String @db.ObjectId
+  startdatum DateTime
+  enddatum DateTime
+}
+
