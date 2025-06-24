@@ -1,22 +1,52 @@
-import { Adressen } from '@/generated/prisma';
-import { Controller, Post, Body } from '@nestjs/common';
+import { Adressen, Prisma } from '@/generated/prisma';
+import {
+  Controller,
+  Post,
+  Body,
+  Get,
+  Param,
+  Patch,
+  Delete,
+} from '@nestjs/common';
 import { AdressenService } from './adressen.service';
+import { AdresseErstellenDto } from './dto/adresseErstellen.dto';
+import { AdresseAendernDto } from './dto/adresseAendern.dto';
 
 @Controller('adressen')
 export class AdressenController {
   constructor(private readonly adressenService: AdressenService) {}
 
+  @Get()
+  async adressen() {
+    return await this.adressenService.adressen();
+  }
+
+  @Get('/:id')
+  async adresse(@Param('id') id: string) {
+    return await this.adressenService.adresse({ id });
+  }
+
   @Post()
   async erstelleAdresse(
     @Body()
-    adressDaten: {
-      strasse: string;
-      hausnummer: string;
-      postleitzahl: string;
-      stadt: string;
-      land: string;
-    },
-  ): Promise<Adressen> {
-    return this.adressenService.erstelleAdresse(adressDaten);
+    clientInput: AdresseErstellenDto,
+  ): Promise<Adressen | undefined> {
+    return await this.adressenService.erstelleAdresse(clientInput);
+  }
+
+  @Patch('/:id')
+  async aendereAdresse(
+    @Param('id') id: string,
+    @Body() clientInput: AdresseAendernDto,
+  ) {
+    return await this.adressenService.aendereAdresse({
+      where: { id },
+      data: clientInput,
+    });
+  }
+
+  @Delete('/:id')
+  async loescheAdresse(@Param('id') id: string) {
+    return await this.adressenService.loescheAdresse({ id });
   }
 }

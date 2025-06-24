@@ -6,6 +6,7 @@ import {
   KontakteController,
   AdressenController,
   AdressenService,
+  ImmobilienService,
 } from './controllers';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
@@ -13,7 +14,7 @@ import { PrismaService } from '@/src/prisma.service';
 
 @Module({
   imports: [ConfigModule.forRoot()],
-  providers: [PrismaService, AdressenService, AppService],
+  providers: [PrismaService, AdressenService, ImmobilienService, AppService],
   controllers: [
     AppController,
     AdressenController,

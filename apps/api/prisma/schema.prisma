@@ -8,42 +8,49 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
+
 generator client {
   provider = "prisma-client-js"
   output   = "../generated/prisma"
 }
 
+enum Land {
+  Deutschland
+  Italien
+  Frankreich
+}
+
 model Adressen {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  strasse String
-  hausnummer String
-  postleitzahl    String
-  stadt   String
-  land  String @default("Deutschland")
+  id           String       @id @default(auto()) @map("_id") @db.ObjectId
+  strasse      String
+  hausnummer   String
+  postleitzahl String
+  stadt        String
+  land         Land       @default(Deutschland)
+  Immobilien   Immobilien[]
+  Kontakte     Kontakte[]
 }
 
 model Immobilien {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId
-  slug     String @unique
-  name     String 
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
   beschreibung String
-  adresse String @db.ObjectId
+  adresse      Adressen @relation(fields: [adressenId], references: [id])
+  adressenId   String   @db.ObjectId
 }
 
 model Kontakte {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId
-  slug     String @unique
-  vorname  String 
-  nachname String 
-  adresse String @db.ObjectId   
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  vorname    String
+  nachname   String
+  adresse    Adressen @relation(fields: [adressenId], references: [id])
+  adressenId String   @db.ObjectId
 }
 
 model Beziehung {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId
-  slug     String @unique
-  immobilie String @db.ObjectId
-  kontakt String @db.ObjectId
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  immobilie  String   @db.ObjectId
+  kontakt    String   @db.ObjectId
   startdatum DateTime
-  enddatum DateTime
+  enddatum   DateTime
 }
-
