@@ -13,10 +13,7 @@ import { ImmobilieAendernDto } from './dto/immobilieAendern.dto';
 
 @Controller('immobilien')
 export class ImmobilienController {
-  constructor(
-    private readonly immobilienService: ImmobilienService,
-    private readonly adressenService: AdressenService,
-  ) {}
+  constructor(private readonly immobilienService: ImmobilienService) {}
 
   @Get()
   async immobilien() {
