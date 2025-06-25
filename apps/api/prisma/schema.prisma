@@ -50,7 +50,7 @@ model Beziehung {
   kontakt            Kontakt   @relation(fields: [kontaktId], references: [id])
   kontaktId          String    @db.ObjectId
   beziehungstyp      Int
-  dienstleistungstyp Int
+  dienstleistungstyp Int?
   startdatum         DateTime
   enddatum           DateTime
 }

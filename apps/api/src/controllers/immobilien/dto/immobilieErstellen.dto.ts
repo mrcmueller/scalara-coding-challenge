@@ -1,17 +1,14 @@
 /* eslint  @typescript-eslint/no-unsafe-call: 0 */
 
 import {
-  IsMongoId,
-  IsOptional,
+  IsEnum,
+  IsPostalCode,
   IsString,
+  Matches,
   MaxLength,
   MinLength,
-  Validate,
-  ValidateNested,
 } from 'class-validator';
-import { AdresseErstellenDto } from '../../adressen/dto/adresseErstellen.dto';
-import { Type } from 'class-transformer';
-import { EineProperty } from './eineProperty';
+import { Land } from '@/generated/prisma';
 
 export class ImmobilieErstellenDto {
   @IsString()
@@ -32,14 +29,41 @@ export class ImmobilieErstellenDto {
   })
   beschreibung: string;
 
-  @Validate(EineProperty)
-  @IsOptional()
-  @ValidateNested()
-  @Type(() => AdresseErstellenDto)
-  adresse: AdresseErstellenDto;
+  @IsString()
+  @MinLength(1, {
+    message: 'Der Straßenname muss mindestens 1 Zeichen enthalten',
+  })
+  @MaxLength(60, {
+    message: 'Der Straßenname darf maximal 60 Zeichen enthalten',
+  })
+  strasse: string;
 
-  @Validate(EineProperty)
-  @IsOptional()
-  @IsMongoId()
-  adressenId: string;
+  @IsString()
+  @MinLength(1, {
+    message: 'Die Hausnummer muss mindestens 1 Zeichen enthalten',
+  })
+  @MaxLength(20, {
+    message: 'Die Hausnummer darf maximal 20 Zeichen enthalten',
+  })
+  @Matches(/\d/, {
+    message: 'Die Hausnummer muss mindestens eine Ziffer enthalten',
+  })
+  hausnummer: string;
+
+  @IsPostalCode('DE')
+  postleitzahl: string;
+
+  @IsString()
+  @MinLength(1, {
+    message: 'Der Stadtname muss mindestens 1 Zeichen enthalten',
+  })
+  @MaxLength(60, {
+    message: 'Der Stadtname darf maximal 60 Zeichen enthalten',
+  })
+  stadt: string;
+
+  @IsEnum(Land, {
+    message: 'Land muss Deutschland, Italien oder Frankreich sein',
+  })
+  land: 'Deutschland' | 'Italien' | 'Frankreich';
 }
