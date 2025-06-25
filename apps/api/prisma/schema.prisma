@@ -20,37 +20,35 @@ enum Land {
   Frankreich
 }
 
-model Adressen {
-  id           String       @id @default(auto()) @map("_id") @db.ObjectId
+model Immobilie {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  beschreibung String
   strasse      String
   hausnummer   String
   postleitzahl String
   stadt        String
-  land         Land         @default(Deutschland)
-  Immobilien   Immobilien[]
-  Kontakte     Kontakte[]
+  land         Land
+  beziehungen Beziehung     
 }
 
-model Immobilien {
-  id           String   @id @default(auto()) @map("_id") @db.ObjectId
-  name         String
-  beschreibung String
-  adresse      Adressen @relation(fields: [adressenId], references: [id])
-  adressenId   String   @db.ObjectId
-}
-
-model Kontakte {
+model Kontakt {
   id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  vorname    String
-  nachname   String
-  adresse    Adressen @relation(fields: [adressenId], references: [id])
-  adressenId String   @db.ObjectId
+  name        String
+  strasse      String
+  hausnummer   String
+  postleitzahl String
+  stadt        String
+  land         Land     
+  beziehungen Beziehung
 }
 
 model Beziehung {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  immobilie  String   @db.ObjectId
-  kontakt    String   @db.ObjectId
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  immobilie  Immobilie 
+  kontakt    Kontakt   
+  beziehungstyp Int
+  dienstleistungstyp Int
   startdatum DateTime
   enddatum   DateTime
 }
