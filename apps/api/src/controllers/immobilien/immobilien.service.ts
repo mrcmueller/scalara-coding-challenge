@@ -1,16 +1,12 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from '@/src/prisma.service';
-import { Prisma, Immobilien } from '@/generated/prisma';
-import { AdressenService } from '../adressen';
+import { Prisma } from '@/generated/prisma';
 import { ImmobilieErstellenDto } from './dto/immobilieErstellen.dto';
 import { ImmobilieAendernDto } from './dto/immobilieAendern.dto';
 
 @Injectable()
 export class ImmobilienService {
-  constructor(
-    private readonly prisma: PrismaService,
-    private readonly adressenService: AdressenService,
-  ) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   async immobilie(
     immobilienWhereUniqueInput: Prisma.ImmobilienWhereUniqueInput,

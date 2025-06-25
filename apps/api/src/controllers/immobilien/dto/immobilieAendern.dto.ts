@@ -32,6 +32,7 @@ export class ImmobilieAendernDto {
   })
   beschreibung?: string;
 
+  @IsOptional()
   @IsString()
   @MinLength(1, {
     message: 'Der Straßenname muss mindestens 1 Zeichen enthalten',
@@ -39,8 +40,9 @@ export class ImmobilieAendernDto {
   @MaxLength(60, {
     message: 'Der Straßenname darf maximal 60 Zeichen enthalten',
   })
-  strasse: string;
+  strasse?: string;
 
+  @IsOptional()
   @IsString()
   @MinLength(1, {
     message: 'Die Hausnummer muss mindestens 1 Zeichen enthalten',
@@ -51,11 +53,13 @@ export class ImmobilieAendernDto {
   @Matches(/\d/, {
     message: 'Die Hausnummer muss mindestens eine Ziffer enthalten',
   })
-  hausnummer: string;
+  hausnummer?: string;
 
+  @IsOptional()
   @IsPostalCode('DE')
-  postleitzahl: string;
+  postleitzahl?: string;
 
+  @IsOptional()
   @IsString()
   @MinLength(1, {
     message: 'Der Stadtname muss mindestens 1 Zeichen enthalten',
@@ -63,10 +67,11 @@ export class ImmobilieAendernDto {
   @MaxLength(60, {
     message: 'Der Stadtname darf maximal 60 Zeichen enthalten',
   })
-  stadt: string;
+  stadt?: string;
 
+  @IsOptional()
   @IsEnum(Land, {
     message: 'Land muss Deutschland, Italien oder Frankreich sein',
   })
-  land: 'Deutschland' | 'Italien' | 'Frankreich';
+  land?: 'Deutschland' | 'Italien' | 'Frankreich';
 }

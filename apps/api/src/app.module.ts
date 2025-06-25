@@ -4,8 +4,6 @@ import {
   BeziehungenController,
   ImmobilienController,
   KontakteController,
-  AdressenController,
-  AdressenService,
   ImmobilienService,
 } from './controllers';
 import { AppService } from './app.service';
@@ -14,10 +12,9 @@ import { PrismaService } from '@/src/prisma.service';
 
 @Module({
   imports: [ConfigModule.forRoot()],
-  providers: [PrismaService, AdressenService, ImmobilienService, AppService],
+  providers: [PrismaService, ImmobilienService, AppService],
   controllers: [
     AppController,
-    AdressenController,
     BeziehungenController,
     ImmobilienController,
     KontakteController,

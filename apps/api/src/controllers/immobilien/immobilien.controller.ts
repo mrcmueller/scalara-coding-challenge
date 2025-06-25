@@ -1,4 +1,3 @@
-import { Immobilien } from '@/generated/prisma';
 import {
   Controller,
   Post,
@@ -9,7 +8,6 @@ import {
   Delete,
 } from '@nestjs/common';
 import { ImmobilienService } from './immobilien.service';
-import { AdressenService } from '../adressen/adressen.service';
 import { ImmobilieErstellenDto } from './dto/immobilieErstellen.dto';
 import { ImmobilieAendernDto } from './dto/immobilieAendern.dto';
 
