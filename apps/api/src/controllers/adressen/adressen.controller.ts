@@ -35,11 +35,11 @@ export class AdressenController {
   }
 
   @Patch('/:id')
-  async aendereAdresse(
+  async adresseUeberschreiben(
     @Param('id') id: string,
     @Body() input: AdresseAendernDto,
   ) {
-    return await this.adressenService.aendereAdresse(id, input);
+    return await this.adressenService.adresseUeberschreiben(id, input);
   }
 
   @Delete('/:id')

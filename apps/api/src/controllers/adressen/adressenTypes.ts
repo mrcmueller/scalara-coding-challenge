@@ -2,6 +2,12 @@ import { Land } from '@/generated/prisma';
 
 type LandString = 'Deutschland' | 'Italien' | 'Frankreich';
 
+const landCheck = (input: any) => {
+  return (
+    input === 'Deutschland' || input === 'Italien' || input === 'Frankreich'
+  );
+};
+
 type Adresse = {
   strasse: string;
   hausnummer: string;
@@ -11,3 +17,4 @@ type Adresse = {
 };
 
 export type { Adresse, LandString };
+export { landCheck };

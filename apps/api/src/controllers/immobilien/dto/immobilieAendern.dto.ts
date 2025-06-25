@@ -40,7 +40,6 @@ export class ImmobilieAendernDto {
   @Type(() => AdresseAendernDto)
   adresse?: AdresseAendernDto;
 
-  // Mach in Zukunft verpflichtend wenn nicht leeres Adressobjekt enthalten
   @IsOptional()
   @IsMongoId()
   adressenId?: string;

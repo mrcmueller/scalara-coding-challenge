@@ -24,35 +24,33 @@ export class ImmobilienService {
     return await this.prisma.immobilien.findMany();
   }
 
-  // istImmobilie(input: any): input is Immobilie {
-  //   if (typeof input !== 'object' || input === null) return false;
+  istImmobilie(input: any): input is Immobilien {
+    if (typeof input !== 'object' || input === null) return false;
 
-  //   const sichererInput = input as Record<string, unknown>;
+    const sichererInput = input as Record<string, unknown>;
 
-  //   const {
-  //     name = undefined,
-  //     beschreibung = undefined,
-  //     adresse = undefined,
-  //   } = sichererInput;
+    const {
+      id = undefined,
+      name = undefined,
+      beschreibung = undefined,
+      adressenId = undefined,
+    } = sichererInput;
 
-  //   return (
-  //     typeof name === 'string' &&
-  //     typeof beschreibung === 'string' &&
-  //     this.adressenService.istAdresse(adresse)
-  //   );
-  // }
+    return (
+      typeof id === 'string' &&
+      typeof name === 'string' &&
+      typeof beschreibung === 'string' &&
+      typeof adressenId === 'string'
+    );
+  }
 
-  async erstelleImmobilie(
-    input: ImmobilieErstellenDto,
-  ): Promise<Immobilien | undefined> {
+  async erstelleImmobilie(input: ImmobilieErstellenDto): Promise<Immobilien> {
     if (input?.adressenId) {
-      // Wenn adressenId auf input
       if (
-        await this.prisma.adressen.findFirst({
+        (await this.prisma.adressen.findUnique({
           where: { id: input.adressenId },
-        })
+        })) !== null
       ) {
-        // Wenn adressenId auf input und adressenId zudem validiert ist (tatsächlich eine Adresse referenziert)
         return await this.prisma.immobilien.create({
           data: {
             name: input.name,
@@ -77,7 +75,7 @@ export class ImmobilienService {
       where: input.adresse,
     });
 
-    if (findeErsteAdresse) {
+    if (findeErsteAdresse !== null) {
       // Wenn die mitgesendete Adresse bereits existiert
       return await this.prisma.immobilien.create({
         data: {
@@ -107,9 +105,51 @@ export class ImmobilienService {
   async aendereImmobilie(
     id: string,
     input: ImmobilieAendernDto,
-  ): Promise<Immobilien> {
-    // Input enthält nur Properties, die geändert werden sollen
-    // Wenn Adresse geändert wird, dann
+  ): Promise<Immobilien | null | undefined> {
+    if (input?.adresse && input?.adressenId) {
+      throw new BadRequestException('Bad request', {
+        cause: new Error(),
+        description:
+          'Input sollte nicht adresse und adressenId gleichzeitig enthalten',
+      });
+    }
+
+    const { adresse, ...inputWithoutAdresse } = input;
+
+    if (adresse) {
+      const immobilie = await this.prisma.immobilien.findUnique({
+        where: { id },
+      });
+
+      if (immobilie) {
+        const adresse = await this.prisma.adressen.findUnique({
+          where: { id: immobilie.adressenId as string },
+          include: { Immobilien: true, Kontakte: true },
+        });
+
+        if (adresse) {
+          const anzahlSelbeAdresse =
+            adresse.Immobilien.length + adresse.Kontakte.length;
+        }
+
+        await this.adressenService.adresseUeberschreiben(
+          immobilie.adressenId as string,
+          adresse,
+        );
+      } else {
+        throw new BadRequestException('Bad request', {
+          cause: new Error(),
+          description: 'Immobilie via id nicht gefunden',
+        });
+      }
+    }
+
+    // Einfach adressenId updaten und die anderen Properties
+
+    return await this.prisma.immobilien.update({
+      where: { id },
+      data: inputWithoutAdresse,
+    });
   }
 
   async loescheImmobilie(
