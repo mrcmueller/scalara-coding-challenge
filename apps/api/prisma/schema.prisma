@@ -21,7 +21,7 @@ enum Land {
 }
 
 model Immobilie {
-  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
   name         String
   beschreibung String
   strasse      String
@@ -29,26 +29,28 @@ model Immobilie {
   postleitzahl String
   stadt        String
   land         Land
-  beziehungen Beziehung     
+  beziehungen  Beziehung[]
 }
 
 model Kontakt {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  name        String
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
   strasse      String
   hausnummer   String
   postleitzahl String
   stadt        String
-  land         Land     
-  beziehungen Beziehung
+  land         Land
+  beziehungen  Beziehung[]
 }
 
 model Beziehung {
-  id         String    @id @default(auto()) @map("_id") @db.ObjectId
-  immobilie  Immobilie 
-  kontakt    Kontakt   
-  beziehungstyp Int
+  id                 String    @id @default(auto()) @map("_id") @db.ObjectId
+  immobilie          Immobilie @relation(fields: [immobilienId], references: [id])
+  immobilienId       String    @db.ObjectId
+  kontakt            Kontakt   @relation(fields: [kontaktId], references: [id])
+  kontaktId          String    @db.ObjectId
+  beziehungstyp      Int
   dienstleistungstyp Int
-  startdatum DateTime
-  enddatum   DateTime
+  startdatum         DateTime
+  enddatum           DateTime
 }
