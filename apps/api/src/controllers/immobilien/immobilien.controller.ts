@@ -1,4 +1,4 @@
-import { Immobilien, Land, Prisma } from '@/generated/prisma';
+import { Immobilien } from '@/generated/prisma';
 import {
   Controller,
   Post,
@@ -10,8 +10,8 @@ import {
 } from '@nestjs/common';
 import { ImmobilienService } from './immobilien.service';
 import { AdressenService } from '../adressen/adressen.service';
-import { Immobilie } from './immobilienTypes';
 import { ImmobilieErstellenDto } from './dto/immobilieErstellen.dto';
+import { ImmobilieAendernDto } from './dto/immobilieAendern.dto';
 
 @Controller('immobilien')
 export class ImmobilienController {
@@ -48,34 +48,9 @@ export class ImmobilienController {
   async aendereImmobilie(
     @Param('id') id: string,
     @Body()
-    body: Prisma.ImmobilienUpdateInput & {
-      strasse?: string;
-      hausnummer?: string;
-      postleitzahl?: string;
-      stadt?: string;
-      land?: Land;
-    },
+    input: ImmobilieAendernDto,
   ) {
-    const {
-      name = undefined,
-      beschreibung = undefined,
-      strasse = undefined,
-      hausnummer = undefined,
-      postleitzahl = undefined,
-      stadt = undefined,
-      land = undefined,
-    } = body;
-    const updatedNichtAdressenTeil =
-      await this.immobilienService.aendereImmobilie({
-        where: { id },
-        data: { name, beschreibung },
-      });
-    const updatedAdressenTeil = await this.adressenService.aendereAdresse({
-      where: { id },
-      data: { strasse, hausnummer, postleitzahl, stadt, land },
-    });
-
-    return { ...updatedNichtAdressenTeil, ...updatedAdressenTeil };
+    return this.immobilienService.aendereImmobilie(id, input);
   }
 
   @Delete('/:id')

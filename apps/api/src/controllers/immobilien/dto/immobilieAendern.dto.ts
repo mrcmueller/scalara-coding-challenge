@@ -4,13 +4,11 @@ import {
   IsMongoId,
   IsOptional,
   IsString,
-  Length,
   MaxLength,
   MinLength,
   Validate,
   ValidateNested,
 } from 'class-validator';
-import { AdresseErstellenDto } from '../../adressen/dto/adresseErstellen.dto';
 import { Type } from 'class-transformer';
 import { EineProperty } from './eineProperty';
 import { AdresseAendernDto } from '../../adressen/dto/adresseAendern.dto';
@@ -36,13 +34,13 @@ export class ImmobilieAendernDto {
   })
   beschreibung?: string;
 
-  @Validate(EineProperty)
   @IsOptional()
+  @Validate(EineProperty)
   @ValidateNested()
   @Type(() => AdresseAendernDto)
   adresse?: AdresseAendernDto;
 
-  @Validate(EineProperty)
+  // Mach in Zukunft verpflichtend wenn nicht leeres Adressobjekt enthalten
   @IsOptional()
   @IsMongoId()
   adressenId?: string;

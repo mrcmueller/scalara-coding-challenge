@@ -2,8 +2,8 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from '@/src/prisma.service';
 import { Prisma, Immobilien } from '@/generated/prisma';
 import { AdressenService } from '../adressen';
-import { Immobilie } from './immobilienTypes';
 import { ImmobilieErstellenDto } from './dto/immobilieErstellen.dto';
+import { ImmobilieAendernDto } from './dto/immobilieAendern.dto';
 
 @Injectable()
 export class ImmobilienService {
@@ -24,40 +24,23 @@ export class ImmobilienService {
     return await this.prisma.immobilien.findMany();
   }
 
-  istImmobilie(input: any): input is Immobilie {
-    if (typeof input !== 'object' || input === null) return false;
+  // istImmobilie(input: any): input is Immobilie {
+  //   if (typeof input !== 'object' || input === null) return false;
 
-    const sichererInput = input as Record<string, unknown>;
+  //   const sichererInput = input as Record<string, unknown>;
 
-    const {
-      name = undefined,
-      beschreibung = undefined,
-      adresse = undefined,
-    } = sichererInput;
+  //   const {
+  //     name = undefined,
+  //     beschreibung = undefined,
+  //     adresse = undefined,
+  //   } = sichererInput;
 
-    return (
-      typeof name === 'string' &&
-      typeof beschreibung === 'string' &&
-      this.adressenService.istAdresse(adresse)
-    );
-  }
-
-  async findeErsteVerifizierteAdressenId(
-    input: any,
-  ): Promise<string | null | undefined> {
-    if (this.adressenService.istAdresse(input)) {
-      const searchResult = await this.prisma.adressen.findFirst({
-        where: input,
-      });
-      return searchResult?.id;
-    }
-    if (typeof input === 'string') {
-      const searchResult = await this.prisma.adressen.findFirst({
-        where: { id: input },
-      });
-      return searchResult?.id;
-    }
-  }
+  //   return (
+  //     typeof name === 'string' &&
+  //     typeof beschreibung === 'string' &&
+  //     this.adressenService.istAdresse(adresse)
+  //   );
+  // }
 
   async erstelleImmobilie(
     input: ImmobilieErstellenDto,
@@ -121,15 +104,12 @@ export class ImmobilienService {
     });
   }
 
-  async aendereImmobilie(params: {
-    where: Prisma.ImmobilienWhereUniqueInput;
-    data: Prisma.ImmobilienUpdateInput;
-  }): Promise<Immobilien> {
-    const { where, data } = params;
-    return await this.prisma.immobilien.update({
-      data,
-      where,
-    });
+  async aendereImmobilie(
+    id: string,
+    input: ImmobilieAendernDto,
+  ): Promise<Immobilien> {
+    // Input enthält nur Properties, die geändert werden sollen
+    // Wenn Adresse geändert wird, dann
   }
 
   async loescheImmobilie(

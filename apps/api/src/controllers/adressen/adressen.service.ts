@@ -9,36 +9,34 @@ import { AdresseAendernDto } from './dto/adresseAendern.dto';
 export class AdressenService {
   constructor(private readonly prisma: PrismaService) {}
 
-  istAdresse(input: any): input is Adresse {
-    if (typeof input !== 'object' || input === null) return false;
+  // istAdresse(input: any): input is Adresse {
+  //   if (typeof input !== 'object' || input === null) return false;
 
-    const sichererInput = input as Record<string, unknown>;
+  //   const sichererInput = input as Record<string, unknown>;
 
-    const {
-      strasse = undefined,
-      hausnummer = undefined,
-      postleitzahl = undefined,
-      stadt = undefined,
-      land = undefined,
-    } = sichererInput;
+  //   const {
+  //     strasse = undefined,
+  //     hausnummer = undefined,
+  //     postleitzahl = undefined,
+  //     stadt = undefined,
+  //     land = undefined,
+  //   } = sichererInput;
 
-    return (
-      typeof strasse === 'string' &&
-      typeof hausnummer === 'string' &&
-      typeof postleitzahl === 'number' &&
-      typeof stadt === 'string' &&
-      (land === 'Deutschland' ||
-        land === 'Italien' ||
-        land === 'Österreich' ||
-        land === 'Frankreich')
-    );
-  }
+  //   return (
+  //     typeof strasse === 'string' &&
+  //     typeof hausnummer === 'string' &&
+  //     typeof postleitzahl === 'number' &&
+  //     typeof stadt === 'string' &&
+  //     (land === 'Deutschland' ||
+  //       land === 'Italien' ||
+  //       land === 'Österreich' ||
+  //       land === 'Frankreich')
+  //   );
+  // }
 
-  async adresse(
-    input: Prisma.AdressenWhereUniqueInput,
-  ): Promise<Adressen | null> {
+  async adresse(id: string): Promise<Adressen | null> {
     return await this.prisma.adressen.findUnique({
-      where: input,
+      where: { id },
     });
   }
 
@@ -61,18 +59,16 @@ export class AdressenService {
     });
   }
 
-  async aendereAdresse(input: {
-    where: Prisma.AdressenWhereUniqueInput;
-    data: AdresseAendernDto;
-  }): Promise<Adressen> {
-    return await this.prisma.adressen.update(input);
+  async aendereAdresse(
+    id: string,
+    input: AdresseAendernDto,
+  ): Promise<Adressen> {
+    return await this.prisma.adressen.update({ where: { id }, data: input });
   }
 
-  async loescheAdresse(
-    where: Prisma.AdressenWhereUniqueInput,
-  ): Promise<Adressen> {
+  async loescheAdresse(id: string): Promise<Adressen> {
     return await this.prisma.adressen.delete({
-      where,
+      where: { id },
     });
   }
 }

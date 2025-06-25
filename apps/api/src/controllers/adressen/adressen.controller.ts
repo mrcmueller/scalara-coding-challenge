@@ -23,30 +23,27 @@ export class AdressenController {
 
   @Get('/:id')
   async adresse(@Param('id') id: string) {
-    return await this.adressenService.adresse({ id });
+    return await this.adressenService.adresse(id);
   }
 
   @Post()
   async erstelleAdresse(
     @Body()
-    clientInput: AdresseErstellenDto,
+    input: AdresseErstellenDto,
   ): Promise<Adressen | undefined> {
-    return await this.adressenService.erstelleAdresse(clientInput);
+    return await this.adressenService.erstelleAdresse(input);
   }
 
   @Patch('/:id')
   async aendereAdresse(
     @Param('id') id: string,
-    @Body() clientInput: AdresseAendernDto,
+    @Body() input: AdresseAendernDto,
   ) {
-    return await this.adressenService.aendereAdresse({
-      where: { id },
-      data: clientInput,
-    });
+    return await this.adressenService.aendereAdresse(id, input);
   }
 
   @Delete('/:id')
   async loescheAdresse(@Param('id') id: string) {
-    return await this.adressenService.loescheAdresse({ id });
+    return await this.adressenService.loescheAdresse(id);
   }
 }
