@@ -11,7 +11,7 @@ import { KontaktAendernDto } from './dto/kontaktAendern.dto';
 import { KontaktErstellenDto } from './dto/kontaktErstellen.dto';
 import { KontakteService } from './kontakte.service';
 
-@Controller('kontakten')
+@Controller('kontakte')
 export class KontakteController {
   constructor(private readonly kontakteService: KontakteService) {}
 
@@ -30,7 +30,7 @@ export class KontakteController {
     @Body()
     input: KontaktErstellenDto,
   ) {
-    return await this.kontakteService.erstelleKontakte(input);
+    return await this.kontakteService.erstelleKontakt(input);
   }
 
   @Patch('/:id')
@@ -39,11 +39,11 @@ export class KontakteController {
     @Body()
     input: KontaktAendernDto,
   ) {
-    return await this.kontakteService.aendereKontakte(id, input);
+    return await this.kontakteService.aendereKontakt(id, input);
   }
 
   @Delete('/:id')
   async loescheKontakte(@Param('id') id: string) {
-    return await this.kontakteService.loescheKontakte(id);
+    return await this.kontakteService.loescheKontakt(id);
   }
 }

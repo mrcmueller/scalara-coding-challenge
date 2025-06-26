@@ -16,6 +16,7 @@ export class BeziehungenService {
   }
 
   async erstelleBeziehung(input: BeziehungErstellenDto): Promise<Beziehung> {
+    console.log(input);
     return await this.prisma.beziehung.create({ data: input });
   }
 }

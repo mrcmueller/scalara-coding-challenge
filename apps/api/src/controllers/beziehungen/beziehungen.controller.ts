@@ -18,7 +18,7 @@ export class BeziehungenController {
   }
 
   @Post()
-  async beziehungErstellen(input: BeziehungErstellenDto): Promise<Beziehung> {
+  async erstelleBeziehung(input: BeziehungErstellenDto): Promise<Beziehung> {
     return await this.beziehungenService.erstelleBeziehung(input);
   }
 }
