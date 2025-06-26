@@ -1,5 +1,6 @@
 import { Type } from 'class-transformer';
 import { IsMongoId, IsNumber, IsOptional, Validate } from 'class-validator';
+import { EnddatumNachStartdatumValidator } from './enddatumNachStartdatum.validator';
 
 export class BeziehungAendernDto {
   @IsOptional()
@@ -36,5 +37,6 @@ export class BeziehungAendernDto {
 
   @IsOptional()
   @Type(() => Date)
+  @Validate(EnddatumNachStartdatumValidator)
   enddatum?: Date;
 }

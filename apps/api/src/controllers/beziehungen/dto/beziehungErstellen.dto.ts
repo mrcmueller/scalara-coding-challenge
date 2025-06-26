@@ -1,5 +1,6 @@
 import { Type } from 'class-transformer';
-import { IsIn, IsMongoId, IsNumber, Validate } from 'class-validator';
+import { IsDate, IsIn, IsMongoId, IsNumber, Validate } from 'class-validator';
+import { EnddatumNachStartdatumValidator } from './enddatumNachStartdatum.validator';
 
 export class BeziehungErstellenDto {
   @IsMongoId()
@@ -20,9 +21,12 @@ export class BeziehungErstellenDto {
   })
   dienstleistungstyp: 1 | 2 | 3;
 
+  @IsDate({ message: 'Startdatum muss ein Datum sein' })
   @Type(() => Date)
   startdatum: Date;
 
+  @IsDate({ message: 'Enddatum muss ein Datum sein' })
   @Type(() => Date)
+  @Validate(EnddatumNachStartdatumValidator)
   enddatum: Date;
 }
