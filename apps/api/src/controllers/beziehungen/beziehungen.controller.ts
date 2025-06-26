@@ -1,4 +1,12 @@
-import { Controller, Delete, Get, Patch, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { BeziehungenService } from './beziehungen.service';
 import { Beziehung } from '@/generated/prisma';
 import { BeziehungErstellenDto } from './dto/beziehungErstellen.dto copy';
@@ -23,19 +31,24 @@ export class BeziehungenController {
   }
 
   @Post()
-  async erstelleBeziehung(input: BeziehungErstellenDto): Promise<Beziehung> {
+  async erstelleBeziehung(
+    @Body()
+    input: BeziehungErstellenDto,
+  ): Promise<Beziehung> {
     return await this.beziehungenService.erstelleBeziehung(input);
   }
 
-  @Patch()
+  @Patch('/:id')
   async aendereBeziehung(
+    @Param('id')
     id: string,
+    @Body()
     input: BeziehungErstellenDto,
   ): Promise<Beziehung> {
     return await this.beziehungenService.aendereBeziehung(id, input);
   }
 
-  @Delete()
+  @Delete('/:id')
   async loescheBeziehung(id: string): Promise<Beziehung> {
     return await this.beziehungenService.loescheBeziehung(id);
   }
