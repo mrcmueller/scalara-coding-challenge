@@ -1,6 +1,7 @@
 /* eslint  @typescript-eslint/no-unsafe-call: 0 */
 
 import {
+  IsArray,
   IsEnum,
   IsOptional,
   IsPostalCode,
@@ -9,7 +10,7 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
-import { Land } from '@/generated/prisma';
+import { Land, Prisma } from '@/generated/prisma';
 
 export class ImmobilieAendernDto {
   @IsOptional()
@@ -74,4 +75,7 @@ export class ImmobilieAendernDto {
     message: 'Land muss Deutschland, Italien oder Frankreich sein',
   })
   land?: 'Deutschland' | 'Italien' | 'Frankreich';
+
+  @IsArray()
+  beziehungen: string[];
 }

@@ -1,7 +1,10 @@
 /* eslint  @typescript-eslint/no-unsafe-call: 0 */
 
 import {
+  IsArray,
   IsEnum,
+  IsMongoId,
+  IsNumber,
   IsPostalCode,
   IsString,
   Matches,
@@ -66,4 +69,8 @@ export class ImmobilieErstellenDto {
     message: 'Land muss Deutschland, Italien oder Frankreich sein',
   })
   land: 'Deutschland' | 'Italien' | 'Frankreich';
+
+  @IsArray()
+  @IsMongoId({ each: true })
+  beziehungen: string[];
 }

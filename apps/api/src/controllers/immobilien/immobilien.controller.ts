@@ -23,7 +23,7 @@ export class ImmobilienController {
 
   @Get('/:id')
   async immobilie(@Param('id') id: string) {
-    return await this.immobilienService.immobilie({ id });
+    return await this.immobilienService.immobilie(id);
   }
   @Post()
   async erstelleImmobilie(

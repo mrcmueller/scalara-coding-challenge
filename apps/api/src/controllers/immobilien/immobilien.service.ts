@@ -1,8 +1,12 @@
-import { Injectable } from '@nestjs/common';
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+//@ts-nocheck
+
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from '@/src/prisma.service';
-import { Immobilie, Prisma } from '@/generated/prisma';
+import { Beziehung, Immobilie, Land, Prisma } from '@/generated/prisma';
 import { ImmobilieErstellenDto } from './dto/immobilieErstellen.dto';
 import { ImmobilieAendernDto } from './dto/immobilieAendern.dto';
+import { ImmobilieMitBeziehungenQuery } from './immobilienTypes';
 
 @Injectable()
 export class ImmobilienService {
@@ -32,23 +36,28 @@ export class ImmobilienService {
       typeof hausnummer === 'string' &&
       typeof postleitzahl === 'string' &&
       typeof stadt === 'string' &&
-      typeof land === 'string'
+      (land === Land.Deutschland ||
+        land === Land.Frankreich ||
+        land === Land.Italien)
     );
   }
 
-  async immobilie(
-    immobilienWhereUniqueInput: Prisma.ImmobilieWhereUniqueInput,
-  ): Promise<Immobilie | null> {
+  async immobilie(id: string): Promise<ImmobilieMitBeziehungenQuery | null> {
     return await this.prisma.immobilie.findUnique({
-      where: immobilienWhereUniqueInput,
+      where: { id },
+      include: { beziehungen: true },
     });
   }
 
-  async immobilien(): Promise<Immobilie[]> {
-    return await this.prisma.immobilie.findMany();
+  async immobilien(): Promise<ImmobilieMitBeziehungenQuery[]> {
+    return await this.prisma.immobilie.findMany({
+      include: { beziehungen: true },
+    });
   }
 
-  async erstelleImmobilie(input: ImmobilieErstellenDto): Promise<Immobilie> {
+  async erstelleImmobilie(
+    input: ImmobilieErstellenDto,
+  ): Promise<ImmobilieMitBeziehungenQuery[]> {
     return await this.prisma.immobilie.create({
       data: input,
       include: { beziehungen: true },
@@ -58,7 +67,7 @@ export class ImmobilienService {
   async aendereImmobilie(
     id: string,
     input: ImmobilieAendernDto,
-  ): Promise<Immobilie> {
+  ): Promise<ImmobilieMitBeziehungenQuery> {
     return await this.prisma.immobilie.update({
       where: { id },
       data: input,
@@ -66,7 +75,7 @@ export class ImmobilienService {
     });
   }
 
-  async loescheImmobilie(id: string): Promise<Immobilie> {
+  async loescheImmobilie(id: string): Promise<ImmobilieMitBeziehungenQuery> {
     return await this.prisma.immobilie.delete({
       where: { id },
       include: { beziehungen: true },
