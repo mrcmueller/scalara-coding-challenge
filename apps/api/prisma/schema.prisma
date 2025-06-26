@@ -45,9 +45,9 @@ model Kontakt {
 
 model Beziehung {
   id                 String    @id @default(auto()) @map("_id") @db.ObjectId
-  immobilie          Immobilie @relation(fields: [immobilienId], references: [id])
+  immobilie          Immobilie @relation(fields: [immobilienId], references: [id], onDelete: Cascade)
   immobilienId       String    @db.ObjectId
-  kontakt            Kontakt   @relation(fields: [kontaktId], references: [id])
+  kontakt            Kontakt   @relation(fields: [kontaktId], references: [id], onDelete: Cascade)
   kontaktId          String    @db.ObjectId
   beziehungstyp      Int
   dienstleistungstyp Int?

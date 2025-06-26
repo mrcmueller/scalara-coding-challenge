@@ -74,9 +74,4 @@ export class ImmobilieAendernDto {
     message: 'Land muss Deutschland, Italien oder Frankreich sein',
   })
   land?: 'Deutschland' | 'Italien' | 'Frankreich';
-
-  @IsOptional()
-  @IsArray()
-  @IsMongoId({ each: true })
-  beziehungen?: string[];
 }

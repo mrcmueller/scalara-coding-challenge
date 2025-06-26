@@ -1,7 +1,7 @@
 import { Controller, Get, Post } from '@nestjs/common';
 import { BeziehungenService } from './beziehungen.service';
-import { BeziehungErstellenDto } from './dto/beziehungAendern.dto';
 import { Beziehung } from '@/generated/prisma';
+import { BeziehungErstellenDto } from './dto/beziehungErstellen.dto';
 
 @Controller('beziehungen')
 export class BeziehungenController {

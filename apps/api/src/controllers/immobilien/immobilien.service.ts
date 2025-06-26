@@ -54,7 +54,7 @@ export class ImmobilienService {
 
   async erstelleImmobilie(
     input: ImmobilieErstellenDto,
-  ): Promise<ImmobilieMitBeziehungenQuery[]> {
+  ): Promise<ImmobilieMitBeziehungenQuery> {
     return await this.prisma.immobilie.create({
       data: input,
       include: { beziehungen: true },

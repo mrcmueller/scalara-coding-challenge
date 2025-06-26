@@ -57,8 +57,4 @@ export class KontaktErstellenDto {
     message: 'Land muss Deutschland, Italien oder Frankreich sein',
   })
   land: 'Deutschland' | 'Italien' | 'Frankreich';
-
-  @IsArray()
-  @IsMongoId({ each: true })
-  beziehungen: string[];
 }

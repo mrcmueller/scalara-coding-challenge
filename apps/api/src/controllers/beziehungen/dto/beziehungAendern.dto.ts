@@ -1,7 +1,7 @@
 import { Type } from 'class-transformer';
 import { IsMongoId, IsNumber, IsOptional, Validate } from 'class-validator';
 
-export class BeziehungErstellenDto {
+export class BeziehungAendernDto {
   @IsOptional()
   @IsMongoId()
   immobilienId?: string;

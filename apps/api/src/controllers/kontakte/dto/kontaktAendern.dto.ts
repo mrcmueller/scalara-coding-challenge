@@ -11,7 +11,7 @@ import {
 } from 'class-validator';
 import { Land } from '@/generated/prisma';
 
-export class KontakteAendernDto {
+export class KontaktAendernDto {
   @IsOptional()
   @IsString()
   @MinLength(1, {
@@ -74,9 +74,4 @@ export class KontakteAendernDto {
     message: 'Land muss Deutschland, Italien oder Frankreich sein',
   })
   land?: 'Deutschland' | 'Italien' | 'Frankreich';
-
-  @IsOptional()
-  @IsArray()
-  @IsMongoId({ each: true })
-  beziehungen?: string[];
 }

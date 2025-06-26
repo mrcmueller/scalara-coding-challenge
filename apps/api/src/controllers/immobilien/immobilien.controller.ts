@@ -39,7 +39,7 @@ export class ImmobilienController {
     @Body()
     input: ImmobilieAendernDto,
   ) {
-    return this.immobilienService.aendereImmobilie(id, input);
+    return await this.immobilienService.aendereImmobilie(id, input);
   }
 
   @Delete('/:id')
