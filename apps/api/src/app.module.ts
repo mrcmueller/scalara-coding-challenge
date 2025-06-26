@@ -10,10 +10,17 @@ import {
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { PrismaService } from '@/src/prisma.service';
+import { KontakteService } from './controllers/kontakte/kontakte.service';
 
 @Module({
   imports: [ConfigModule.forRoot()],
-  providers: [PrismaService, ImmobilienService, BeziehungenService, AppService],
+  providers: [
+    PrismaService,
+    ImmobilienService,
+    BeziehungenService,
+    KontakteService,
+    AppService,
+  ],
   controllers: [
     AppController,
     BeziehungenController,

@@ -2,6 +2,7 @@ import {
   IsArray,
   IsEnum,
   IsMongoId,
+  IsOptional,
   IsPostalCode,
   IsString,
   Matches,
@@ -10,7 +11,8 @@ import {
 } from 'class-validator';
 import { Land } from '@/generated/prisma';
 
-export class ImmobilieErstellenDto {
+export class KontakteAendernDto {
+  @IsOptional()
   @IsString()
   @MinLength(1, {
     message: 'Der Name muss mindestens 1 Zeichen enthalten',
@@ -18,8 +20,9 @@ export class ImmobilieErstellenDto {
   @MaxLength(100, {
     message: 'Der Name darf maximal 100 Zeichen enthalten',
   })
-  name: string;
+  name?: string;
 
+  @IsOptional()
   @IsString()
   @MinLength(15, {
     message: 'Die Beschreibung muss mindestens 15 Zeichen enthalten',
@@ -27,8 +30,9 @@ export class ImmobilieErstellenDto {
   @MaxLength(300, {
     message: 'Die Beschreibung darf maximal 300 Zeichen enthalten',
   })
-  beschreibung: string;
+  beschreibung?: string;
 
+  @IsOptional()
   @IsString()
   @MinLength(1, {
     message: 'Der Straßenname muss mindestens 1 Zeichen enthalten',
@@ -36,8 +40,9 @@ export class ImmobilieErstellenDto {
   @MaxLength(60, {
     message: 'Der Straßenname darf maximal 60 Zeichen enthalten',
   })
-  strasse: string;
+  strasse?: string;
 
+  @IsOptional()
   @IsString()
   @MinLength(1, {
     message: 'Die Hausnummer muss mindestens 1 Zeichen enthalten',
@@ -48,11 +53,13 @@ export class ImmobilieErstellenDto {
   @Matches(/\d/, {
     message: 'Die Hausnummer muss mindestens eine Ziffer enthalten',
   })
-  hausnummer: string;
+  hausnummer?: string;
 
+  @IsOptional()
   @IsPostalCode('DE')
-  postleitzahl: string;
+  postleitzahl?: string;
 
+  @IsOptional()
   @IsString()
   @MinLength(1, {
     message: 'Der Stadtname muss mindestens 1 Zeichen enthalten',
@@ -60,14 +67,16 @@ export class ImmobilieErstellenDto {
   @MaxLength(60, {
     message: 'Der Stadtname darf maximal 60 Zeichen enthalten',
   })
-  stadt: string;
+  stadt?: string;
 
+  @IsOptional()
   @IsEnum(Land, {
     message: 'Land muss Deutschland, Italien oder Frankreich sein',
   })
-  land: 'Deutschland' | 'Italien' | 'Frankreich';
+  land?: 'Deutschland' | 'Italien' | 'Frankreich';
 
+  @IsOptional()
   @IsArray()
   @IsMongoId({ each: true })
-  beziehungen: string[];
+  beziehungen?: string[];
 }

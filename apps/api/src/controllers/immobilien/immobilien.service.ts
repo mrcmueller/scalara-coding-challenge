@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-//@ts-nocheck
-
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@/src/prisma.service';
 import { Immobilie, Land } from '@/generated/prisma';

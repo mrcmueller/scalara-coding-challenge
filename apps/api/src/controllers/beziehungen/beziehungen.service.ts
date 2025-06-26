@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@/src/prisma.service';
 import { Beziehung } from '@/generated/prisma';
-import { BeziehungErstellenDto } from './dto/beziehungErstellen.dto';
+import { BeziehungErstellenDto } from './dto/beziehungAendern.dto';
 
 @Injectable()
 export class BeziehungenService {

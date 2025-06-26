@@ -10,7 +10,7 @@ import {
 } from 'class-validator';
 import { Land } from '@/generated/prisma';
 
-export class ImmobilieErstellenDto {
+export class KontaktErstellenDto {
   @IsString()
   @MinLength(1, {
     message: 'Der Name muss mindestens 1 Zeichen enthalten',
@@ -19,15 +19,6 @@ export class ImmobilieErstellenDto {
     message: 'Der Name darf maximal 100 Zeichen enthalten',
   })
   name: string;
-
-  @IsString()
-  @MinLength(15, {
-    message: 'Die Beschreibung muss mindestens 15 Zeichen enthalten',
-  })
-  @MaxLength(300, {
-    message: 'Die Beschreibung darf maximal 300 Zeichen enthalten',
-  })
-  beschreibung: string;
 
   @IsString()
   @MinLength(1, {

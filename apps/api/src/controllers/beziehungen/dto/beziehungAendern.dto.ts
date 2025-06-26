@@ -1,13 +1,16 @@
 import { Type } from 'class-transformer';
-import { IsMongoId, IsNumber, Validate } from 'class-validator';
+import { IsMongoId, IsNumber, IsOptional, Validate } from 'class-validator';
 
 export class BeziehungErstellenDto {
+  @IsOptional()
   @IsMongoId()
-  immobilienId: string;
+  immobilienId?: string;
 
+  @IsOptional()
   @IsMongoId()
-  kontaktId: string;
+  kontaktId?: string;
 
+  @IsOptional()
   @IsNumber()
   @Validate(
     (i: any) => typeof i === 'number' && (i === 1 || i === 2 || i === 3),
@@ -15,8 +18,9 @@ export class BeziehungErstellenDto {
       message: 'Der Beziehungstyp darf nur die Zahl 1, 2 oder 3 sein',
     },
   )
-  beziehungstyp: 1 | 2 | 3;
+  beziehungstyp?: 1 | 2 | 3;
 
+  @IsOptional()
   @IsNumber()
   @Validate(
     (i: any) => typeof i === 'number' && (i === 1 || i === 2 || i === 3),
@@ -24,11 +28,13 @@ export class BeziehungErstellenDto {
       message: 'Der Dienstleistungstyp darf nur die Zahl 1, 2 oder 3 sein',
     },
   )
-  dienstleistungstyp: 1 | 2 | 3;
+  dienstleistungstyp?: 1 | 2 | 3;
 
+  @IsOptional()
   @Type(() => Date)
-  startdatum: Date;
+  startdatum?: Date;
 
+  @IsOptional()
   @Type(() => Date)
-  enddatum: Date;
+  enddatum?: Date;
 }

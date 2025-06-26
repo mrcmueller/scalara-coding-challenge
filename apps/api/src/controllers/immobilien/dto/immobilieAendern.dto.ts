@@ -1,8 +1,7 @@
-/* eslint  @typescript-eslint/no-unsafe-call: 0 */
-
 import {
   IsArray,
   IsEnum,
+  IsMongoId,
   IsOptional,
   IsPostalCode,
   IsString,
@@ -76,6 +75,8 @@ export class ImmobilieAendernDto {
   })
   land?: 'Deutschland' | 'Italien' | 'Frankreich';
 
+  @IsOptional()
   @IsArray()
-  beziehungen: string[];
+  @IsMongoId({ each: true })
+  beziehungen?: string[];
 }
