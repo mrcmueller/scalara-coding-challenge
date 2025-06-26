@@ -8,20 +8,23 @@ import {
   Post,
 } from '@nestjs/common';
 import { BeziehungenService } from './beziehungen.service';
-import { Beziehung } from '@/generated/prisma';
 import { BeziehungErstellenDto } from './dto/beziehungErstellen.dto copy';
+import { BeziehungMitPayloadsQuery } from './beziehungen.types';
 
 @Controller('beziehungen')
 export class BeziehungenController {
   constructor(private readonly beziehungenService: BeziehungenService) {}
 
   @Get()
-  async beziehungen(): Promise<Beziehung[]> {
+  async beziehungen(): Promise<BeziehungMitPayloadsQuery[]> {
     return await this.beziehungenService.beziehungen();
   }
 
   @Get()
-  async beziehung(id: string): Promise<Beziehung | null> {
+  async beziehung(
+    @Param('id')
+    id: string,
+  ): Promise<BeziehungMitPayloadsQuery | null> {
     return await this.beziehungenService.beziehung(id);
   }
 
@@ -29,7 +32,7 @@ export class BeziehungenController {
   async erstelleBeziehung(
     @Body()
     input: BeziehungErstellenDto,
-  ): Promise<Beziehung> {
+  ): Promise<BeziehungMitPayloadsQuery> {
     return await this.beziehungenService.erstelleBeziehung(input);
   }
 
@@ -39,12 +42,14 @@ export class BeziehungenController {
     id: string,
     @Body()
     input: BeziehungErstellenDto,
-  ): Promise<Beziehung> {
+  ): Promise<BeziehungMitPayloadsQuery> {
     return await this.beziehungenService.aendereBeziehung(id, input);
   }
 
   @Delete('/:id')
-  async loescheBeziehung(id: string): Promise<Beziehung> {
+  async loescheBeziehung(
+    @Param('id') id: string,
+  ): Promise<BeziehungMitPayloadsQuery> {
     return await this.beziehungenService.loescheBeziehung(id);
   }
 }
