@@ -8,7 +8,7 @@ import {
   Post,
 } from '@nestjs/common';
 import { BeziehungenService } from './beziehungen.service';
-import { BeziehungErstellenDto } from './dto/beziehungErstellen.dto copy';
+import { BeziehungErstellenDto } from './dto/beziehungErstellen.dto';
 import { BeziehungMitPayloadsQuery } from './beziehungen.types';
 
 @Controller('beziehungen')
