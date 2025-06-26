@@ -25,11 +25,6 @@ export class BeziehungenController {
     return await this.beziehungenService.beziehung(id);
   }
 
-  test(input: BeziehungErstellenDto): string {
-    console.log(input);
-    return 'hello';
-  }
-
   @Post()
   async erstelleBeziehung(
     @Body()
