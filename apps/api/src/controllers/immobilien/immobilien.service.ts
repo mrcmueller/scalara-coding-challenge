@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 //@ts-nocheck
 
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@/src/prisma.service';
-import { Beziehung, Immobilie, Land, Prisma } from '@/generated/prisma';
+import { Immobilie, Land } from '@/generated/prisma';
 import { ImmobilieErstellenDto } from './dto/immobilieErstellen.dto';
 import { ImmobilieAendernDto } from './dto/immobilieAendern.dto';
 import { ImmobilieMitBeziehungenQuery } from './immobilienTypes';

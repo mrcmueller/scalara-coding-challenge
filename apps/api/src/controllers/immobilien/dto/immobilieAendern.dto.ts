@@ -10,7 +10,7 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
-import { Land, Prisma } from '@/generated/prisma';
+import { Land } from '@/generated/prisma';
 
 export class ImmobilieAendernDto {
   @IsOptional()

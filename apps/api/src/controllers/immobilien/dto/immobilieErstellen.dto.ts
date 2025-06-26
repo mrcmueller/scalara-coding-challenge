@@ -4,7 +4,6 @@ import {
   IsArray,
   IsEnum,
   IsMongoId,
-  IsNumber,
   IsPostalCode,
   IsString,
   Matches,

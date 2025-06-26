@@ -10,7 +10,6 @@ import {
 import { ImmobilienService } from './immobilien.service';
 import { ImmobilieErstellenDto } from './dto/immobilieErstellen.dto';
 import { ImmobilieAendernDto } from './dto/immobilieAendern.dto';
-import { Immobilie } from '@/generated/prisma';
 
 @Controller('immobilien')
 export class ImmobilienController {
@@ -25,12 +24,13 @@ export class ImmobilienController {
   async immobilie(@Param('id') id: string) {
     return await this.immobilienService.immobilie(id);
   }
+
   @Post()
   async erstelleImmobilie(
     @Body()
-    clientInput: ImmobilieErstellenDto,
-  ): Promise<Immobilie> {
-    return await this.immobilienService.erstelleImmobilie(clientInput);
+    input: ImmobilieErstellenDto,
+  ) {
+    return await this.immobilienService.erstelleImmobilie(input);
   }
 
   @Patch('/:id')
