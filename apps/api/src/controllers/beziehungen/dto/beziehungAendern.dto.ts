@@ -37,6 +37,6 @@ export class BeziehungAendernDto {
 
   @IsOptional()
   @Type(() => Date)
-  @Validate(EnddatumNachStartdatumValidator)
+  // @Validate(EnddatumNachStartdatumValidator)
   enddatum?: Date;
 }

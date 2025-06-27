@@ -82,32 +82,28 @@ export class BeziehungenService {
 
     if (id) {
       // Da fast alle props für Validations benötigt werden -> fetch wenn Änderung
-      loaded = await this.prisma.beziehung.findFirst({
+      loaded = await this.prisma.beziehung.findUniqueOrThrow({
         where: { id },
       });
 
-      if (loaded) {
-        console.log('loaded', loaded);
+      console.log('loaded', loaded);
 
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        merged = Object.assign({}, loaded, input);
-      } else {
-        throw new BadRequestException(['Keine Datensätze für id gefunden']);
-      }
-
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      merged = Object.assign({}, loaded, input);
       console.log('after OA', merged);
 
       if (
-        input?.beziehungstyp === 3 &&
-        (loaded as Potentials)?.beziehungstyp &&
-        input?.dienstleistungstyp
+        (merged as Potentials)?.beziehungstyp === 2 &&
+        !(merged as Potentials).dienstleistungstyp
       ) {
         throw new BadRequestException(['Bitte gib eine Dienstleistung an']);
       }
+    } else if (input?.beziehungstyp === 2 && !input?.dienstleistungstyp) {
+      throw new BadRequestException(['Bitte gib eine Dienstleistung an']);
     }
 
     // Pro Immobilie nur einen Mieter pro Zeitraum
-    await this.einenMieterProZeitraum(input as Ueberpruefbar);
+    // await this.einenMieterProZeitraum(merged as Ueberpruefbar);
   }
 
   async beziehungen(): Promise<BeziehungMitPayloadsQuery[]> {
@@ -129,7 +125,7 @@ export class BeziehungenService {
     await this.checks(input);
 
     // Pro Immobilie nur einen Mieter pro Zeitraum
-    await this.einenMieterProZeitraum(input);
+    // await this.einenMieterProZeitraum(input);
 
     return await this.prisma.beziehung.create({
       data: input,
