@@ -1,16 +1,15 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
+import { StripUndefinedPipe } from './StripUndefinedPipe';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(
     new ValidationPipe({
-      transform: false,
-      transformOptions: {
-        exposeUnsetFields: false,
-      },
+      transform: true,
     }),
+    new StripUndefinedPipe(),
   );
   await app.listen(process.env.PORT ?? 3000);
 }

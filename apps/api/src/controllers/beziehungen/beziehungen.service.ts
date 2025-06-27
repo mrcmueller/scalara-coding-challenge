@@ -41,18 +41,25 @@ type Ueberpruefbar = {
 export class BeziehungenService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async einenMieterProZeitraum(input: {
-    startdatum: Date;
-    enddatum: Date;
-    immobilienId: string;
-  }) {
+  async einenMieterProZeitraum(
+    input: {
+      startdatum: Date;
+      enddatum: Date;
+      immobilienId: string;
+    },
+    id?: string,
+  ) {
     // Pro Immobilie nur einen Mieter pro Zeitraum
+    let ueberschneidungGefunden = false;
 
     const alleMieterImmobilie = await this.prisma.beziehung.findMany({
       where: { immobilienId: input.immobilienId, beziehungstyp: 2 },
     });
 
-    let ueberschneidungGefunden = false;
+    if (id) {
+      const indexToRemove = alleMieterImmobilie.findIndex((el) => el.id === id);
+      alleMieterImmobilie.splice(indexToRemove, 1);
+    }
 
     for (let i = 0; i < alleMieterImmobilie.length; i += 1) {
       const el = alleMieterImmobilie[i];
@@ -86,24 +93,27 @@ export class BeziehungenService {
         where: { id },
       });
 
-      console.log('loaded', loaded);
-
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       merged = Object.assign({}, loaded, input);
-      console.log('after OA', merged);
 
       if (
-        (merged as Potentials)?.beziehungstyp === 2 &&
+        (merged as Potentials)?.beziehungstyp === 3 &&
         !(merged as Potentials).dienstleistungstyp
       ) {
         throw new BadRequestException(['Bitte gib eine Dienstleistung an']);
       }
-    } else if (input?.beziehungstyp === 2 && !input?.dienstleistungstyp) {
+
+      if ((merged as Ueberpruefbar).beziehungstyp === 2) {
+        console.log(merged);
+        await this.einenMieterProZeitraum(merged as Ueberpruefbar, id);
+      }
+    } else if (input?.beziehungstyp === 3 && !input?.dienstleistungstyp) {
       throw new BadRequestException(['Bitte gib eine Dienstleistung an']);
+    } else if (input?.beziehungstyp === 2) {
+      await this.einenMieterProZeitraum(input as Ueberpruefbar);
     }
 
     // Pro Immobilie nur einen Mieter pro Zeitraum
-    // await this.einenMieterProZeitraum(merged as Ueberpruefbar);
   }
 
   async beziehungen(): Promise<BeziehungMitPayloadsQuery[]> {
@@ -124,8 +134,7 @@ export class BeziehungenService {
   ): Promise<BeziehungMitPayloadsQuery> {
     await this.checks(input);
 
-    // Pro Immobilie nur einen Mieter pro Zeitraum
-    // await this.einenMieterProZeitraum(input);
+    console.log(input);
 
     return await this.prisma.beziehung.create({
       data: input,
@@ -138,7 +147,16 @@ export class BeziehungenService {
     input: BeziehungAendernDto,
   ): Promise<BeziehungMitPayloadsQuery> {
     console.log('original input', input);
+
     await this.checks({ ...input }, id);
+
+    if (input?.startdatum) {
+      console.log(typeof new Date(input.startdatum));
+    }
+
+    if (input?.enddatum) {
+      console.log(typeof new Date(input.enddatum));
+    }
 
     const result = await this.prisma.beziehung.update({
       where: { id },
