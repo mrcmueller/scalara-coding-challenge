@@ -39,6 +39,7 @@ export class KontakteController {
     @Body()
     input: KontaktAendernDto,
   ) {
+    console.log(input);
     return await this.kontakteService.aendereKontakt(id, input);
   }
 

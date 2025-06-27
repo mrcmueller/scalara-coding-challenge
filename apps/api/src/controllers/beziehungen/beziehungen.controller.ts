@@ -10,6 +10,7 @@ import {
 import { BeziehungenService } from './beziehungen.service';
 import { BeziehungErstellenDto } from './dto/beziehungErstellen.dto';
 import { BeziehungMitPayloadsQuery } from './beziehungen.types';
+import { BeziehungAendernDto } from './dto/beziehungAendern.dto';
 
 @Controller('beziehungen')
 export class BeziehungenController {
@@ -41,7 +42,7 @@ export class BeziehungenController {
     @Param('id')
     id: string,
     @Body()
-    input: BeziehungErstellenDto,
+    input: BeziehungAendernDto,
   ): Promise<BeziehungMitPayloadsQuery> {
     return await this.beziehungenService.aendereBeziehung(id, input);
   }

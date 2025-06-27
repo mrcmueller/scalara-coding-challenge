@@ -5,7 +5,7 @@ import {
 } from 'class-validator';
 
 const hatStartdatumProperty = (input: any): input is { startdatum: any } => {
-  return typeof input === 'object' && input !== null && 'startdatum' in input;
+  return typeof input === 'object' && input != null && 'startdatum' in input;
 };
 
 const zuValidemDateOderFalse = (input: any) => {

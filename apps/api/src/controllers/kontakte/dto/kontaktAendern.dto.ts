@@ -22,16 +22,6 @@ export class KontaktAendernDto {
 
   @IsOptional()
   @IsString()
-  @MinLength(15, {
-    message: 'Die Beschreibung muss mindestens 15 Zeichen enthalten',
-  })
-  @MaxLength(300, {
-    message: 'Die Beschreibung darf maximal 300 Zeichen enthalten',
-  })
-  beschreibung?: string;
-
-  @IsOptional()
-  @IsString()
   @MinLength(1, {
     message: 'Der Straßenname muss mindestens 1 Zeichen enthalten',
   })

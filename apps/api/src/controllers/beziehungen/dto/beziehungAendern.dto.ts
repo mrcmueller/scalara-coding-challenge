@@ -1,5 +1,11 @@
 import { Type } from 'class-transformer';
-import { IsMongoId, IsNumber, IsOptional, Validate } from 'class-validator';
+import {
+  IsIn,
+  IsMongoId,
+  IsNumber,
+  IsOptional,
+  Validate,
+} from 'class-validator';
 import { EnddatumNachStartdatumValidator } from './enddatumNachStartdatum.validator';
 
 export class BeziehungAendernDto {
@@ -13,22 +19,16 @@ export class BeziehungAendernDto {
 
   @IsOptional()
   @IsNumber()
-  @Validate(
-    (i: any) => typeof i === 'number' && (i === 1 || i === 2 || i === 3),
-    {
-      message: 'Der Beziehungstyp darf nur die Zahl 1, 2 oder 3 sein',
-    },
-  )
+  @IsIn([1, 2, 3], {
+    message: 'Der Beziehungstyp darf nur die Zahl 1, 2 oder 3 sein',
+  })
   beziehungstyp?: 1 | 2 | 3;
 
   @IsOptional()
   @IsNumber()
-  @Validate(
-    (i: any) => typeof i === 'number' && (i === 1 || i === 2 || i === 3),
-    {
-      message: 'Der Dienstleistungstyp darf nur die Zahl 1, 2 oder 3 sein',
-    },
-  )
+  @IsIn([1, 2, 3], {
+    message: 'Der Dienstleistungstyp darf nur die Zahl 1, 2 oder 3 sein',
+  })
   dienstleistungstyp?: 1 | 2 | 3;
 
   @IsOptional()
