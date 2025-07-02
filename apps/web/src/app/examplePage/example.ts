@@ -7,6 +7,6 @@ import { RouterOutlet } from '@angular/router';
   templateUrl: './example.html',
   styleUrl: './example.scss',
 })
-export class Exammple {
+export class Example {
   protected title = 'web';
 }

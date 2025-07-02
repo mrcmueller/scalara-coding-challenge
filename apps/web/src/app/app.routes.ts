@@ -1,15 +1,16 @@
 import { Routes } from '@angular/router';
-import { App } from './homePage/app';
-import { Exammple } from './examplePage/example';
+import { App } from './app';
+import { Example } from './examplePage/example';
+import { HomePage } from './homePage/homePage';
 
 export const routes: Routes = [
   {
     path: '',
-    component: App,
+    component: HomePage,
   },
   {
     path: 'example',
-    component: Exammple,
+    component: Example,
   },
   //   { path: 'immobilien', component:  },
   //   { path: 'immobilien/:id', component:  },
