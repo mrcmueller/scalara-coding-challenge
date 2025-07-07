@@ -1,5 +1,12 @@
-<div class="underline">
-  @for(item of items; track item){
-  <h1>{{ items[0].title }}</h1>
-  }
+<div class="flex h-full w-16" style="background-color: #242529">
+  <div class="flex items-center flex-col w-full mt-6 gap-8">
+    @for(item of items; track item){
+    <a href="{{item.link}}">
+      <img
+        src="{{item.icon}}"
+        class="{{item.classes}} cursor-pointer select-none"
+      />
+    </a>
+    }
+  </div>
 </div>
