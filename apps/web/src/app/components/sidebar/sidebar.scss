@@ -1,5 +1,6 @@
-@import 'tailwindcss';
+@reference "tailwindcss";
 
-body {
-  display: none !important;
+div {
+  @apply bg-red-500;
+  height: 100%;
 }

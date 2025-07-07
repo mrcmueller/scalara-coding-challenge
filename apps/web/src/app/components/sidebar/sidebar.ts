@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { title } from 'process';
 
 @Component({
   selector: 'sidebar',
@@ -11,5 +12,7 @@ export class Sidebar {
       title: 'Immobilien',
       icon: '',
     },
+    { title: 'Kontakte', icon: '' },
+    { title: 'Beziehungen', icon: '' },
   ];
 }

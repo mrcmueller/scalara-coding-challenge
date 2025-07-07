@@ -1,3 +1,5 @@
-<div class="text-3xl underline">
-  <h1>Hallo{{ items[0].title }}</h1>
+<div class="underline">
+  @for(item of items; track item){
+  <h1>{{ items[0].title }}</h1>
+  }
 </div>
