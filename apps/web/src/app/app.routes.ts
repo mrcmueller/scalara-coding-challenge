@@ -1,7 +1,9 @@
 import { Routes } from '@angular/router';
 import { App } from './app';
-import { Example } from './examplePage/example';
-import { HomePage } from './homePage/homePage';
+import { HomePage } from './components/pages/homePage/homePage';
+import { Immobilien } from './components/pages/immobilienPage/immobilien';
+import { Kontakte } from './components/pages/kontaktePage/kontakte';
+import { Beziehungen } from './components/pages/beziehungenPage/beziehungen';
 
 export const routes: Routes = [
   {
@@ -9,8 +11,16 @@ export const routes: Routes = [
     component: HomePage,
   },
   {
-    path: 'example',
-    component: Example,
+    path: 'immobilien',
+    component: Immobilien,
+  },
+  {
+    path: 'kontakte',
+    component: Kontakte,
+  },
+  {
+    path: 'beziehungen',
+    component: Beziehungen,
   },
   //   { path: 'immobilien', component:  },
   //   { path: 'immobilien/:id', component:  },
