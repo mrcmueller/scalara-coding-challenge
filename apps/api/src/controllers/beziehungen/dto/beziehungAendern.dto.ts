@@ -7,16 +7,20 @@ import {
   Validate,
 } from 'class-validator';
 import { EnddatumNachStartdatumValidator } from './enddatumNachStartdatum.validator';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class BeziehungAendernDto {
+  @ApiProperty()
   @IsOptional()
   @IsMongoId()
   immobilienId?: string;
 
+  @ApiProperty()
   @IsOptional()
   @IsMongoId()
   kontaktId?: string;
 
+  @ApiProperty()
   @IsOptional()
   @IsNumber()
   @IsIn([1, 2, 3], {
@@ -24,6 +28,7 @@ export class BeziehungAendernDto {
   })
   beziehungstyp?: 1 | 2 | 3;
 
+  @ApiProperty()
   @IsOptional()
   @IsNumber()
   @IsIn([1, 2, 3], {
@@ -31,10 +36,12 @@ export class BeziehungAendernDto {
   })
   dienstleistungstyp?: 1 | 2 | 3;
 
+  @ApiProperty()
   @IsOptional()
   @Type(() => Date)
   startdatum?: Date;
 
+  @ApiProperty()
   @IsOptional()
   @Type(() => Date)
   @Validate(EnddatumNachStartdatumValidator)

@@ -10,18 +10,21 @@ import {
 import { ImmobilienService } from './immobilien.service';
 import { ImmobilieErstellenDto } from './dto/immobilieErstellen.dto';
 import { ImmobilieAendernDto } from './dto/immobilieAendern.dto';
+import { ImmobilieMitBeziehungenQuery } from './immobilienTypes';
 
 @Controller('immobilien')
 export class ImmobilienController {
   constructor(private readonly immobilienService: ImmobilienService) {}
 
   @Get()
-  async immobilien() {
+  async immobilien(): Promise<ImmobilieMitBeziehungenQuery[]> {
     return await this.immobilienService.immobilien();
   }
 
   @Get('/:id')
-  async immobilie(@Param('id') id: string) {
+  async immobilie(
+    @Param('id') id: string,
+  ): Promise<ImmobilieMitBeziehungenQuery | null> {
     return await this.immobilienService.immobilie(id);
   }
 
@@ -29,7 +32,7 @@ export class ImmobilienController {
   async erstelleImmobilie(
     @Body()
     input: ImmobilieErstellenDto,
-  ) {
+  ): Promise<ImmobilieMitBeziehungenQuery> {
     return await this.immobilienService.erstelleImmobilie(input);
   }
 
@@ -38,12 +41,14 @@ export class ImmobilienController {
     @Param('id') id: string,
     @Body()
     input: ImmobilieAendernDto,
-  ) {
+  ): Promise<ImmobilieMitBeziehungenQuery> {
     return this.immobilienService.aendereImmobilie(id, input);
   }
 
   @Delete('/:id')
-  async loescheImmobilie(@Param('id') id: string) {
+  async loescheImmobilie(
+    @Param('id') id: string,
+  ): Promise<ImmobilieMitBeziehungenQuery> {
     return await this.immobilienService.loescheImmobilie(id);
   }
 }

@@ -8,20 +8,25 @@ import {
   Validate,
 } from 'class-validator';
 import { EnddatumNachStartdatumValidator } from './enddatumNachStartdatum.validator';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class BeziehungErstellenDto {
+  @ApiProperty()
   @IsMongoId()
   immobilienId: string;
 
+  @ApiProperty()
   @IsMongoId()
   kontaktId: string;
 
+  @ApiProperty()
   @IsNumber()
   @IsIn([1, 2, 3], {
     message: 'Der Beziehungstyp darf nur die Zahl 1, 2 oder 3 sein',
   })
   beziehungstyp: 1 | 2 | 3;
 
+  @ApiProperty()
   @IsOptional()
   @IsNumber()
   @IsIn([1, 2, 3], {
@@ -29,10 +34,12 @@ export class BeziehungErstellenDto {
   })
   dienstleistungstyp?: 1 | 2 | 3;
 
+  @ApiProperty()
   @IsDate({ message: 'Startdatum muss ein Datum sein' })
   @Type(() => Date)
   startdatum: Date;
 
+  @ApiProperty()
   @IsDate({ message: 'Enddatum muss ein Datum sein' })
   @Type(() => Date)
   @Validate(EnddatumNachStartdatumValidator)

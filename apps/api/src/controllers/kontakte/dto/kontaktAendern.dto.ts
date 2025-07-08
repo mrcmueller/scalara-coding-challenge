@@ -8,8 +8,10 @@ import {
   MinLength,
 } from 'class-validator';
 import { Land } from '@/generated/prisma';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class KontaktAendernDto {
+  @ApiProperty()
   @IsOptional()
   @IsString()
   @MinLength(1, {
@@ -20,6 +22,7 @@ export class KontaktAendernDto {
   })
   name?: string;
 
+  @ApiProperty()
   @IsOptional()
   @IsString()
   @MinLength(1, {
@@ -30,6 +33,7 @@ export class KontaktAendernDto {
   })
   strasse?: string;
 
+  @ApiProperty()
   @IsOptional()
   @IsString()
   @MinLength(1, {
@@ -43,10 +47,12 @@ export class KontaktAendernDto {
   })
   hausnummer?: string;
 
+  @ApiProperty()
   @IsOptional()
   @IsPostalCode('DE')
   postleitzahl?: string;
 
+  @ApiProperty()
   @IsOptional()
   @IsString()
   @MinLength(1, {
@@ -57,6 +63,7 @@ export class KontaktAendernDto {
   })
   stadt?: string;
 
+  @ApiProperty()
   @IsOptional()
   @IsEnum(Land, {
     message: 'Land muss Deutschland, Italien oder Frankreich sein',

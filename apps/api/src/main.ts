@@ -11,7 +11,7 @@ async function bootstrap() {
     .setTitle('Scalara API')
     .setDescription('Eine API für Scalara')
     .setVersion('1.0')
-    // .addTag('scalara')
+    .addTag('scalara')
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, documentFactory);

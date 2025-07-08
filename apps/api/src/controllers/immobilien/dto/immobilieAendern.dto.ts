@@ -1,7 +1,5 @@
 import {
-  IsArray,
   IsEnum,
-  IsMongoId,
   IsOptional,
   IsPostalCode,
   IsString,
@@ -10,8 +8,10 @@ import {
   MinLength,
 } from 'class-validator';
 import { Land } from '@/generated/prisma';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class ImmobilieAendernDto {
+  @ApiProperty()
   @IsOptional()
   @IsString()
   @MinLength(1, {
@@ -22,6 +22,7 @@ export class ImmobilieAendernDto {
   })
   name?: string;
 
+  @ApiProperty()
   @IsOptional()
   @IsString()
   @MinLength(15, {
@@ -32,6 +33,7 @@ export class ImmobilieAendernDto {
   })
   beschreibung?: string;
 
+  @ApiProperty()
   @IsOptional()
   @IsString()
   @MinLength(1, {
@@ -42,6 +44,7 @@ export class ImmobilieAendernDto {
   })
   strasse?: string;
 
+  @ApiProperty()
   @IsOptional()
   @IsString()
   @MinLength(1, {
@@ -55,10 +58,12 @@ export class ImmobilieAendernDto {
   })
   hausnummer?: string;
 
+  @ApiProperty()
   @IsOptional()
   @IsPostalCode('DE')
   postleitzahl?: string;
 
+  @ApiProperty()
   @IsOptional()
   @IsString()
   @MinLength(1, {
@@ -69,6 +74,7 @@ export class ImmobilieAendernDto {
   })
   stadt?: string;
 
+  @ApiProperty()
   @IsOptional()
   @IsEnum(Land, {
     message: 'Land muss Deutschland, Italien oder Frankreich sein',

@@ -213,25 +213,151 @@ info:
   description: Eine API für Scalara
   version: '1.0'
   contact: {}
-tags: []
+tags:
+  - name: scalara
+    description: ''
 servers: []
 components:
   schemas:
     BeziehungErstellenDto:
       type: object
-      properties: {}
+      properties:
+        immobilienId:
+          type: string
+        kontaktId:
+          type: string
+        beziehungstyp:
+          type: number
+        dienstleistungstyp:
+          type: number
+        startdatum:
+          format: date-time
+          type: string
+        enddatum:
+          format: date-time
+          type: string
+      required:
+        - immobilienId
+        - kontaktId
+        - beziehungstyp
+        - dienstleistungstyp
+        - startdatum
+        - enddatum
     BeziehungAendernDto:
       type: object
-      properties: {}
+      properties:
+        immobilienId:
+          type: string
+        kontaktId:
+          type: string
+        beziehungstyp:
+          type: number
+        dienstleistungstyp:
+          type: number
+        startdatum:
+          format: date-time
+          type: string
+        enddatum:
+          format: date-time
+          type: string
+      required:
+        - immobilienId
+        - kontaktId
+        - beziehungstyp
+        - dienstleistungstyp
+        - startdatum
+        - enddatum
     ImmobilieErstellenDto:
       type: object
-      properties: {}
+      properties:
+        name:
+          type: string
+        beschreibung:
+          type: string
+        strasse:
+          type: string
+        hausnummer:
+          type: string
+        postleitzahl:
+          type: string
+        stadt:
+          type: string
+        land:
+          type: string
+      required:
+        - name
+        - beschreibung
+        - strasse
+        - hausnummer
+        - postleitzahl
+        - stadt
+        - land
     ImmobilieAendernDto:
       type: object
-      properties: {}
+      properties:
+        name:
+          type: string
+        beschreibung:
+          type: string
+        strasse:
+          type: string
+        hausnummer:
+          type: string
+        postleitzahl:
+          type: string
+        stadt:
+          type: string
+        land:
+          type: string
+      required:
+        - name
+        - beschreibung
+        - strasse
+        - hausnummer
+        - postleitzahl
+        - stadt
+        - land
     KontaktErstellenDto:
       type: object
-      properties: {}
+      properties:
+        name:
+          type: string
+        strasse:
+          type: string
+        hausnummer:
+          type: string
+        postleitzahl:
+          type: string
+        stadt:
+          type: string
+        land:
+          type: string
+      required:
+        - name
+        - strasse
+        - hausnummer
+        - postleitzahl
+        - stadt
+        - land
     KontaktAendernDto:
       type: object
-      properties: {}
+      properties:
+        name:
+          type: string
+        strasse:
+          type: string
+        hausnummer:
+          type: string
+        postleitzahl:
+          type: string
+        stadt:
+          type: string
+        land:
+          type: string
+      required:
+        - name
+        - strasse
+        - hausnummer
+        - postleitzahl
+        - stadt
+        - land

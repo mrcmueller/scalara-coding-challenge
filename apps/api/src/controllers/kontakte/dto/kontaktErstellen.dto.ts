@@ -7,8 +7,10 @@ import {
   MinLength,
 } from 'class-validator';
 import { Land } from '@/generated/prisma';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class KontaktErstellenDto {
+  @ApiProperty()
   @IsString()
   @MinLength(1, {
     message: 'Der Name muss mindestens 1 Zeichen enthalten',
@@ -18,6 +20,7 @@ export class KontaktErstellenDto {
   })
   name: string;
 
+  @ApiProperty()
   @IsString()
   @MinLength(1, {
     message: 'Der Straßenname muss mindestens 1 Zeichen enthalten',
@@ -27,6 +30,7 @@ export class KontaktErstellenDto {
   })
   strasse: string;
 
+  @ApiProperty()
   @IsString()
   @MinLength(1, {
     message: 'Die Hausnummer muss mindestens 1 Zeichen enthalten',
@@ -39,9 +43,11 @@ export class KontaktErstellenDto {
   })
   hausnummer: string;
 
+  @ApiProperty()
   @IsPostalCode('DE')
   postleitzahl: string;
 
+  @ApiProperty()
   @IsString()
   @MinLength(1, {
     message: 'Der Stadtname muss mindestens 1 Zeichen enthalten',
@@ -51,6 +57,7 @@ export class KontaktErstellenDto {
   })
   stadt: string;
 
+  @ApiProperty()
   @IsEnum(Land, {
     message: 'Land muss Deutschland, Italien oder Frankreich sein',
   })
