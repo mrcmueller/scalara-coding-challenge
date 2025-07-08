@@ -9,13 +9,14 @@ import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
 import { ImmobilieAendernDto } from '../../models/immobilie-aendern-dto';
+import { ImmobilieAntwortMitBeziehungenDto } from '../../models/immobilie-antwort-mit-beziehungen-dto';
 
 export interface ImmobilienControllerAendereImmobilie$Params {
   id: string;
       body: ImmobilieAendernDto
 }
 
-export function immobilienControllerAendereImmobilie(http: HttpClient, rootUrl: string, params: ImmobilienControllerAendereImmobilie$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+export function immobilienControllerAendereImmobilie(http: HttpClient, rootUrl: string, params: ImmobilienControllerAendereImmobilie$Params, context?: HttpContext): Observable<StrictHttpResponse<ImmobilieAntwortMitBeziehungenDto>> {
   const rb = new RequestBuilder(rootUrl, immobilienControllerAendereImmobilie.PATH, 'patch');
   if (params) {
     rb.path('id', params.id, {});
@@ -23,11 +24,11 @@ export function immobilienControllerAendereImmobilie(http: HttpClient, rootUrl: 
   }
 
   return http.request(
-    rb.build({ responseType: 'text', accept: '*/*', context })
+    rb.build({ responseType: 'json', accept: 'application/json', context })
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<void>;
+      return r as StrictHttpResponse<ImmobilieAntwortMitBeziehungenDto>;
     })
   );
 }

@@ -8,25 +8,26 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
+import { BeziehungAntwortDto } from '../../models/beziehung-antwort-dto';
 
 export interface BeziehungenControllerBeziehung$Params {
   id: string;
 }
 
-export function beziehungenControllerBeziehung(http: HttpClient, rootUrl: string, params: BeziehungenControllerBeziehung$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+export function beziehungenControllerBeziehung(http: HttpClient, rootUrl: string, params: BeziehungenControllerBeziehung$Params, context?: HttpContext): Observable<StrictHttpResponse<BeziehungAntwortDto>> {
   const rb = new RequestBuilder(rootUrl, beziehungenControllerBeziehung.PATH, 'get');
   if (params) {
     rb.path('id', params.id, {});
   }
 
   return http.request(
-    rb.build({ responseType: 'text', accept: '*/*', context })
+    rb.build({ responseType: 'json', accept: 'application/json', context })
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<void>;
+      return r as StrictHttpResponse<BeziehungAntwortDto>;
     })
   );
 }
 
-beziehungenControllerBeziehung.PATH = '/beziehungen';
+beziehungenControllerBeziehung.PATH = '/beziehungen/{id}';

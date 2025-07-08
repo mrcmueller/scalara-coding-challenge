@@ -9,9 +9,8 @@ import {
 } from '@nestjs/common';
 import { BeziehungenService } from './beziehungen.service';
 import { BeziehungErstellenDto } from './dto/beziehungErstellen.dto';
-import { BeziehungMitPayloadsQuery } from './beziehungen.types';
 import { BeziehungAendernDto } from './dto/beziehungAendern.dto';
-import { ApiExtraModels, ApiOkResponse } from '@nestjs/swagger';
+import { ApiExtraModels, ApiOkResponse, getSchemaPath } from '@nestjs/swagger';
 import { BeziehungAntwortDto } from './dto/responses/beziehungAntwort.dto';
 import { KontaktAntwortDto } from '../kontakte/dto/responses/kontaktAntwort.dto';
 import { ImmobilieAntwortDto } from '../immobilien/dto/responses/immobilieAntwort.dto';
@@ -21,8 +20,13 @@ import { plainToInstance } from 'class-transformer';
 export class BeziehungenController {
   constructor(private readonly beziehungenService: BeziehungenService) {}
 
-  @ApiOkResponse({ type: () => [BeziehungAntwortDto] })
-  @ApiExtraModels(BeziehungAntwortDto, KontaktAntwortDto, ImmobilieAntwortDto)
+  @ApiOkResponse({
+    schema: {
+      type: 'array',
+      items: { $ref: getSchemaPath(BeziehungAntwortDto) },
+    },
+  })
+  @ApiExtraModels(KontaktAntwortDto, ImmobilieAntwortDto)
   @Get()
   async beziehungen(): Promise<BeziehungAntwortDto[]> {
     const antwort = await this.beziehungenService.beziehungen();
@@ -32,8 +36,8 @@ export class BeziehungenController {
   }
 
   @ApiOkResponse({ type: BeziehungAntwortDto })
-  @ApiExtraModels(BeziehungAntwortDto, KontaktAntwortDto, ImmobilieAntwortDto)
-  @Get()
+  @ApiExtraModels(KontaktAntwortDto, ImmobilieAntwortDto)
+  @Get('/:id')
   async beziehung(
     @Param('id')
     id: string,
@@ -44,28 +48,43 @@ export class BeziehungenController {
     });
   }
 
+  @ApiOkResponse({ type: BeziehungAntwortDto })
+  @ApiExtraModels(KontaktAntwortDto, ImmobilieAntwortDto)
   @Post()
   async erstelleBeziehung(
     @Body()
     input: BeziehungErstellenDto,
-  ): Promise<BeziehungMitPayloadsQuery> {
-    return await this.beziehungenService.erstelleBeziehung(input);
+  ): Promise<BeziehungAntwortDto> {
+    const antwort = await this.beziehungenService.erstelleBeziehung(input);
+    return plainToInstance(BeziehungAntwortDto, antwort, {
+      enableImplicitConversion: true,
+    });
   }
 
+  @ApiOkResponse({ type: BeziehungAntwortDto })
+  @ApiExtraModels(KontaktAntwortDto, ImmobilieAntwortDto)
   @Patch('/:id')
   async aendereBeziehung(
     @Param('id')
     id: string,
     @Body()
     input: BeziehungAendernDto,
-  ): Promise<BeziehungMitPayloadsQuery> {
-    return await this.beziehungenService.aendereBeziehung(id, input);
+  ): Promise<BeziehungAntwortDto> {
+    const antwort = await this.beziehungenService.aendereBeziehung(id, input);
+    return plainToInstance(BeziehungAntwortDto, antwort, {
+      enableImplicitConversion: true,
+    });
   }
 
+  @ApiOkResponse({ type: BeziehungAntwortDto })
+  @ApiExtraModels(KontaktAntwortDto, ImmobilieAntwortDto)
   @Delete('/:id')
   async loescheBeziehung(
     @Param('id') id: string,
-  ): Promise<BeziehungMitPayloadsQuery> {
-    return await this.beziehungenService.loescheBeziehung(id);
+  ): Promise<BeziehungAntwortDto> {
+    const antwort = await this.beziehungenService.loescheBeziehung(id);
+    return plainToInstance(BeziehungAntwortDto, antwort, {
+      enableImplicitConversion: true,
+    });
   }
 }

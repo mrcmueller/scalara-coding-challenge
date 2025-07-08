@@ -1,28 +1,31 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-import { ImmobilieAntwortDto } from '../../../immobilien/dto/responses/immobilieAntwort.dto';
-import { KontaktAntwortDto } from '../../../kontakte/dto/responses/kontaktAntwort.dto';
 import { Exclude, Transform } from 'class-transformer';
 import {
   IsDateString,
   IsIn,
+  IsMongoId,
   IsNumber,
   IsOptional,
   IsString,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class BeziehungAntwortDto {
+export class BeziehungenEingefuegtDto {
   @ApiProperty()
   @IsString()
   id: string;
 
-  @ApiProperty({ type: KontaktAntwortDto })
-  kontakt: KontaktAntwortDto;
+  @ApiProperty()
+  @IsMongoId()
+  @IsString()
+  immobilienId: string;
 
-  @ApiProperty({ type: ImmobilieAntwortDto })
-  immobilie: ImmobilieAntwortDto;
+  @ApiProperty()
+  @IsMongoId()
+  @IsString()
+  kontaktId: string;
 
   @ApiProperty()
   @IsNumber()
@@ -44,10 +47,4 @@ export class BeziehungAntwortDto {
   @IsDateString()
   @Transform(({ value }) => value?.toISOString?.())
   enddatum: string;
-
-  @Exclude()
-  immobilienId: string;
-
-  @Exclude()
-  kontaktId: string;
 }

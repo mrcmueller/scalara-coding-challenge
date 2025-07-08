@@ -123,10 +123,12 @@ export class BeziehungenService {
   }
 
   async beziehung(id: string): Promise<BeziehungMitPayloadsQuery | null> {
-    return await this.prisma.beziehung.findUnique({
+    const antwort = await this.prisma.beziehung.findUnique({
       where: { id },
       include: { immobilie: true, kontakt: true },
     });
+
+    return antwort;
   }
 
   async erstelleBeziehung(

@@ -11,6 +11,7 @@ import { BaseService } from '../base-service';
 import { ApiConfiguration } from '../api-configuration';
 import { StrictHttpResponse } from '../strict-http-response';
 
+import { ImmobilieAntwortMitBeziehungenDto } from '../models/immobilie-antwort-mit-beziehungen-dto';
 import { immobilienControllerAendereImmobilie } from '../fn/immobilien/immobilien-controller-aendere-immobilie';
 import { ImmobilienControllerAendereImmobilie$Params } from '../fn/immobilien/immobilien-controller-aendere-immobilie';
 import { immobilienControllerErstelleImmobilie } from '../fn/immobilien/immobilien-controller-erstelle-immobilie';
@@ -37,7 +38,7 @@ export class ImmobilienService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  immobilienControllerImmobilien$Response(params?: ImmobilienControllerImmobilien$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  immobilienControllerImmobilien$Response(params?: ImmobilienControllerImmobilien$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<ImmobilieAntwortMitBeziehungenDto>>> {
     return immobilienControllerImmobilien(this.http, this.rootUrl, params, context);
   }
 
@@ -47,9 +48,9 @@ export class ImmobilienService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  immobilienControllerImmobilien(params?: ImmobilienControllerImmobilien$Params, context?: HttpContext): Observable<void> {
+  immobilienControllerImmobilien(params?: ImmobilienControllerImmobilien$Params, context?: HttpContext): Observable<Array<ImmobilieAntwortMitBeziehungenDto>> {
     return this.immobilienControllerImmobilien$Response(params, context).pipe(
-      map((r: StrictHttpResponse<void>): void => r.body)
+      map((r: StrictHttpResponse<Array<ImmobilieAntwortMitBeziehungenDto>>): Array<ImmobilieAntwortMitBeziehungenDto> => r.body)
     );
   }
 
@@ -62,7 +63,7 @@ export class ImmobilienService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  immobilienControllerErstelleImmobilie$Response(params: ImmobilienControllerErstelleImmobilie$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  immobilienControllerErstelleImmobilie$Response(params: ImmobilienControllerErstelleImmobilie$Params, context?: HttpContext): Observable<StrictHttpResponse<ImmobilieAntwortMitBeziehungenDto>> {
     return immobilienControllerErstelleImmobilie(this.http, this.rootUrl, params, context);
   }
 
@@ -72,9 +73,9 @@ export class ImmobilienService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  immobilienControllerErstelleImmobilie(params: ImmobilienControllerErstelleImmobilie$Params, context?: HttpContext): Observable<void> {
+  immobilienControllerErstelleImmobilie(params: ImmobilienControllerErstelleImmobilie$Params, context?: HttpContext): Observable<ImmobilieAntwortMitBeziehungenDto> {
     return this.immobilienControllerErstelleImmobilie$Response(params, context).pipe(
-      map((r: StrictHttpResponse<void>): void => r.body)
+      map((r: StrictHttpResponse<ImmobilieAntwortMitBeziehungenDto>): ImmobilieAntwortMitBeziehungenDto => r.body)
     );
   }
 
@@ -87,7 +88,7 @@ export class ImmobilienService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  immobilienControllerImmobilie$Response(params: ImmobilienControllerImmobilie$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  immobilienControllerImmobilie$Response(params: ImmobilienControllerImmobilie$Params, context?: HttpContext): Observable<StrictHttpResponse<ImmobilieAntwortMitBeziehungenDto>> {
     return immobilienControllerImmobilie(this.http, this.rootUrl, params, context);
   }
 
@@ -97,9 +98,9 @@ export class ImmobilienService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  immobilienControllerImmobilie(params: ImmobilienControllerImmobilie$Params, context?: HttpContext): Observable<void> {
+  immobilienControllerImmobilie(params: ImmobilienControllerImmobilie$Params, context?: HttpContext): Observable<ImmobilieAntwortMitBeziehungenDto> {
     return this.immobilienControllerImmobilie$Response(params, context).pipe(
-      map((r: StrictHttpResponse<void>): void => r.body)
+      map((r: StrictHttpResponse<ImmobilieAntwortMitBeziehungenDto>): ImmobilieAntwortMitBeziehungenDto => r.body)
     );
   }
 
@@ -112,7 +113,7 @@ export class ImmobilienService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  immobilienControllerLoescheImmobilie$Response(params: ImmobilienControllerLoescheImmobilie$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  immobilienControllerLoescheImmobilie$Response(params: ImmobilienControllerLoescheImmobilie$Params, context?: HttpContext): Observable<StrictHttpResponse<ImmobilieAntwortMitBeziehungenDto>> {
     return immobilienControllerLoescheImmobilie(this.http, this.rootUrl, params, context);
   }
 
@@ -122,9 +123,9 @@ export class ImmobilienService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  immobilienControllerLoescheImmobilie(params: ImmobilienControllerLoescheImmobilie$Params, context?: HttpContext): Observable<void> {
+  immobilienControllerLoescheImmobilie(params: ImmobilienControllerLoescheImmobilie$Params, context?: HttpContext): Observable<ImmobilieAntwortMitBeziehungenDto> {
     return this.immobilienControllerLoescheImmobilie$Response(params, context).pipe(
-      map((r: StrictHttpResponse<void>): void => r.body)
+      map((r: StrictHttpResponse<ImmobilieAntwortMitBeziehungenDto>): ImmobilieAntwortMitBeziehungenDto => r.body)
     );
   }
 
@@ -137,7 +138,7 @@ export class ImmobilienService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  immobilienControllerAendereImmobilie$Response(params: ImmobilienControllerAendereImmobilie$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  immobilienControllerAendereImmobilie$Response(params: ImmobilienControllerAendereImmobilie$Params, context?: HttpContext): Observable<StrictHttpResponse<ImmobilieAntwortMitBeziehungenDto>> {
     return immobilienControllerAendereImmobilie(this.http, this.rootUrl, params, context);
   }
 
@@ -147,9 +148,9 @@ export class ImmobilienService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  immobilienControllerAendereImmobilie(params: ImmobilienControllerAendereImmobilie$Params, context?: HttpContext): Observable<void> {
+  immobilienControllerAendereImmobilie(params: ImmobilienControllerAendereImmobilie$Params, context?: HttpContext): Observable<ImmobilieAntwortMitBeziehungenDto> {
     return this.immobilienControllerAendereImmobilie$Response(params, context).pipe(
-      map((r: StrictHttpResponse<void>): void => r.body)
+      map((r: StrictHttpResponse<ImmobilieAntwortMitBeziehungenDto>): ImmobilieAntwortMitBeziehungenDto => r.body)
     );
   }
 

@@ -3,8 +3,9 @@ import { BeziehungAntwortDto } from '../../../beziehungen/dto/responses/beziehun
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsString, IsEnum, ValidateNested } from 'class-validator';
+import { BeziehungenEingefuegtDto } from '@/src/controllers/immobilien/beziehungenEingefuegt.dto';
 
-export class KontaktAntwortDto {
+export class KontaktAntwortMitBeziehungenDto {
   @ApiProperty()
   @IsString()
   id: string;
@@ -33,8 +34,8 @@ export class KontaktAntwortDto {
   @IsEnum(Land)
   land: Land;
 
-  @ApiProperty({ type: () => [BeziehungAntwortDto] })
+  @ApiProperty({ type: () => [BeziehungenEingefuegtDto] })
   @ValidateNested({ each: true })
-  @Type(() => BeziehungAntwortDto)
-  items: BeziehungAntwortDto[];
+  @Type(() => BeziehungenEingefuegtDto)
+  beziehungen: BeziehungenEingefuegtDto[];
 }

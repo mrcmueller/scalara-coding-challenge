@@ -8,19 +8,14 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { BeziehungAendernDto } from '../../models/beziehung-aendern-dto';
 import { BeziehungAntwortDto } from '../../models/beziehung-antwort-dto';
 
-export interface BeziehungenControllerAendereBeziehung$Params {
-  id: string;
-      body: BeziehungAendernDto
+export interface BeziehungenControllerBeziehungen$Params {
 }
 
-export function beziehungenControllerAendereBeziehung(http: HttpClient, rootUrl: string, params: BeziehungenControllerAendereBeziehung$Params, context?: HttpContext): Observable<StrictHttpResponse<BeziehungAntwortDto>> {
-  const rb = new RequestBuilder(rootUrl, beziehungenControllerAendereBeziehung.PATH, 'patch');
+export function beziehungenControllerBeziehungen(http: HttpClient, rootUrl: string, params?: BeziehungenControllerBeziehungen$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<BeziehungAntwortDto>>> {
+  const rb = new RequestBuilder(rootUrl, beziehungenControllerBeziehungen.PATH, 'get');
   if (params) {
-    rb.path('id', params.id, {});
-    rb.body(params.body, 'application/json');
   }
 
   return http.request(
@@ -28,9 +23,9 @@ export function beziehungenControllerAendereBeziehung(http: HttpClient, rootUrl:
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return r as StrictHttpResponse<BeziehungAntwortDto>;
+      return r as StrictHttpResponse<Array<BeziehungAntwortDto>>;
     })
   );
 }
 
-beziehungenControllerAendereBeziehung.PATH = '/beziehungen/{id}';
+beziehungenControllerBeziehungen.PATH = '/beziehungen';

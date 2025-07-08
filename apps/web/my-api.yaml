@@ -11,16 +11,17 @@ paths:
         - App
   /beziehungen:
     get:
-      operationId: BeziehungenController_beziehung
-      parameters:
-        - name: id
-          required: true
-          in: path
-          schema:
-            type: string
+      operationId: BeziehungenController_beziehungen
+      parameters: []
       responses:
         '200':
           description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BeziehungAntwortDto'
       tags:
         - Beziehungen
     post:
@@ -33,11 +34,32 @@ paths:
             schema:
               $ref: '#/components/schemas/BeziehungErstellenDto'
       responses:
-        '201':
+        '200':
           description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BeziehungAntwortDto'
       tags:
         - Beziehungen
   /beziehungen/{id}:
+    get:
+      operationId: BeziehungenController_beziehung
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BeziehungAntwortDto'
+      tags:
+        - Beziehungen
     patch:
       operationId: BeziehungenController_aendereBeziehung
       parameters:
@@ -55,6 +77,10 @@ paths:
       responses:
         '200':
           description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BeziehungAntwortDto'
       tags:
         - Beziehungen
     delete:
@@ -68,6 +94,10 @@ paths:
       responses:
         '200':
           description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BeziehungAntwortDto'
       tags:
         - Beziehungen
   /immobilien:
@@ -77,6 +107,12 @@ paths:
       responses:
         '200':
           description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ImmobilieAntwortMitBeziehungenDto'
       tags:
         - Immobilien
     post:
@@ -89,8 +125,12 @@ paths:
             schema:
               $ref: '#/components/schemas/ImmobilieErstellenDto'
       responses:
-        '201':
+        '200':
           description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImmobilieAntwortMitBeziehungenDto'
       tags:
         - Immobilien
   /immobilien/{id}:
@@ -105,6 +145,10 @@ paths:
       responses:
         '200':
           description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImmobilieAntwortMitBeziehungenDto'
       tags:
         - Immobilien
     patch:
@@ -124,6 +168,10 @@ paths:
       responses:
         '200':
           description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImmobilieAntwortMitBeziehungenDto'
       tags:
         - Immobilien
     delete:
@@ -137,6 +185,10 @@ paths:
       responses:
         '200':
           description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImmobilieAntwortMitBeziehungenDto'
       tags:
         - Immobilien
   /kontakte:
@@ -146,6 +198,12 @@ paths:
       responses:
         '200':
           description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/KontaktAntwortMitBeziehungenDto'
       tags:
         - Kontakte
     post:
@@ -158,8 +216,12 @@ paths:
             schema:
               $ref: '#/components/schemas/KontaktErstellenDto'
       responses:
-        '201':
+        '200':
           description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KontaktAntwortMitBeziehungenDto'
       tags:
         - Kontakte
   /kontakte/{id}:
@@ -174,6 +236,10 @@ paths:
       responses:
         '200':
           description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KontaktAntwortMitBeziehungenDto'
       tags:
         - Kontakte
     patch:
@@ -193,6 +259,10 @@ paths:
       responses:
         '200':
           description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KontaktAntwortMitBeziehungenDto'
       tags:
         - Kontakte
     delete:
@@ -206,6 +276,10 @@ paths:
       responses:
         '200':
           description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KontaktAntwortMitBeziehungenDto'
       tags:
         - Kontakte
 info:
@@ -219,6 +293,93 @@ tags:
 servers: []
 components:
   schemas:
+    KontaktAntwortDto:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        strasse:
+          type: string
+        hausnummer:
+          type: string
+        postleitzahl:
+          type: string
+        stadt:
+          type: string
+        land:
+          type: string
+          enum:
+            - Deutschland
+            - Italien
+            - Frankreich
+      required:
+        - id
+        - name
+        - strasse
+        - hausnummer
+        - postleitzahl
+        - stadt
+        - land
+    ImmobilieAntwortDto:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        beschreibung:
+          type: string
+        strasse:
+          type: string
+        hausnummer:
+          type: string
+        postleitzahl:
+          type: string
+        stadt:
+          type: string
+        land:
+          type: string
+          enum:
+            - Deutschland
+            - Italien
+            - Frankreich
+      required:
+        - id
+        - name
+        - beschreibung
+        - strasse
+        - hausnummer
+        - postleitzahl
+        - stadt
+        - land
+    BeziehungAntwortDto:
+      type: object
+      properties:
+        id:
+          type: string
+        kontakt:
+          $ref: '#/components/schemas/KontaktAntwortDto'
+        immobilie:
+          $ref: '#/components/schemas/ImmobilieAntwortDto'
+        beziehungstyp:
+          type: number
+        dienstleistungstyp:
+          type: number
+        startdatum:
+          type: string
+          format: date-time
+        enddatum:
+          type: string
+          format: date-time
+      required:
+        - id
+        - kontakt
+        - immobilie
+        - beziehungstyp
+        - startdatum
+        - enddatum
     BeziehungErstellenDto:
       type: object
       properties:
@@ -267,6 +428,69 @@ components:
         - dienstleistungstyp
         - startdatum
         - enddatum
+    BeziehungenEingefuegtDto:
+      type: object
+      properties:
+        id:
+          type: string
+        immobilienId:
+          type: string
+        kontaktId:
+          type: string
+        beziehungstyp:
+          type: number
+        dienstleistungstyp:
+          type: number
+        startdatum:
+          type: string
+          format: date-time
+        enddatum:
+          type: string
+          format: date-time
+      required:
+        - id
+        - immobilienId
+        - kontaktId
+        - beziehungstyp
+        - startdatum
+        - enddatum
+    ImmobilieAntwortMitBeziehungenDto:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        beschreibung:
+          type: string
+        strasse:
+          type: string
+        hausnummer:
+          type: string
+        postleitzahl:
+          type: string
+        stadt:
+          type: string
+        land:
+          type: string
+          enum:
+            - Deutschland
+            - Italien
+            - Frankreich
+        beziehungen:
+          type: array
+          items:
+            $ref: '#/components/schemas/BeziehungenEingefuegtDto'
+      required:
+        - id
+        - name
+        - beschreibung
+        - strasse
+        - hausnummer
+        - postleitzahl
+        - stadt
+        - land
+        - beziehungen
     ImmobilieErstellenDto:
       type: object
       properties:
@@ -317,6 +541,40 @@ components:
         - postleitzahl
         - stadt
         - land
+    KontaktAntwortMitBeziehungenDto:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        strasse:
+          type: string
+        hausnummer:
+          type: string
+        postleitzahl:
+          type: string
+        stadt:
+          type: string
+        land:
+          type: string
+          enum:
+            - Deutschland
+            - Italien
+            - Frankreich
+        beziehungen:
+          type: array
+          items:
+            $ref: '#/components/schemas/BeziehungenEingefuegtDto'
+      required:
+        - id
+        - name
+        - strasse
+        - hausnummer
+        - postleitzahl
+        - stadt
+        - land
+        - beziehungen
     KontaktErstellenDto:
       type: object
       properties:

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '@/src/prisma.service';
 import { Immobilie, Land } from '@/generated/prisma';
 import { ImmobilieErstellenDto } from './dto/immobilieErstellen.dto';
@@ -40,10 +40,16 @@ export class ImmobilienService {
   }
 
   async immobilie(id: string): Promise<ImmobilieMitBeziehungenQuery | null> {
-    return await this.prisma.immobilie.findUnique({
+    const antwort = await this.prisma.immobilie.findUnique({
       where: { id },
       include: { beziehungen: true },
     });
+
+    // if (antwort === null) {
+    //   throw new NotFoundException('Immobilie nicht gefunden');
+    // }
+
+    return antwort;
   }
 
   async immobilien(): Promise<ImmobilieMitBeziehungenQuery[]> {

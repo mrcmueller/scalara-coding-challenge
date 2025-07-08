@@ -9,13 +9,14 @@ import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
 import { KontaktAendernDto } from '../../models/kontakt-aendern-dto';
+import { KontaktAntwortMitBeziehungenDto } from '../../models/kontakt-antwort-mit-beziehungen-dto';
 
 export interface KontakteControllerAendereKontakte$Params {
   id: string;
       body: KontaktAendernDto
 }
 
-export function kontakteControllerAendereKontakte(http: HttpClient, rootUrl: string, params: KontakteControllerAendereKontakte$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+export function kontakteControllerAendereKontakte(http: HttpClient, rootUrl: string, params: KontakteControllerAendereKontakte$Params, context?: HttpContext): Observable<StrictHttpResponse<KontaktAntwortMitBeziehungenDto>> {
   const rb = new RequestBuilder(rootUrl, kontakteControllerAendereKontakte.PATH, 'patch');
   if (params) {
     rb.path('id', params.id, {});
@@ -23,11 +24,11 @@ export function kontakteControllerAendereKontakte(http: HttpClient, rootUrl: str
   }
 
   return http.request(
-    rb.build({ responseType: 'text', accept: '*/*', context })
+    rb.build({ responseType: 'json', accept: 'application/json', context })
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<void>;
+      return r as StrictHttpResponse<KontaktAntwortMitBeziehungenDto>;
     })
   );
 }
