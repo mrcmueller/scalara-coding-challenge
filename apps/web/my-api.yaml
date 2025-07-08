@@ -1,0 +1,237 @@
+openapi: 3.0.0
+paths:
+  /:
+    get:
+      operationId: AppController_getHello
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+        - App
+  /beziehungen:
+    get:
+      operationId: BeziehungenController_beziehung
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Beziehungen
+    post:
+      operationId: BeziehungenController_erstelleBeziehung
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BeziehungErstellenDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+        - Beziehungen
+  /beziehungen/{id}:
+    patch:
+      operationId: BeziehungenController_aendereBeziehung
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BeziehungAendernDto'
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Beziehungen
+    delete:
+      operationId: BeziehungenController_loescheBeziehung
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Beziehungen
+  /immobilien:
+    get:
+      operationId: ImmobilienController_immobilien
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Immobilien
+    post:
+      operationId: ImmobilienController_erstelleImmobilie
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImmobilieErstellenDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+        - Immobilien
+  /immobilien/{id}:
+    get:
+      operationId: ImmobilienController_immobilie
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Immobilien
+    patch:
+      operationId: ImmobilienController_aendereImmobilie
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImmobilieAendernDto'
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Immobilien
+    delete:
+      operationId: ImmobilienController_loescheImmobilie
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Immobilien
+  /kontakte:
+    get:
+      operationId: KontakteController_kontakte
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Kontakte
+    post:
+      operationId: KontakteController_erstelleKontakte
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KontaktErstellenDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+        - Kontakte
+  /kontakte/{id}:
+    get:
+      operationId: KontakteController_kontakt
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Kontakte
+    patch:
+      operationId: KontakteController_aendereKontakte
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KontaktAendernDto'
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Kontakte
+    delete:
+      operationId: KontakteController_loescheKontakte
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Kontakte
+info:
+  title: Scalara API
+  description: Eine API für Scalara
+  version: '1.0'
+  contact: {}
+tags: []
+servers: []
+components:
+  schemas:
+    BeziehungErstellenDto:
+      type: object
+      properties: {}
+    BeziehungAendernDto:
+      type: object
+      properties: {}
+    ImmobilieErstellenDto:
+      type: object
+      properties: {}
+    ImmobilieAendernDto:
+      type: object
+      properties: {}
+    KontaktErstellenDto:
+      type: object
+      properties: {}
+    KontaktAendernDto:
+      type: object
+      properties: {}

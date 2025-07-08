@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, inject, Injectable, signal } from '@angular/core';
 // import { RouterOutlet } from '@angular/router';
 
 @Component({
@@ -7,6 +8,14 @@ import { Component } from '@angular/core';
   templateUrl: './immobilien.html',
   styleUrl: './immobilien.scss',
 })
+@Injectable({ providedIn: 'root' })
 export class Immobilien {
+  private http = inject(HttpClient);
   protected title = 'web';
+  data = this.http
+    .get('http://localhost:3000/immobilien')
+    .subscribe((config) => {
+      // process configuration
+    });
+  constructor() {}
 }
