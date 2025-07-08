@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 // import { RouterOutlet } from '@angular/router';
 
 @Component({
-  selector: 'beziehungen-root',
+  selector: 'kontakte-root',
   // imports: [RouterOutlet],
-  templateUrl: './beziehungen.html',
-  styleUrl: './beziehungen.scss',
+  templateUrl: './kontaktePage.html',
+  styleUrl: './kontaktePage.scss',
 })
-export class Beziehungen {
+export class KontaktePage {
   protected title = 'web';
 }

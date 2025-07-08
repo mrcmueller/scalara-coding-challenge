@@ -1,9 +1,9 @@
 import { Routes } from '@angular/router';
 import { App } from './app';
 import { HomePage } from './components/pages/homePage/homePage';
-import { Immobilien } from './components/pages/immobilienPage/immobilien';
-import { Kontakte } from './components/pages/kontaktePage/kontakte';
-import { Beziehungen } from './components/pages/beziehungenPage/beziehungen';
+import { ImmobilienPage } from './components/pages/immobilienPage/immobilienPage';
+import { KontaktePage } from './components/pages/kontaktePage/kontaktePage';
+import { BeziehungenPage } from './components/pages/beziehungenPage/beziehungenPage';
 
 export const routes: Routes = [
   {
@@ -12,15 +12,15 @@ export const routes: Routes = [
   },
   {
     path: 'immobilien',
-    component: Immobilien,
+    component: ImmobilienPage,
   },
   {
     path: 'kontakte',
-    component: Kontakte,
+    component: KontaktePage,
   },
   {
     path: 'beziehungen',
-    component: Beziehungen,
+    component: BeziehungenPage,
   },
   //   { path: 'immobilien', component:  },
   //   { path: 'immobilien/:id', component:  },

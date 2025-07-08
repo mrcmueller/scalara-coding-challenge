@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, inject, Injectable, signal } from '@angular/core';
+import { ImmobilienService } from '../../../api/services';
 // import { RouterOutlet } from '@angular/router';
 
 @Component({
@@ -8,14 +9,9 @@ import { Component, inject, Injectable, signal } from '@angular/core';
   templateUrl: './immobilien.html',
   styleUrl: './immobilien.scss',
 })
-@Injectable({ providedIn: 'root' })
-export class Immobilien {
+export class ImmobilienPage {
   private http = inject(HttpClient);
   protected title = 'web';
-  data = this.http
-    .get('http://localhost:3000/immobilien')
-    .subscribe((config) => {
-      // process configuration
-    });
+  data = ImmobilienService.ImmobilienControllerImmobilienPath;
   constructor() {}
 }
