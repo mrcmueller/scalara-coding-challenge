@@ -1,7 +1,17 @@
-import { ImmobilieAntwortDto } from '@/src/controllers/immobilien/dto/responses/immobilienAntwort.dto';
-import { KontaktAntwortDto } from '@/src/controllers/kontakte/dto/responses/kontaktAntwort.dto';
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+import { ImmobilieAntwortDto } from '../../../immobilien/dto/responses/immobilieAntwort.dto';
+import { KontaktAntwortDto } from '../../../kontakte/dto/responses/kontaktAntwort.dto';
+import { Transform } from 'class-transformer';
+import {
+  IsDateString,
+  IsIn,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsInt, IsOptional, IsDateString } from 'class-validator';
 
 export class BeziehungAntwortDto {
   @ApiProperty()
@@ -15,19 +25,23 @@ export class BeziehungAntwortDto {
   immobilie: ImmobilieAntwortDto;
 
   @ApiProperty()
-  @IsInt()
-  beziehungstyp: number;
+  @IsNumber()
+  @IsIn([1, 2, 3])
+  beziehungstyp: 1 | 2 | 3;
 
   @ApiProperty({ required: false })
   @IsOptional()
-  @IsInt()
-  dienstleistungstyp?: number;
+  @IsNumber()
+  @IsIn([1, 2, 3])
+  dienstleistungstyp?: 1 | 2 | 3;
 
-  @ApiProperty()
+  @ApiProperty({ type: String, format: 'date-time' })
   @IsDateString()
+  @Transform(({ value }) => value?.toISOString?.())
   startdatum: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String, format: 'date-time' })
   @IsDateString()
+  @Transform(({ value }) => value?.toISOString?.())
   enddatum: string;
 }

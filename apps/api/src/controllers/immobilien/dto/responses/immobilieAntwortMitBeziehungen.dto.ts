@@ -1,5 +1,5 @@
 import { Land } from '@/generated/prisma';
-import { BeziehungAntwortDto } from '@/src/controllers/beziehungen/dto/responses/beziehungAntwort.dto';
+import { BeziehungAntwortDto } from '../../../beziehungen/dto/responses/beziehungAntwort.dto';
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsString, IsEnum, ValidateNested } from 'class-validator';

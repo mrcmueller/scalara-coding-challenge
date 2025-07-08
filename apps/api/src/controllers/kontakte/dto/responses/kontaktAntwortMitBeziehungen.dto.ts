@@ -1,10 +1,10 @@
 import { Land } from '@/generated/prisma';
-import { BeziehungAntwortDto } from '@/src/controllers/beziehungen/dto/responses/beziehungAntwort.dto';
+import { BeziehungAntwortDto } from '../../../beziehungen/dto/responses/beziehungAntwort.dto';
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsString, IsEnum, ValidateNested } from 'class-validator';
 
-export class ImmobilieAntwortDto {
+export class KontaktAntwortDto {
   @ApiProperty()
   @IsString()
   id: string;
@@ -12,10 +12,6 @@ export class ImmobilieAntwortDto {
   @ApiProperty()
   @IsString()
   name: string;
-
-  @ApiProperty()
-  @IsString()
-  beschreibung: string;
 
   @ApiProperty()
   @IsString()
@@ -36,4 +32,9 @@ export class ImmobilieAntwortDto {
   @ApiProperty({ enum: Land })
   @IsEnum(Land)
   land: Land;
+
+  @ApiProperty({ type: () => [BeziehungAntwortDto] })
+  @ValidateNested({ each: true })
+  @Type(() => BeziehungAntwortDto)
+  items: BeziehungAntwortDto[];
 }
