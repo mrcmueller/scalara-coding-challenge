@@ -1,0 +1,17 @@
+<h1>Kontakt Details</h1>
+
+@if (kontaktSignal()) {
+<p><strong>Id: </strong>{{ kontaktSignal()?.id }}</p>
+<p><strong>Name: </strong>{{ kontaktSignal()?.name }}</p>
+<p>
+  <strong>Straße/Hausnummer: </strong>{{ kontaktSignal()?.strasse }} {{
+  kontaktSignal()?.hausnummer }}
+</p>
+<p>
+  <strong>Postleitzahl/Stadt: </strong>{{ kontaktSignal()?.postleitzahl }}
+  {{kontaktSignal()?.stadt}}
+</p>
+<p><strong>Land: </strong>{{ kontaktSignal()?.land }}</p>
+} @else {
+<p>Lade Kontakt...</p>
+}

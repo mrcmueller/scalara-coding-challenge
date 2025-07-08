@@ -11,7 +11,6 @@ import {
   withEventReplay,
 } from '@angular/platform-browser';
 import { provideHttpClient, withFetch } from '@angular/common/http';
-import { ImmobilienService } from './api/services';
 
 export const appConfig: ApplicationConfig = {
   providers: [

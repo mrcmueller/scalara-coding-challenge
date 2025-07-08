@@ -1,19 +1,13 @@
-import { Component, inject, Signal } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { CommonModule, JsonPipe } from '@angular/common';
-import { ImmobilienService } from '../../../api/services';
+import { Component } from '@angular/core';
+// import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'immobilien-root',
+  // imports: [RouterOutlet],
   standalone: true,
-  imports: [CommonModule],
   templateUrl: './immobilienPage.html',
   styleUrl: './immobilienPage.scss',
 })
 export class ImmobilienPage {
-  // immobilienSignal: Signal<any>;
-
-  constructor(service: ImmobilienService) {
-    // this.immobilienSignal = toSignal(service.immobilienControllerImmobilien());
-  }
+  protected title = 'web';
 }

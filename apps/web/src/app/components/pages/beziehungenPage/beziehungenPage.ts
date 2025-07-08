@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'beziehungen-root',
+  standalone: true,
   // imports: [RouterOutlet],
   templateUrl: './beziehungenPage.html',
   styleUrl: './beziehungenPage.scss',

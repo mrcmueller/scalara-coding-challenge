@@ -4,6 +4,7 @@ import { HomePage } from './components/pages/homePage/homePage';
 import { ImmobilienPage } from './components/pages/immobilienPage/immobilienPage';
 import { KontaktePage } from './components/pages/kontaktePage/kontaktePage';
 import { BeziehungenPage } from './components/pages/beziehungenPage/beziehungenPage';
+import { KontakteDetail } from './components/pages/kontakteDetail/kontakteDetail';
 
 export const routes: Routes = [
   {
@@ -22,6 +23,7 @@ export const routes: Routes = [
     path: 'beziehungen',
     component: BeziehungenPage,
   },
+  { path: 'kontakte/:id', component: KontakteDetail },
   //   { path: 'immobilien', component:  },
   //   { path: 'immobilien/:id', component:  },
   //   { path: 'immobilien/neu', component:  },
