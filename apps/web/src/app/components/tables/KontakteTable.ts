@@ -1,5 +1,7 @@
+import { CdkTableModule, DataSource } from '@angular/cdk/table';
 import { Component } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 export interface PeriodicElement {
   name: string;
@@ -25,9 +27,21 @@ const ELEMENT_DATA: PeriodicElement[] = [
   selector: 'kontakte-table',
   styleUrl: './KontakteTable.scss',
   templateUrl: './KontakteTable.html',
-  imports: [MatTableModule],
+  imports: [CdkTableModule],
 })
 export class KontakteTable {
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = ELEMENT_DATA;
+  dataSource = new ExampleDataSource();
+}
+
+export class ExampleDataSource extends DataSource<PeriodicElement> {
+  /** Stream of data that is provided to the table. */
+  data = new BehaviorSubject<PeriodicElement[]>(ELEMENT_DATA);
+
+  /** Connect function called by the table to retrieve one stream containing the data to render. */
+  connect(): Observable<PeriodicElement[]> {
+    return this.data;
+  }
+
+  disconnect() {}
 }
