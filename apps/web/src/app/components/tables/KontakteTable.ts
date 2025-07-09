@@ -1,6 +1,5 @@
 import { CdkTableModule, DataSource } from '@angular/cdk/table';
 import { Component } from '@angular/core';
-import { MatTableModule } from '@angular/material/table';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 export interface PeriodicElement {
