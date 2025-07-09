@@ -1,3 +1,4 @@
+@use '@angular/material' as mat;
 @import 'tailwindcss'; /* To make utility classes available in globally in project */
 
 html,
@@ -14,9 +15,34 @@ body {
   display: none !important;
 }
 
-h1 {
-  font-size: 1.4rem;
-  font-weight: 500;
-  padding-bottom: 0;
-  margin-bottom: 1.5rem;
+body {
+  --h1-fontsize: 1.4rem;
+
+  h1 {
+    font-size: var(--h1-fontsize);
+    line-height: var(--h1-fontsize);
+    font-weight: 500;
+    padding-bottom: 0;
+    margin-bottom: 1.5rem;
+  }
+}
+
+:root {
+  @include mat.table-overrides(
+    (
+      background-color: none,
+      header-headline-color: #111,
+      row-item-outline-color: #bbb,
+    )
+  );
+
+  @include mat.button-overrides(
+    (
+      filled-container-color: #1fb990,
+      filled-horizontal-padding: 1.1rem,
+      filled-container-height: 2.1rem,
+      filled-container-shape: 0.3rem,
+      filled-label-text-size: 0.9rem,
+    )
+  );
 }

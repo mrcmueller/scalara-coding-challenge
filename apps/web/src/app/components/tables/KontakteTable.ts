@@ -1,8 +1,9 @@
-import { CdkTableModule, DataSource } from '@angular/cdk/table';
+import { DataSource } from '@angular/cdk/table';
 import { Component } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { KontakteService } from '../../api/services';
 import { KontaktAntwortMitBeziehungenDto } from '../../api/models';
+import { MatTableModule } from '@angular/material/table';
 
 export interface PeriodicElement {
   name: string;
@@ -28,7 +29,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
   selector: 'kontakte-table',
   styleUrl: './KontakteTable.scss',
   templateUrl: './KontakteTable.html',
-  imports: [CdkTableModule],
+  imports: [MatTableModule],
 })
 export class KontakteTable {
   dataSource: DataSource<KontaktAntwortMitBeziehungenDto>;
@@ -37,7 +38,7 @@ export class KontakteTable {
     this.dataSource = new KontakteDataSource(kontakteService);
   }
 
-  displayedColumns: string[] = ['name', 'strasse', 'land'];
+  displayedColumns: string[] = ['name', 'adresse', 'land'];
 }
 
 export class KontakteDataSource extends DataSource<KontaktAntwortMitBeziehungenDto> {
