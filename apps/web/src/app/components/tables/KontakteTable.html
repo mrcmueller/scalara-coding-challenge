@@ -1,3 +1,5 @@
+@if(dataSource){
+
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
   <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef>Name</th>
@@ -24,7 +26,7 @@
         <img src="/icons/Edit.svg" class="h-4 cursor-pointer" /><img
           src="/icons/Delete.svg"
           class="h-4 cursor-pointer"
-          (click)="delete(element.id)"
+          (click)="dataSource.delete(element.id)"
         />
       </div>
     </td>
@@ -33,3 +35,5 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
+
+}
