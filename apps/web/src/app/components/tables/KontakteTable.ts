@@ -1,6 +1,8 @@
 import { CdkTableModule, DataSource } from '@angular/cdk/table';
 import { Component } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { KontakteService } from '../../api/services';
+import { KontaktAntwortMitBeziehungenDto } from '../../api/models';
 
 export interface PeriodicElement {
   name: string;
@@ -29,16 +31,25 @@ const ELEMENT_DATA: PeriodicElement[] = [
   imports: [CdkTableModule],
 })
 export class KontakteTable {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = new ExampleDataSource();
+  dataSource: DataSource<KontaktAntwortMitBeziehungenDto>;
+
+  constructor(kontakteService: KontakteService) {
+    this.dataSource = new KontakteDataSource(kontakteService);
+  }
+
+  displayedColumns: string[] = ['name', 'strasse', 'land'];
 }
 
-export class ExampleDataSource extends DataSource<PeriodicElement> {
-  /** Stream of data that is provided to the table. */
-  data = new BehaviorSubject<PeriodicElement[]>(ELEMENT_DATA);
+export class KontakteDataSource extends DataSource<KontaktAntwortMitBeziehungenDto> {
+  data: Observable<KontaktAntwortMitBeziehungenDto[]>;
+
+  constructor(kontakteService: KontakteService) {
+    super();
+    this.data = kontakteService.kontakteControllerKontakte();
+  }
 
   /** Connect function called by the table to retrieve one stream containing the data to render. */
-  connect(): Observable<PeriodicElement[]> {
+  connect(): Observable<KontaktAntwortMitBeziehungenDto[]> {
     return this.data;
   }
 
