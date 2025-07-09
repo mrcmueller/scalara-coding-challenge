@@ -1,15 +1,15 @@
 import { Component, inject, Signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
-import { KontakteService } from '../../../api/services';
-import { KontaktAntwortMitBeziehungenDto } from '../../../api/models';
+import { KontakteService } from '../../../../api/services';
+import { KontaktAntwortMitBeziehungenDto } from '../../../../api/models';
 
 @Component({
   selector: 'kontakt-detail',
   standalone: true,
-  templateUrl: './kontakteDetail.html',
+  templateUrl: './kontaktDetail.html',
 })
-export class KontakteDetail {
+export class KontaktDetail {
   id: string;
   kontaktSignal: Signal<KontaktAntwortMitBeziehungenDto | null>;
   constructor(kontakteService: KontakteService, route: ActivatedRoute) {

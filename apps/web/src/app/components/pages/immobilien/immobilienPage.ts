@@ -2,12 +2,12 @@ import { Component } from '@angular/core';
 // import { RouterOutlet } from '@angular/router';
 
 @Component({
-  selector: 'beziehungen-root',
-  standalone: true,
+  selector: 'immobilien',
   // imports: [RouterOutlet],
-  templateUrl: './beziehungenPage.html',
-  styleUrl: './beziehungenPage.scss',
+  standalone: true,
+  templateUrl: './immobilienPage.html',
+  styleUrl: './immobilienPage.scss',
 })
-export class BeziehungenPage {
+export class ImmobilienPage {
   protected title = 'web';
 }

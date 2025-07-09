@@ -1,10 +1,11 @@
 import { Routes } from '@angular/router';
 import { App } from './app';
-import { HomePage } from './components/pages/homePage/homePage';
-import { ImmobilienPage } from './components/pages/immobilienPage/immobilienPage';
-import { KontaktePage } from './components/pages/kontaktePage/kontaktePage';
-import { BeziehungenPage } from './components/pages/beziehungenPage/beziehungenPage';
-import { KontakteDetail } from './components/pages/kontakteDetail/kontakteDetail';
+import { HomePage } from './components/pages/home/homePage';
+import { ImmobilienPage } from './components/pages/immobilien/immobilienPage';
+import { KontaktePage } from './components/pages/kontakte/kontaktePage';
+import { BeziehungenPage } from './components/pages/beziehungen/beziehungenPage';
+import { KontaktDetail } from './components/pages/kontakte/detail/kontaktDetail';
+import { KontaktErstellen } from './components/pages/kontakte/erstellen/kontaktErstellen';
 
 export const routes: Routes = [
   {
@@ -23,7 +24,8 @@ export const routes: Routes = [
     path: 'beziehungen',
     component: BeziehungenPage,
   },
-  { path: 'kontakte/:id', component: KontakteDetail },
+  { path: 'kontakte/hinzufuegen', component: KontaktErstellen },
+  { path: 'kontakte/:id', component: KontaktDetail },
   //   { path: 'immobilien', component:  },
   //   { path: 'immobilien/:id', component:  },
   //   { path: 'immobilien/neu', component:  },

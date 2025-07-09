@@ -8,7 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 // import { RouterOutlet } from '@angular/router';
 
 @Component({
-  selector: 'kontakte-root',
+  selector: 'kontakte',
   standalone: true,
   // imports: [RouterOutlet],
   templateUrl: './kontaktePage.html',
