@@ -40,11 +40,17 @@ export class BeziehungenEingefuegtDto {
 
   @ApiProperty({ type: String, format: 'date-time' })
   @IsDateString()
-  @Transform(({ value }) => value?.toISOString?.())
+  @Transform(({ value }) => {
+    const date = new Date(value);
+    return date.toISOString();
+  })
   startdatum: string;
 
   @ApiProperty({ type: String, format: 'date-time' })
   @IsDateString()
-  @Transform(({ value }) => value?.toISOString?.())
+  @Transform(({ value }) => {
+    const date = new Date(value);
+    return date.toISOString();
+  })
   enddatum: string;
 }

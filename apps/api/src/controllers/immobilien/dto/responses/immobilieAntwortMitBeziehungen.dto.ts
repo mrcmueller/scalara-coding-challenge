@@ -2,7 +2,7 @@ import { Land } from '@/generated/prisma';
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsString, IsEnum, ValidateNested } from 'class-validator';
-import { BeziehungenEingefuegtDto } from '../../beziehungenEingefuegt.dto';
+import { BeziehungenEingefuegtDto } from '../beziehungenEingefuegt.dto';
 
 export class ImmobilieAntwortMitBeziehungenDto {
   @ApiProperty()

@@ -12,7 +12,7 @@ import { KontaktErstellenDto } from './dto/kontaktErstellen.dto';
 import { KontakteService } from './kontakte.service';
 import { KontaktAntwortMitBeziehungenDto } from './dto/responses/kontaktAntwortMitBeziehungen.dto';
 import { ApiExtraModels, ApiOkResponse, getSchemaPath } from '@nestjs/swagger';
-import { BeziehungenEingefuegtDto } from '../immobilien/beziehungenEingefuegt.dto';
+import { BeziehungenEingefuegtDto } from '../immobilien/dto/beziehungenEingefuegt.dto';
 import { plainToInstance } from 'class-transformer';
 
 @Controller('kontakte')

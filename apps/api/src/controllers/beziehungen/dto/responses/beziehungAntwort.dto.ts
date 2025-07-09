@@ -12,6 +12,9 @@ import {
   IsString,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { Logger } from '@nestjs/common';
+
+const logger = new Logger();
 
 export class BeziehungAntwortDto {
   @ApiProperty()
@@ -37,12 +40,18 @@ export class BeziehungAntwortDto {
 
   @ApiProperty({ type: String, format: 'date-time' })
   @IsDateString()
-  @Transform(({ value }) => value?.toISOString?.())
+  @Transform(({ value }) => {
+    const date = new Date(value);
+    return date.toISOString();
+  })
   startdatum: string;
 
   @ApiProperty({ type: String, format: 'date-time' })
   @IsDateString()
-  @Transform(({ value }) => value?.toISOString?.())
+  @Transform(({ value }) => {
+    const date = new Date(value);
+    return date.toISOString();
+  })
   enddatum: string;
 
   @Exclude()

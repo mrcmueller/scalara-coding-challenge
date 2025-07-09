@@ -13,7 +13,7 @@ import { ImmobilieAendernDto } from './dto/immobilieAendern.dto';
 import { ApiExtraModels, ApiOkResponse, getSchemaPath } from '@nestjs/swagger';
 import { ImmobilieAntwortMitBeziehungenDto } from './dto/responses/immobilieAntwortMitBeziehungen.dto';
 import { plainToInstance } from 'class-transformer';
-import { BeziehungenEingefuegtDto } from './beziehungenEingefuegt.dto';
+import { BeziehungenEingefuegtDto } from './dto/beziehungenEingefuegt.dto';
 
 @Controller('immobilien')
 export class ImmobilienController {

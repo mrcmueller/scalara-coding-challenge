@@ -1,16 +1,3 @@
 <h1>Kontakte</h1>
-@if (kontakteSignal()) { @for (item of kontakteSignal(); track item.id) {
-<p><strong>Id: </strong>{{ item.id }}</p>
-<p><strong>Name: </strong>{{ item.name }}</p>
-<p>
-  <strong>Straße/Hausnummer: </strong>{{ item.strasse }} {{ item.hausnummer }}
-</p>
-<p>
-  <strong>Postleitzahl/Stadt: </strong>{{ item.postleitzahl }} {{item.stadt}}
-</p>
-<p><strong>Land: </strong>{{ item.land }}</p>
-} @empty {
-<li>Es gibt keine Kontakte</li>
-} } @else {
-<p>Lade Kontakte...</p>
-}
+
+<kontakte-table />

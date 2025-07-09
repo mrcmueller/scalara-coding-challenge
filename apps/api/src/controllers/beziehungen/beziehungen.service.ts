@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from '@/src/prisma.service';
 import { BeziehungErstellenDto } from './dto/beziehungErstellen.dto';
 import { BeziehungAendernDto } from './dto/beziehungAendern.dto';
@@ -39,6 +39,8 @@ type Ueberpruefbar = {
 
 @Injectable()
 export class BeziehungenService {
+  private readonly logger = new Logger(BeziehungenService.name);
+
   constructor(private readonly prisma: PrismaService) {}
 
   async einenMieterProZeitraum(
@@ -104,7 +106,6 @@ export class BeziehungenService {
       }
 
       if ((merged as Ueberpruefbar).beziehungstyp === 2) {
-        console.log(merged);
         await this.einenMieterProZeitraum(merged as Ueberpruefbar, id);
       }
     } else if (input?.beziehungstyp === 3 && !input?.dienstleistungstyp) {
@@ -117,6 +118,8 @@ export class BeziehungenService {
   }
 
   async beziehungen(): Promise<BeziehungMitPayloadsQuery[]> {
+    this.logger.log('Hello');
+
     return await this.prisma.beziehung.findMany({
       include: { immobilie: true, kontakt: true },
     });
@@ -136,8 +139,6 @@ export class BeziehungenService {
   ): Promise<BeziehungMitPayloadsQuery> {
     await this.checks(input);
 
-    console.log(input);
-
     return await this.prisma.beziehung.create({
       data: input,
       include: { immobilie: true, kontakt: true },
@@ -148,24 +149,13 @@ export class BeziehungenService {
     id: string,
     input: BeziehungAendernDto,
   ): Promise<BeziehungMitPayloadsQuery> {
-    console.log('original input', input);
-
     await this.checks({ ...input }, id);
-
-    if (input?.startdatum) {
-      console.log(typeof new Date(input.startdatum));
-    }
-
-    if (input?.enddatum) {
-      console.log(typeof new Date(input.enddatum));
-    }
 
     const result = await this.prisma.beziehung.update({
       where: { id },
       data: input,
       include: { immobilie: true, kontakt: true },
     });
-    console.log('result', result);
     return result;
   }
 
