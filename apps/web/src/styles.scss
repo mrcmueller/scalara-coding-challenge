@@ -27,6 +27,14 @@ body {
   }
 }
 
+.form-container {
+  max-width: 30rem;
+}
+
+.mdc-notched-outline__notch {
+  border-right: none !important;
+}
+
 :root {
   @include mat.table-overrides(
     (
@@ -45,4 +53,40 @@ body {
       filled-label-text-size: 0.9rem,
     )
   );
+
+  @include mat.form-field-overrides(
+    (
+      // Following props works well, even when commented out:
+      // outlined-outline-color: #efefef
+      container-text-size: 0.87rem,
+      outlined-label-text-size: 0.87rem,
+      outlined-container-shape: 0.25rem,
+
+      // outlined-with-label-container-padding-top: 1.2rem,
+       // outlined-with-label-container-padding-bottom: 0rem
+    )
+  );
+
+  .mat-mdc-text-field-wrapper {
+    background-color: #fdfdfd !important;
+  }
+
+  .mdc-floating-label {
+    top: 1rem !important;
+  }
+
+  .mdc-floating-label--float-above {
+    top: 28px !important;
+  }
+
+  .mat-mdc-form-field-infix {
+    min-height: 2.2rem !important;
+    padding-bottom: 0px !important;
+    padding-top: 0px !important;
+    // display: none;
+  }
+
+  .mat-mdc-input-element {
+    margin-top: 5px;
+  }
 }

@@ -1,2 +1,51 @@
 <h1>Kontakt hinzufügen</h1>
+
+<!-- {
+  "name": "string",
+  "strasse": "string",
+  "hausnummer": "string",
+  "postleitzahl": "string",
+  "stadt": "string",
+  "land": "string"
+} -->
+
+<div class="form-container mt-10 mb-6">
+  <form [formGroup]="options">
+    <div class="form-fields flex flex-col gap-1">
+      <div class="w-full flex justify-between gap-4">
+        <mat-form-field appearance="outline">
+          <mat-label>Name</mat-label>
+          <input matInput placeholder="Ihr Name" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Straße</mat-label>
+          <input matInput placeholder="Ihre Straße" />
+        </mat-form-field>
+      </div>
+      <div class="w-full flex justify-between gap-4">
+        <mat-form-field appearance="outline">
+          <mat-label>Hausnummer</mat-label>
+          <input matInput placeholder="Ihre Hausnummer" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Postleitzahl</mat-label>
+          <input matInput placeholder="Ihre Postleitzahl" />
+        </mat-form-field>
+      </div>
+      <div class="w-full flex justify-between gap-4">
+        <mat-form-field appearance="outline">
+          <mat-label>Stadt</mat-label>
+          <input matInput placeholder="Ihre Stadt" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Land</mat-label>
+          <input matInput placeholder="Ihr Land" />
+        </mat-form-field>
+      </div>
+    </div>
+  </form>
+</div>
 <button matButton="filled" class="-mt-1">Hinzufügen</button>
