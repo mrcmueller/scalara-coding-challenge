@@ -3,6 +3,7 @@
 html,
 body {
   height: 100%;
+  color: #303030;
 }
 body {
   margin: 0;
@@ -11,4 +12,11 @@ body {
 
 .vanish {
   display: none !important;
+}
+
+h1 {
+  font-size: 1.4rem;
+  font-weight: 500;
+  padding-bottom: 0;
+  margin-bottom: 1.5rem;
 }
