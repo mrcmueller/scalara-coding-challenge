@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from '@/src/prisma.service';
 import { Kontakt } from '@/generated/prisma';
 import { KontaktErstellenDto } from './dto/kontaktErstellen.dto';
@@ -43,6 +43,10 @@ export class KontakteService {
   }
 
   async loescheKontakt(id: string): Promise<KontaktMitBeziehungenQuery> {
+    const logger = new Logger();
+
+    logger.log(`Tried to delete Kontakt with id: ${id}`);
+
     return await this.prisma.kontakt.delete({
       where: { id },
       include: { beziehungen: true },

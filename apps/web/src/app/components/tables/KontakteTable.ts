@@ -32,13 +32,23 @@ const ELEMENT_DATA: PeriodicElement[] = [
   imports: [MatTableModule],
 })
 export class KontakteTable {
+  kontakteService: KontakteService;
   dataSource: DataSource<KontaktAntwortMitBeziehungenDto>;
 
   constructor(kontakteService: KontakteService) {
-    this.dataSource = new KontakteDataSource(kontakteService);
+    this.kontakteService = kontakteService;
+    this.dataSource = new KontakteDataSource(this.kontakteService);
   }
 
-  displayedColumns: string[] = ['name', 'adresse', 'land'];
+  delete(id: string) {
+    const result = this.kontakteService.kontakteControllerLoescheKontakte({
+      id,
+    });
+
+    console.log(result.subscribe());
+  }
+
+  displayedColumns: string[] = ['name', 'adresse', 'land', 'action'];
 }
 
 export class KontakteDataSource extends DataSource<KontaktAntwortMitBeziehungenDto> {

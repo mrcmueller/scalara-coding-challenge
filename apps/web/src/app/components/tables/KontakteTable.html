@@ -17,6 +17,19 @@
     <td mat-cell *matCellDef="let element">{{element.land}}</td>
   </ng-container>
 
+  <ng-container matColumnDef="action">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td mat-cell *matCellDef="let element">
+      <div class="flex flex-row h-full gap-6 justify-end">
+        <img src="/icons/Edit.svg" class="h-4 cursor-pointer" /><img
+          src="/icons/Delete.svg"
+          class="h-4 cursor-pointer"
+          (click)="delete(element.id)"
+        />
+      </div>
+    </td>
+  </ng-container>
+
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
