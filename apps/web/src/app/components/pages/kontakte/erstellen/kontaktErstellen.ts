@@ -18,6 +18,7 @@ import {
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
+import { NameEditorComponent } from '../../../form/name/name-editor.component';
 
 // import { RouterOutlet } from '@angular/router';
 
@@ -39,22 +40,16 @@ type Land = 'Deutschland' | 'Italien' | 'Frankreich';
     MatInputModule,
     MatSelectModule,
     MatIconModule,
+    NameEditorComponent,
   ],
 })
 export class KontaktErstellen {
   laender = ['Deutschland', 'Italien', 'Frankreich'];
   selectedValue: Land = 'Deutschland';
-  readonly hideRequiredControl = new FormControl(false);
-  readonly floatLabelControl = new FormControl('auto' as FloatLabelType);
-  readonly options = inject(FormBuilder).group({
-    hideRequired: this.hideRequiredControl,
-    floatLabel: this.floatLabelControl,
-  });
-  protected readonly hideRequired = toSignal(
-    this.hideRequiredControl.valueChanges,
-  );
-  protected readonly floatLabel = toSignal(
-    this.floatLabelControl.valueChanges.pipe(map((v) => v || 'auto')),
-    { initialValue: 'auto' },
-  );
+  name = new FormControl('');
+  strasse = new FormControl('');
+  hausnummer = new FormControl('');
+  postleitzahl = new FormControl('');
+  stadt = new FormControl('');
+  land = new FormControl('Deutschland');
 }

@@ -105,3 +105,15 @@ body {
     cursor: pointer;
   }
 }
+
+kontakt-erstellen {
+  @include mat.button-overrides(
+    (
+      filled-container-color: #1fb990,
+      filled-horizontal-padding: 1.2rem,
+      filled-container-height: 2.2rem,
+      filled-container-shape: 0.3rem,
+      filled-label-text-size: 0.93rem,
+    )
+  );
+}

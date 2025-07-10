@@ -10,39 +10,48 @@
 } -->
 
 <div class="form-container mt-10 mb-6">
-  <form [formGroup]="options">
+  <form>
     <div class="form-fields flex flex-col gap-1">
       <div class="w-full flex justify-between gap-4">
-        <mat-form-field appearance="outline">
-          <mat-label>Name</mat-label>
-          <input matInput placeholder="Ihr Name" />
-        </mat-form-field>
+        <name-editor />
 
         <mat-form-field appearance="outline">
           <mat-label>Straße</mat-label>
-          <input matInput placeholder="Ihre Straße" />
+          <input matInput placeholder="Ihre Straße" [formControl]="strasse" />
         </mat-form-field>
       </div>
       <div class="w-full flex justify-between gap-4">
         <mat-form-field appearance="outline">
           <mat-label>Hausnummer</mat-label>
-          <input matInput placeholder="Ihre Hausnummer" />
+          <input
+            matInput
+            placeholder="Ihre Hausnummer"
+            [formControl]="hausnummer"
+          />
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Postleitzahl</mat-label>
-          <input matInput placeholder="Ihre Postleitzahl" />
+          <input
+            matInput
+            placeholder="Ihre Postleitzahl"
+            [formControl]="postleitzahl"
+          />
         </mat-form-field>
       </div>
       <div class="w-full flex justify-between gap-4">
         <mat-form-field appearance="outline">
           <mat-label>Stadt</mat-label>
-          <input matInput placeholder="Ihre Stadt" />
+          <input matInput placeholder="Ihre Stadt" [formControl]="stadt" />
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>{{selectedValue}}</mat-label>
-          <mat-select [(ngModel)]="selectedValue" name="land">
+          <mat-select
+            [(ngModel)]="selectedValue"
+            name="land"
+            [formControl]="land"
+          >
             @for (land of laender; track land) {
             <mat-option [value]="land">{{land}}</mat-option>
             }
