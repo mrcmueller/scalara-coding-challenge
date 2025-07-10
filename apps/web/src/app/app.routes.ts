@@ -5,7 +5,7 @@ import { ImmobilienPage } from './components/pages/immobilien/immobilienPage';
 import { KontaktePage } from './components/pages/kontakte/kontaktePage';
 import { BeziehungenPage } from './components/pages/beziehungen/beziehungenPage';
 import { KontaktDetail } from './components/pages/kontakte/detail/kontaktDetail';
-import { KontaktErstellenOderBearbeiten } from './components/pages/kontakte/erstellenOderBearbeiten/erstellenOderBearbeiten';
+import { KontaktErstellenOderBearbeiten } from './components/pages/kontakte/erstellenOderBearbeiten/kontaktErstellenOderBearbeiten';
 
 export const routes: Routes = [
   {

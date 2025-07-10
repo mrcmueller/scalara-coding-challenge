@@ -15,24 +15,17 @@ import { StrasseEditorComponent } from '../../../form/strasse/strasse-editor.com
 import { KontakteService } from '../../../../api/services';
 import { KontaktErstellenDto } from '../../../../api/models';
 import { postalCodeValidator } from '../../../form/postleitzahl/postalCodeValidator.directive';
-import { filter, Subject } from 'rxjs';
+import { filter } from 'rxjs';
 import { LandEditorComponent } from '../../../form/land/land-editor.component';
-import {
-  Laender,
-  LAENDER,
-  Land,
-  Locale,
-  Locales,
-  LOCALES,
-} from '../../../form/land/laender';
+import { LAENDER, Land, LOCALES } from '../../../form/land/laender';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 
 @Component({
-  selector: 'kontakt-erstellen',
+  selector: 'kontakt-erstellen-oder-bearbeiten',
   standalone: true,
   // imports: [RouterOutlet],
-  templateUrl: './erstellenOderBearbeiten.html',
-  styleUrl: './erstellenOderBearbeiten.scss',
+  templateUrl: './kontaktErstellenOderBearbeiten.html',
+  styleUrl: './kontaktErstellenOderBearbeiten.scss',
   imports: [
     MatButtonModule,
     FormsModule,
@@ -53,14 +46,12 @@ export class KontaktErstellenOderBearbeiten {
   laender = LAENDER;
   locales = LOCALES;
   initialLandId = 0;
-  localeSubject: Subject<string> = new Subject<string>();
   //
   land = this.laender[this.initialLandId];
   locale = this.locales[this.initialLandId];
   valueChanges: any;
 
   getLocale = () => {
-    console.log('locale fetched via getter function: ', this.locale);
     return this.locale;
   };
 
@@ -84,17 +75,12 @@ export class KontaktErstellenOderBearbeiten {
 
   setLocale(newValue: any): string {
     this.locale = this.locales[this.laender.findIndex((el) => el === newValue)];
-    this.localeSubject.next(this.locale);
     return this.locale;
   }
 
   constructor(kontakteService: KontakteService) {
-    // Revalidate PostalCode Input when Land was changed
     this.kontaktErstellenForm.controls.land.valueChanges.subscribe((val) => {
       const newLocale = this.setLocale(val);
-      console.log(newLocale);
-      //     control.reset(control.value);
-      // control.setErrors(null);
       const currentValue =
         this.kontaktErstellenForm.controls.postleitzahl.updateValueAndValidity();
     });
