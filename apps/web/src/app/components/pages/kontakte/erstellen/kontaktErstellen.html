@@ -27,7 +27,13 @@
         </div>
         <div class="w-full flex justify-between gap-4">
           <stadt-editor [control]="kontaktErstellenForm.controls.stadt" />
-          <land-editor [control]="kontaktErstellenForm.controls.land" />
+          <land-editor
+            [laender]="laender"
+            [locales]="locales"
+            [initalLandId]="initialLandId"
+            [localeSubject]="localeSubject"
+            [control]="kontaktErstellenForm.controls.land"
+          />
         </div>
       </div>
     </div>

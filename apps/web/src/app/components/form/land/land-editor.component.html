@@ -1,6 +1,10 @@
 <mat-form-field appearance="outline">
   <mat-label>Land</mat-label>
-  <mat-select [formControl]="control" required>
+  <mat-select
+    [formControl]="control"
+    (valueChange)="updateValue($event)"
+    required
+  >
     @for (element of laender; track element) {
       <mat-option [value]="element">{{ element }}</mat-option>
     }

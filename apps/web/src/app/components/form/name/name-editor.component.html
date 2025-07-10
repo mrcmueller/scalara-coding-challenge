@@ -6,6 +6,9 @@
       @if (control.hasError('required')) {
         Name ist erforderlich.
       }
+      @if (control.hasError('pattern')) {
+        Ein Name benötigt mind. einen Buchstaben.
+      }
     </div>
   }
 </mat-form-field>

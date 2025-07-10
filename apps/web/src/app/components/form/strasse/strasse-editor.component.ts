@@ -14,8 +14,7 @@ import { MatInputModule } from '@angular/material/input';
   ],
 })
 export class StrasseEditorComponent {
-  @Input() control!: FormControl<string>;
-  updateValue(value: string) {
-    this.control.setValue(value);
-  }
+  @Input() control: FormControl<string> = new FormControl(
+    '',
+  ) as FormControl<string>;
 }
