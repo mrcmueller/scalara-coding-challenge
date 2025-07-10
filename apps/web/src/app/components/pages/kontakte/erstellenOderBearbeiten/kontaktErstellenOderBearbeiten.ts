@@ -19,6 +19,7 @@ import { filter } from 'rxjs';
 import { LandEditorComponent } from '../../../form/land/land-editor.component';
 import { LAENDER, Land, LOCALES } from '../../../form/land/laender';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { KontakteRefresh } from '../../../tables/KontakteTable';
 
 @Component({
   selector: 'kontakt-erstellen-oder-bearbeiten',
@@ -42,6 +43,7 @@ export class KontaktErstellenOderBearbeiten {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private service = inject(KontakteService);
+  public kontakteRefresh = inject(KontakteRefresh);
   // passed to Subcomponent
   laender = LAENDER;
   locales = LOCALES;
@@ -78,7 +80,7 @@ export class KontaktErstellenOderBearbeiten {
     return this.locale;
   }
 
-  constructor(kontakteService: KontakteService) {
+  constructor() {
     this.kontaktErstellenForm.controls.land.valueChanges.subscribe((val) => {
       const newLocale = this.setLocale(val);
       const currentValue =
@@ -86,14 +88,8 @@ export class KontaktErstellenOderBearbeiten {
     });
   }
 
-  renavigate() {
-    this.router.events
-      .pipe(filter((value) => value instanceof NavigationEnd))
-      .subscribe((event) => {
-        if (event.url === '/kontakte') {
-          window.location.reload();
-        }
-      });
+  goBack(): void {
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
   onSubmit() {
@@ -101,7 +97,7 @@ export class KontaktErstellenOderBearbeiten {
       .kontakteControllerErstelleKontakte({
         body: this.kontaktErstellenForm.value as KontaktErstellenDto,
       })
-      .subscribe();
-    this.renavigate();
+      .subscribe(() => this.kontakteRefresh.refresh());
+    this.goBack();
   }
 }

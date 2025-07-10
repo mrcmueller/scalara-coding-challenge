@@ -5,6 +5,7 @@ import { KontakteTable } from '../../tables/KontakteTable';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
+import { ActivatedRoute, Router } from '@angular/router';
 // import { RouterOutlet } from '@angular/router';
 
 @Component({
@@ -17,8 +18,4 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class KontaktePage {
   protected title = 'web';
-  // private kontakteService = inject(KontakteService);
-  // kontakteSignal = toSignal(this.kontakteService.kontakteControllerKontakte(), {
-  //   initialValue: null,
-  // });
 }

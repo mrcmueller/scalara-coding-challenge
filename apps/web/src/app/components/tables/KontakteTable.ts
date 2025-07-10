@@ -1,5 +1,5 @@
 import { DataSource } from '@angular/cdk/table';
-import { Component } from '@angular/core';
+import { Component, inject, Injectable } from '@angular/core';
 import { Observable, Subject, switchMap, startWith, Subscription } from 'rxjs';
 import { KontakteService } from '../../api/services';
 import { KontaktAntwortMitBeziehungenDto } from '../../api/models';
@@ -25,28 +25,43 @@ export class KontakteTable {
   displayedColumns: string[] = ['name', 'adresse', 'land', 'action'];
 }
 
+@Injectable({
+  providedIn: 'root',
+})
+export class KontakteRefresh extends Subject<void> {
+  constructor() {
+    super();
+  }
+
+  refresh(): void {
+    console.log('I am the refresh and I am executed!');
+    this.next();
+  }
+}
+
 export class KontakteDataSource
   extends DataSource<KontaktAntwortMitBeziehungenDto>
   implements Delete
 {
-  kontakteService: KontakteService;
-  refresh$ = new Subject<void>();
-  data: Observable<KontaktAntwortMitBeziehungenDto[]>;
-
   constructor(kontakteService: KontakteService) {
     super();
-    this.kontakteService = kontakteService;
-    this.data = this.refresh$.pipe(
-      startWith(null),
-      switchMap(() => this.kontakteService.kontakteControllerKontakte()),
-    );
   }
+
+  kontakteService = inject(KontakteService);
+  refresh$ = inject(KontakteRefresh);
+  data = this.refresh$.pipe(
+    startWith(null),
+    switchMap(() => {
+      console.log('run');
+      return this.kontakteService.kontakteControllerKontakte();
+    }),
+  );
 
   delete(id: string) {
     const sub = this.kontakteService
       .kontakteControllerLoescheKontakte({ id })
       .subscribe(() => {
-        this.refresh$.next();
+        this.refresh$.refresh();
       });
   }
 
