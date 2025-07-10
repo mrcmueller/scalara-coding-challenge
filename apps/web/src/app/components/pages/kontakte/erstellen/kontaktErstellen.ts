@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   FormsModule,
   ReactiveFormsModule,
@@ -25,6 +25,7 @@ import {
   Locales,
   LOCALES,
 } from '../../../form/land/laender';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'kontakt-erstellen',
@@ -45,10 +46,13 @@ import {
   ],
 })
 export class KontaktErstellen {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private service = inject(KontakteService);
   // passed to Subcomponent
-  laender = [...LAENDER, 'Großbritannien'];
-  locales = [...LOCALES, 'GB'];
-  initialLandId = 3;
+  laender = LAENDER;
+  locales = LOCALES;
+  initialLandId = 0;
   localeSubject: Subject<string> = new Subject<string>();
   //
   land = this.laender[this.initialLandId];
@@ -56,6 +60,7 @@ export class KontaktErstellen {
   valueChanges: any;
 
   getLocale = () => {
+    console.log('locale fetched via getter function: ', this.locale);
     return this.locale;
   };
 
@@ -77,24 +82,22 @@ export class KontaktErstellen {
     land: new FormControl(this.land, Validators.required) as FormControl<Land>,
   });
 
-  service: KontakteService;
+  setLocale(newValue: any): string {
+    this.locale = this.locales[this.laender.findIndex((el) => el === newValue)];
+    this.localeSubject.next(this.locale);
+    return this.locale;
+  }
 
   constructor(kontakteService: KontakteService) {
-    this.service = kontakteService;
-
-    // Lets us retrieve Locale when changed and overide our own local value used for validation
-    this.localeSubject.subscribe((val) => {
-      this.locale = val;
-    });
-    this.localeSubject.next(this.locale);
-
     // Revalidate PostalCode Input when Land was changed
-    this.kontaktErstellenForm.controls.postleitzahl.valueChanges.subscribe(
-      (val) => {
-        this.valueChanges = val;
-        console.log(this.valueChanges);
-      },
-    );
+    this.kontaktErstellenForm.controls.land.valueChanges.subscribe((val) => {
+      const newLocale = this.setLocale(val);
+      console.log(newLocale);
+      //     control.reset(control.value);
+      // control.setErrors(null);
+      const currentValue =
+        this.kontaktErstellenForm.controls.postleitzahl.updateValueAndValidity();
+    });
   }
 
   onSubmit() {
@@ -103,7 +106,6 @@ export class KontaktErstellen {
         body: this.kontaktErstellenForm.value as KontaktErstellenDto,
       })
       .subscribe();
-    console.log('Submit Button wurde gedrückt');
-    alert('Submit Button wurde gedrückt');
+    this.router.navigate(['kontakte']);
   }
 }

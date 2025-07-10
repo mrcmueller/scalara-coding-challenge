@@ -11,11 +11,9 @@ import { Locale } from '../land/laender';
 
 export function postalCodeValidator(getLocale: () => string): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
-    const invalidPostalCode = !validator.isPostalCode(
-      control.value,
-      getLocale() as 'any',
-    );
-    return invalidPostalCode
+    const validatePostalCode = () =>
+      !validator.isPostalCode(control.value, getLocale() as 'any');
+    return validatePostalCode()
       ? { invalidPostalCode: { value: control.value } }
       : null;
   };

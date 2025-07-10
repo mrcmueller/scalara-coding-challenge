@@ -20,24 +20,11 @@ export class LandEditorComponent {
   @Input() laender: string[] = LAENDER;
   @Input() locales: string[] = LOCALES;
   @Input() initalLandId: number = 0;
-  @Input() localeSubject: Subject<string> = new Subject<string>();
   locale = this.locales[this.initalLandId];
 
   @Input() control = new FormControl(
     LAENDER[this.initalLandId],
   ) as FormControl<Land>;
 
-  constructor() {
-    this.updateValue(this.laender[this.initalLandId]);
-  }
-
-  setLocale(newValue: any): string {
-    this.locale = this.locales[this.laender.findIndex((el) => el === newValue)];
-    this.localeSubject.next(this.locale);
-    return this.locale;
-  }
-
-  updateValue(newValue: any) {
-    this.setLocale(newValue);
-  }
+  constructor() {}
 }
