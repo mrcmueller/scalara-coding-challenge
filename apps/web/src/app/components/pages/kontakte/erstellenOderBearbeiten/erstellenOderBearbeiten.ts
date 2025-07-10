@@ -15,7 +15,7 @@ import { StrasseEditorComponent } from '../../../form/strasse/strasse-editor.com
 import { KontakteService } from '../../../../api/services';
 import { KontaktErstellenDto } from '../../../../api/models';
 import { postalCodeValidator } from '../../../form/postleitzahl/postalCodeValidator.directive';
-import { Subject } from 'rxjs';
+import { filter, Subject } from 'rxjs';
 import { LandEditorComponent } from '../../../form/land/land-editor.component';
 import {
   Laender,
@@ -25,14 +25,14 @@ import {
   Locales,
   LOCALES,
 } from '../../../form/land/laender';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'kontakt-erstellen',
   standalone: true,
   // imports: [RouterOutlet],
-  templateUrl: './kontaktErstellen.html',
-  styleUrl: './kontaktErstellen.scss',
+  templateUrl: './erstellenOderBearbeiten.html',
+  styleUrl: './erstellenOderBearbeiten.scss',
   imports: [
     MatButtonModule,
     FormsModule,
@@ -45,7 +45,7 @@ import { ActivatedRoute, Router } from '@angular/router';
     LandEditorComponent,
   ],
 })
-export class KontaktErstellen {
+export class KontaktErstellenOderBearbeiten {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private service = inject(KontakteService);
@@ -100,14 +100,22 @@ export class KontaktErstellen {
     });
   }
 
+  renavigate() {
+    this.router.events
+      .pipe(filter((value) => value instanceof NavigationEnd))
+      .subscribe((event) => {
+        if (event.url === '/kontakte') {
+          window.location.reload();
+        }
+      });
+  }
+
   onSubmit() {
     this.service
       .kontakteControllerErstelleKontakte({
         body: this.kontaktErstellenForm.value as KontaktErstellenDto,
       })
       .subscribe();
-    this.router.navigate(['kontakte']).then(() => {
-      window.location.reload();
-    });
+    this.renavigate();
   }
 }
