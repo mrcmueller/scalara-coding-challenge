@@ -19,6 +19,11 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
 import { NameEditorComponent } from '../../../form/name/name-editor.component';
+import { PostleitzahlEditorComponent } from '../../../form/postleitzahl/postleitzahl-editor.component';
+import { HausnummerEditorComponent } from '../../../form/hausnummer/hausnummer-editor.component';
+import { LandEditorComponent } from '../../../form/land/land-editor.component';
+import { StadtEditorComponent } from '../../../form/stadt/stadt-editor.component';
+import { StrasseEditorComponent } from '../../../form/strasse/strasse-editor.component';
 
 // import { RouterOutlet } from '@angular/router';
 
@@ -41,15 +46,11 @@ type Land = 'Deutschland' | 'Italien' | 'Frankreich';
     MatSelectModule,
     MatIconModule,
     NameEditorComponent,
+    StrasseEditorComponent,
+    HausnummerEditorComponent,
+    PostleitzahlEditorComponent,
+    StadtEditorComponent,
+    LandEditorComponent,
   ],
 })
-export class KontaktErstellen {
-  laender = ['Deutschland', 'Italien', 'Frankreich'];
-  selectedValue: Land = 'Deutschland';
-  name = new FormControl('');
-  strasse = new FormControl('');
-  hausnummer = new FormControl('');
-  postleitzahl = new FormControl('');
-  stadt = new FormControl('');
-  land = new FormControl('Deutschland');
-}
+export class KontaktErstellen {}

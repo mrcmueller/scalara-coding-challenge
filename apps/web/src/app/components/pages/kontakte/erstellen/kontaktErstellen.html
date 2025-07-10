@@ -14,49 +14,15 @@
     <div class="form-fields flex flex-col gap-1">
       <div class="w-full flex justify-between gap-4">
         <name-editor />
-
-        <mat-form-field appearance="outline">
-          <mat-label>Straße</mat-label>
-          <input matInput placeholder="Ihre Straße" [formControl]="strasse" />
-        </mat-form-field>
+        <strasse-editor />
       </div>
       <div class="w-full flex justify-between gap-4">
-        <mat-form-field appearance="outline">
-          <mat-label>Hausnummer</mat-label>
-          <input
-            matInput
-            placeholder="Ihre Hausnummer"
-            [formControl]="hausnummer"
-          />
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-          <mat-label>Postleitzahl</mat-label>
-          <input
-            matInput
-            placeholder="Ihre Postleitzahl"
-            [formControl]="postleitzahl"
-          />
-        </mat-form-field>
+        <hausnummer-editor />
+        <postleitzahl-editor />
       </div>
       <div class="w-full flex justify-between gap-4">
-        <mat-form-field appearance="outline">
-          <mat-label>Stadt</mat-label>
-          <input matInput placeholder="Ihre Stadt" [formControl]="stadt" />
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-          <mat-label>{{selectedValue}}</mat-label>
-          <mat-select
-            [(ngModel)]="selectedValue"
-            name="land"
-            [formControl]="land"
-          >
-            @for (land of laender; track land) {
-            <mat-option [value]="land">{{land}}</mat-option>
-            }
-          </mat-select>
-        </mat-form-field>
+        <stadt-editor />
+        <land-editor />
       </div>
     </div>
   </form>

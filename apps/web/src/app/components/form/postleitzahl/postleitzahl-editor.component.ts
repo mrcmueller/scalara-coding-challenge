@@ -3,9 +3,9 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 
 @Component({
-  selector: 'name-editor',
-  templateUrl: './name-editor.component.html',
-  styleUrl: './name-editor.component.scss',
+  selector: 'postleitzahl-editor',
+  templateUrl: './postleitzahl-editor.component.html',
+  styleUrl: './postleitzahl-editor.component.scss',
   imports: [
     ReactiveFormsModule,
     FormsModule,
@@ -13,9 +13,9 @@ import { MatInputModule } from '@angular/material/input';
     MatInputModule,
   ],
 })
-export class NameEditorComponent {
-  name = new FormControl('');
-  updateName(value: string) {
-    this.name.setValue(value);
+export class PostleitzahlEditorComponent {
+  postleitzahl = new FormControl('');
+  updatePostleitzahl(value: string) {
+    this.postleitzahl.setValue(value);
   }
 }

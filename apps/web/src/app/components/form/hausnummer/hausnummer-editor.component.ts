@@ -3,9 +3,9 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 
 @Component({
-  selector: 'name-editor',
-  templateUrl: './name-editor.component.html',
-  styleUrl: './name-editor.component.scss',
+  selector: 'hausnummer-editor',
+  templateUrl: './hausnummer-editor.component.html',
+  styleUrl: './hausnummer-editor.component.scss',
   imports: [
     ReactiveFormsModule,
     FormsModule,
@@ -13,9 +13,9 @@ import { MatInputModule } from '@angular/material/input';
     MatInputModule,
   ],
 })
-export class NameEditorComponent {
-  name = new FormControl('');
-  updateName(value: string) {
-    this.name.setValue(value);
+export class HausnummerEditorComponent {
+  hausnummer = new FormControl('');
+  updateHausnummer(value: string) {
+    this.hausnummer.setValue(value);
   }
 }
