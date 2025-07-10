@@ -20,8 +20,7 @@ import { StrasseEditorComponent } from '../../../form/strasse/strasse-editor.com
 import { KontakteService } from '../../../../api/services';
 import { KontaktErstellenDto } from '../../../../api/models';
 import validator from 'validator';
-
-// import { RouterOutlet } from '@angular/router';
+import { postalCodeValidator } from '../../../form/postleitzahl/postalCodeValidator.directive';
 
 @Component({
   selector: 'kontakt-erstellen',
@@ -51,7 +50,7 @@ export class KontaktErstellen {
     ]) as FormControl<string>,
     postleitzahl: new FormControl('', [
       Validators.required,
-      Validators.pattern(/\d/),
+      postalCodeValidator('DE'),
     ]) as FormControl<string>,
     stadt: new FormControl('', Validators.required) as FormControl<string>,
     land: new FormControl(laender[0], Validators.required) as FormControl<Land>,

@@ -9,12 +9,12 @@ import {
 import validator from 'validator';
 import { LocalesType, Locales } from '../land/land-editor.component';
 
-export function postalCodeValidator(postalCode: string): ValidatorFn {
+export function postalCodeValidator(locale: LocalesType): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
-    const invalidPostalCode = Locales.some((locale) =>
-      validator.isPostalCode(postalCode, locale as validator.PostalCodeLocale),
-    );
-    return forbidden ? { forbiddenName: { value: control.value } } : null;
+    const invalidPostalCode = !validator.isPostalCode(control.value, locale);
+    return invalidPostalCode
+      ? { invalidPostalCode: { value: control.value } }
+      : null;
   };
 }
 
@@ -23,21 +23,22 @@ export function postalCodeValidator(postalCode: string): ValidatorFn {
 //   initialValue,
 // );
 
-@Directive({
-  selector: '[invalidPostalCode]',
-  providers: [
-    {
-      provide: NG_VALIDATORS,
-      useExisting: InvalidPostalCodeDirective,
-      multi: true,
-    },
-  ],
-})
-export class InvalidPostalCodeDirective implements Validator {
-  postalCode = input<string>('', { alias: 'invalidPostalCode' });
-  validate(control: AbstractControl): ValidationErrors | null {
-    return this.postalCode
-      ? postalCodeValidator(new RegExp(this.forbiddenName(), 'i'))(control)
-      : null;
-  }
-}
+// @Directive({
+//   selector: '[invalidPostalCode]',
+//   providers: [
+//     {
+//       provide: NG_VALIDATORS,
+//       useExisting: InvalidPostalCodeDirective,
+//       multi: true,
+//     },
+//   ],
+// })
+// export class InvalidPostalCodeDirective implements Validator {
+//   postalCode = input<string>('', { alias: 'invalidPostalCode' });
+//   locale = input<LocalesType>('DE', { alias: 'invalidLocale' });
+//   validate(control: AbstractControl): ValidationErrors | null {
+//     return this.postalCode
+//       ? postalCodeValidator(this.postalCode(), this.locale())(control)
+//       : null;
+//   }
+// }
