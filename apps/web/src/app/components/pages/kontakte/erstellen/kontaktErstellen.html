@@ -9,22 +9,24 @@
   "land": "string"
 } -->
 
-<div class="form-container mt-10 mb-6">
-  <form>
-    <div class="form-fields flex flex-col gap-1">
-      <div class="w-full flex justify-between gap-4">
-        <name-editor />
-        <strasse-editor />
-      </div>
-      <div class="w-full flex justify-between gap-4">
-        <hausnummer-editor />
-        <postleitzahl-editor />
-      </div>
-      <div class="w-full flex justify-between gap-4">
-        <stadt-editor />
-        <land-editor />
+<div class="form-container mt-10">
+  <form [formGroup]="kontaktErstellenForm" (ngSubmit)="onSubmit()">
+    <div class="mb-6">
+      <div class="form-fields flex flex-col gap-1">
+        <div class="w-full flex justify-between gap-4">
+          <name-editor />
+          <strasse-editor />
+        </div>
+        <div class="w-full flex justify-between gap-4">
+          <hausnummer-editor />
+          <postleitzahl-editor />
+        </div>
+        <div class="w-full flex justify-between gap-4">
+          <stadt-editor />
+          <!-- <land-editor /> -->
+        </div>
       </div>
     </div>
+    <button type="submit" matButton="filled" class="-mt-1">Hinzufügen</button>
   </form>
 </div>
-<button matButton="filled" class="-mt-1">Hinzufügen</button>

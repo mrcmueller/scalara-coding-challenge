@@ -1,23 +1,17 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import {
-  FormBuilder,
-  FormControl,
   FormsModule,
   ReactiveFormsModule,
+  FormGroup,
+  FormControl,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
-import {
-  FloatLabelType,
-  MatFormFieldModule,
-} from '@angular/material/form-field';
-
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { map } from 'rxjs';
 import { NameEditorComponent } from '../../../form/name/name-editor.component';
 import { PostleitzahlEditorComponent } from '../../../form/postleitzahl/postleitzahl-editor.component';
 import { HausnummerEditorComponent } from '../../../form/hausnummer/hausnummer-editor.component';
@@ -39,12 +33,6 @@ type Land = 'Deutschland' | 'Italien' | 'Frankreich';
     MatButtonModule,
     FormsModule,
     ReactiveFormsModule,
-    MatCheckboxModule,
-    MatRadioModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatIconModule,
     NameEditorComponent,
     StrasseEditorComponent,
     HausnummerEditorComponent,
@@ -53,4 +41,18 @@ type Land = 'Deutschland' | 'Italien' | 'Frankreich';
     LandEditorComponent,
   ],
 })
-export class KontaktErstellen {}
+export class KontaktErstellen {
+  kontaktErstellenForm = new FormGroup({
+    name: new FormControl(''),
+    strasse: new FormControl(''),
+    hausnummer: new FormControl(''),
+    postleitzahl: new FormControl(''),
+    stadt: new FormControl(''),
+    land: new FormControl('Deutschland'),
+  });
+
+  onSubmit() {
+    console.log('Submit Button wurde gedrückt');
+    alert('Submit Button wurde gedrückt');
+  }
+}
