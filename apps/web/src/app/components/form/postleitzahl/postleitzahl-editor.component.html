@@ -11,7 +11,11 @@
       @if (control.hasError('required')) {
         Postleitzahl ist erforderlich.
       }
-      Error
+      @if (
+        control.hasError('invalidPostalCode') && !control.hasError('required')
+      ) {
+        Postleitzahl ungültig für ausgewähltes Land.
+      }
     </div>
   }
 </mat-form-field>
