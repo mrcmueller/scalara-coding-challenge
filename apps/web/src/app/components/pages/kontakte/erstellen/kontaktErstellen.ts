@@ -106,6 +106,8 @@ export class KontaktErstellen {
         body: this.kontaktErstellenForm.value as KontaktErstellenDto,
       })
       .subscribe();
-    this.router.navigate(['kontakte']);
+    this.router.navigate(['kontakte']).then(() => {
+      window.location.reload();
+    });
   }
 }
