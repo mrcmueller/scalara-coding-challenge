@@ -1,6 +1,6 @@
 import { DataSource } from '@angular/cdk/table';
 import { Component } from '@angular/core';
-import { Observable, Subject, switchMap, startWith } from 'rxjs';
+import { Observable, Subject, switchMap, startWith, Subscription } from 'rxjs';
 import { KontakteService } from '../../api/services';
 import { KontaktAntwortMitBeziehungenDto } from '../../api/models';
 import { MatTableModule } from '@angular/material/table';
@@ -43,7 +43,7 @@ export class KontakteDataSource
   }
 
   delete(id: string) {
-    this.kontakteService
+    const sub = this.kontakteService
       .kontakteControllerLoescheKontakte({ id })
       .subscribe(() => {
         this.refresh$.next();

@@ -21,6 +21,8 @@ import { map } from 'rxjs';
 
 // import { RouterOutlet } from '@angular/router';
 
+type Land = 'Deutschland' | 'Italien' | 'Frankreich';
+
 @Component({
   selector: 'kontakt-erstellen',
   standalone: true,
@@ -40,6 +42,8 @@ import { map } from 'rxjs';
   ],
 })
 export class KontaktErstellen {
+  laender = ['Deutschland', 'Italien', 'Frankreich'];
+  selectedValue: Land = 'Deutschland';
   readonly hideRequiredControl = new FormControl(false);
   readonly floatLabelControl = new FormControl('auto' as FloatLabelType);
   readonly options = inject(FormBuilder).group({

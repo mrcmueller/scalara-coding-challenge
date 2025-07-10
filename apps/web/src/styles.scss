@@ -36,6 +36,16 @@ body {
 }
 
 :root {
+  @include mat.select-overrides(
+    (
+      trigger-text-size: 0.87rem,
+    )
+  );
+
+  .mat-mdc-select {
+    margin-top: 5px !important;
+  }
+
   @include mat.table-overrides(
     (
       background-color: none,
@@ -88,5 +98,10 @@ body {
 
   .mat-mdc-input-element {
     margin-top: 5px;
+  }
+
+  .mat-mdc-row:hover {
+    background-color: #eee !important;
+    cursor: pointer;
   }
 }
