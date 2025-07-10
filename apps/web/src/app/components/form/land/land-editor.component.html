@@ -1,7 +1,7 @@
 <mat-form-field appearance="outline">
   <mat-label>Land</mat-label>
-  <mat-select [formControl]="land" required>
-    @for (element of laender; track land) {
+  <mat-select [formControl]="control" required>
+    @for (element of laender; track element) {
       <mat-option [value]="element">{{ element }}</mat-option>
     }
   </mat-select>

@@ -171,6 +171,9 @@ importers:
       tslib:
         specifier: ^2.3.0
         version: 2.8.1
+      validator:
+        specifier: ^13.15.15
+        version: 13.15.15
       zone.js:
         specifier: ~0.15.0
         version: 0.15.1

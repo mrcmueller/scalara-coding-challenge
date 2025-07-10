@@ -1,7 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+
+export type Land = 'Deutschland' | 'Italien' | 'Frankreich';
+export type LocalesType = 'DE' | 'IT' | 'FR';
+const Locales = ['DE', 'IT', 'FR'];
+const laender = ['Deutschland', 'Italien', 'Frankreich'];
+export { laender, Locales };
 
 @Component({
   selector: 'land-editor',
@@ -16,9 +22,10 @@ import { MatSelectModule } from '@angular/material/select';
   ],
 })
 export class LandEditorComponent {
-  laender = ['Deutschland', 'Italien', 'Frankreich'];
-  land = new FormControl('Deutschland');
-  updateLand(value: string) {
-    this.land.setValue(value);
+  laender = laender;
+
+  @Input() control = new FormControl('Deutschland') as FormControl<Land>;
+  updateValue(value: Land) {
+    this.control.setValue(value);
   }
 }

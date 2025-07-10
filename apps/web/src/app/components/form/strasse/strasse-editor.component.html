@@ -1,4 +1,11 @@
 <mat-form-field appearance="outline">
   <mat-label>Straße</mat-label>
-  <input matInput placeholder="Ihre Straße" [formControl]="strasse" required />
+  <input matInput placeholder="Ihre Straße" [formControl]="control" required />
+  @if (control.invalid && (control.dirty || control.touched)) {
+    <div class="alert text-red-700 text-xs pt-2 pb-2">
+      @if (control.hasError('required')) {
+        Straße ist erforderlich.
+      }
+    </div>
+  }
 </mat-form-field>

@@ -3,7 +3,14 @@
   <input
     matInput
     placeholder="Ihre Postleitzahl"
-    [formControl]="postleitzahl"
+    [formControl]="control"
     required
   />
+  @if (control.invalid && (control.dirty || control.touched)) {
+    <div class="alert text-red-700 text-xs pt-2 pb-2">
+      @if (control.hasError('required')) {
+        Postleitzahl ist erforderlich.
+      }
+    </div>
+  }
 </mat-form-field>

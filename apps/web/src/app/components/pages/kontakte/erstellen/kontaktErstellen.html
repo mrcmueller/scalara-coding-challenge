@@ -14,19 +14,30 @@
     <div class="mb-6">
       <div class="form-fields flex flex-col gap-1">
         <div class="w-full flex justify-between gap-4">
-          <name-editor />
-          <strasse-editor />
+          <name-editor [control]="kontaktErstellenForm.controls.name" />
+          <strasse-editor [control]="kontaktErstellenForm.controls.strasse" />
         </div>
         <div class="w-full flex justify-between gap-4">
-          <hausnummer-editor />
-          <postleitzahl-editor />
+          <hausnummer-editor
+            [control]="kontaktErstellenForm.controls.hausnummer"
+          />
+          <postleitzahl-editor
+            [control]="kontaktErstellenForm.controls.postleitzahl"
+          />
         </div>
         <div class="w-full flex justify-between gap-4">
-          <stadt-editor />
-          <!-- <land-editor /> -->
+          <stadt-editor [control]="kontaktErstellenForm.controls.stadt" />
+          <land-editor [control]="kontaktErstellenForm.controls.land" />
         </div>
       </div>
     </div>
-    <button type="submit" matButton="filled" class="-mt-1">Hinzufügen</button>
+    <button
+      type="submit"
+      [disabled]="!kontaktErstellenForm.valid"
+      matButton="filled"
+      class="-mt-1"
+    >
+      Hinzufügen
+    </button>
   </form>
 </div>

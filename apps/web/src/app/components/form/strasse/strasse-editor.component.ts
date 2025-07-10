@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 
@@ -14,8 +14,8 @@ import { MatInputModule } from '@angular/material/input';
   ],
 })
 export class StrasseEditorComponent {
-  strasse = new FormControl('');
-  updateStrasse(value: string) {
-    this.strasse.setValue(value);
+  @Input() control!: FormControl<string>;
+  updateValue(value: string) {
+    this.control.setValue(value);
   }
 }

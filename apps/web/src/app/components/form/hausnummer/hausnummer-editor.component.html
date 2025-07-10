@@ -3,7 +3,17 @@
   <input
     matInput
     placeholder="Ihre Hausnummer"
-    [formControl]="hausnummer"
+    [formControl]="control"
     required
   />
+  @if (control.invalid && (control.dirty || control.touched)) {
+    <div class="alert text-red-700 text-xs pt-2 pb-2">
+      @if (control.hasError('required')) {
+        Hausnummer ist erforderlich.
+      }
+      @if (control.hasError('pattern')) {
+        Hausnummer benötigt mind. eine Ziffer.
+      }
+    </div>
+  }
 </mat-form-field>

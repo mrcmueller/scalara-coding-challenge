@@ -1,4 +1,11 @@
 <mat-form-field appearance="outline">
   <mat-label>Name</mat-label>
-  <input matInput placeholder="Ihr Name" [formControl]="name" required />
+  <input matInput placeholder="Ihr Name" [formControl]="control" required />
+  @if (control.invalid && (control.dirty || control.touched)) {
+    <div class="alert text-red-700 text-xs pt-2 pb-2">
+      @if (control.hasError('required')) {
+        Name ist erforderlich.
+      }
+    </div>
+  }
 </mat-form-field>
