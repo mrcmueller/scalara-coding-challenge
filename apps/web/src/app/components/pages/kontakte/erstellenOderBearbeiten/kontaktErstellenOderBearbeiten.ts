@@ -46,6 +46,14 @@ export class KontaktErstellenOderBearbeiten {
   private service = inject(KontakteService);
   public kontakteRefresh = inject(KontakteRefresh);
   readonly dialog = inject(MatDialog);
+  routeSub: any;
+  editMode = false;
+
+  ngOnInit() {
+    this.routeSub = this.route.params.subscribe((params) => {
+      this.editMode = params['id'] ? true : false;
+    });
+  }
 
   // passed to Subcomponent
   laender = [...LAENDER, 'Großbritannien'];

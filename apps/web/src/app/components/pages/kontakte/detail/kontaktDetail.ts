@@ -3,12 +3,14 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { KontakteService } from '../../../../api/services';
 import { KontaktAntwortMitBeziehungenDto } from '../../../../api/models';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'kontakt-detail',
   styleUrl: './kontaktDetail.scss',
   standalone: true,
   templateUrl: './kontaktDetail.html',
+  imports: [MatButtonModule],
 })
 export class KontaktDetail {
   id: string;
