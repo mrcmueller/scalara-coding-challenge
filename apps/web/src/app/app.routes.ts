@@ -7,6 +7,7 @@ import { BeziehungenPage } from './components/pages/beziehungen/beziehungenPage'
 import { KontaktDetail } from './components/pages/kontakte/detail/kontaktDetail';
 import { KontaktErstellenOderBearbeiten } from './components/pages/kontakte/erstellenOderBearbeiten/kontaktErstellenOderBearbeiten';
 import { ImmobilieErstellenOderBearbeiten } from './components/pages/immobilien/erstellenOderBearbeiten/immobilieErstellenOderBearbeiten';
+import { ImmobilienDetail } from './components/pages/immobilien/detail/immobilienDetail';
 
 export const routes: Routes = [
   {
@@ -14,16 +15,28 @@ export const routes: Routes = [
     component: HomePage,
   },
   {
+    path: 'beziehungen',
+    component: BeziehungenPage,
+  },
+  {
     path: 'immobilien',
     component: ImmobilienPage,
   },
   {
-    path: 'kontakte',
-    component: KontaktePage,
+    path: 'immobilien/hinzufuegen',
+    component: ImmobilieErstellenOderBearbeiten,
   },
   {
-    path: 'beziehungen',
-    component: BeziehungenPage,
+    path: 'immobilien/:id',
+    component: ImmobilienDetail,
+  },
+  {
+    path: 'immobilien/:id/bearbeiten',
+    component: ImmobilieErstellenOderBearbeiten,
+  },
+  {
+    path: 'kontakte',
+    component: KontaktePage,
   },
   { path: 'kontakte/hinzufuegen', component: KontaktErstellenOderBearbeiten },
   { path: 'kontakte/:id', component: KontaktDetail },
@@ -31,10 +44,7 @@ export const routes: Routes = [
     path: 'kontakte/:id/bearbeiten',
     component: KontaktErstellenOderBearbeiten,
   },
-  {
-    path: 'immobilien/hinzufuegen',
-    component: ImmobilieErstellenOderBearbeiten,
-  },
+
   //   { path: 'immobilien', component:  },
   //   { path: 'immobilien/:id', component:  },
   //   { path: 'immobilien/neu', component:  },
