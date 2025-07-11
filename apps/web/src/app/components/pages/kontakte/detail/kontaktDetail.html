@@ -1,4 +1,9 @@
-<h1>Kontakt Details</h1>
+<div class="flex justify-between">
+  <h1>Kontakt-Details</h1>
+  <a href="/kontakte/{{ kontaktSignal()?.id }}/bearbeiten"
+    ><button matButton="filled" class="-mt-1">Bearbeiten</button></a
+  >
+</div>
 
 @if (kontaktSignal()) {
 <p><strong>Id: </strong>{{ kontaktSignal()?.id }}</p>

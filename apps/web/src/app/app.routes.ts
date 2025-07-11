@@ -28,6 +28,10 @@ export const routes: Routes = [
   { path: 'kontakte/hinzufuegen', component: KontaktErstellenOderBearbeiten },
   { path: 'kontakte/:id', component: KontaktDetail },
   {
+    path: 'kontakte/:id/bearbeiten',
+    component: KontaktErstellenOderBearbeiten,
+  },
+  {
     path: 'immobilien/hinzufuegen',
     component: ImmobilieErstellenOderBearbeiten,
   },

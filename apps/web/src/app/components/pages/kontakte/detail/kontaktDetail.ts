@@ -6,6 +6,7 @@ import { KontaktAntwortMitBeziehungenDto } from '../../../../api/models';
 
 @Component({
   selector: 'kontakt-detail',
+  styleUrl: './kontaktDetail.scss',
   standalone: true,
   templateUrl: './kontaktDetail.html',
 })

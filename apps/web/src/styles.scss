@@ -111,7 +111,8 @@ body {
   }
 }
 
-kontakt-erstellen {
+kontakt-erstellen,
+kontakt-detail {
   @include mat.button-overrides(
     (
       filled-container-color: #1fb990,
