@@ -17,15 +17,7 @@ export class KontakteTable {
 
   displayedColumns: string[] = ['name', 'adresse', 'land', 'action'];
 
-  ngOnInit() {
-    console.log(
-      `${Math.floor(Math.random() * 100)} Initialized: ${this.constructor.name}`,
-    );
-  }
+  ngOnInit() {}
 
-  ngOnDestroy() {
-    console.log(
-      `${Math.floor(Math.random() * 100)} Destroyed: ${this.constructor.name}`,
-    );
-  }
+  ngOnDestroy() {}
 }

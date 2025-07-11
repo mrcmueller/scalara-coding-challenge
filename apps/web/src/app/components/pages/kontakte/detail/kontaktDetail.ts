@@ -29,9 +29,6 @@ export class KontaktDetail {
   params?: { id?: string };
 
   ngOnInit() {
-    console.log(
-      `${Math.floor(Math.random() * 100)} Initialized: ${this.constructor.name}`,
-    );
     // this.refresh.pipe(
     //   startWith(null),
     //   switchMap(() => {
@@ -66,9 +63,5 @@ export class KontaktDetail {
     });
   }
 
-  ngOnDestroy() {
-    console.log(
-      `${Math.floor(Math.random() * 100)} Destroyed: ${this.constructor.name}`,
-    );
-  }
+  ngOnDestroy() {}
 }

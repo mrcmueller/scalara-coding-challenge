@@ -97,10 +97,6 @@ export class ImmobilieErstellenOderBearbeiten {
   }
 
   ngOnInit() {
-    console.log(
-      `${Math.floor(Math.random() * 100)} Initialized: ${this.constructor.name}`,
-    );
-
     const routeSub = this.route.params.subscribe((params) => {
       this.id = params['id'];
     });
@@ -180,9 +176,5 @@ export class ImmobilieErstellenOderBearbeiten {
     this.goBack();
   }
 
-  ngOnDestroy() {
-    console.log(
-      `${Math.floor(Math.random() * 100)} Destroyed: ${this.constructor.name}`,
-    );
-  }
+  ngOnDestroy() {}
 }

@@ -18,10 +18,6 @@ export class ImmobilienDetail {
     signal(null);
 
   ngOnInit() {
-    console.log(
-      `${Math.floor(Math.random() * 100)} Initialized: ${this.constructor.name}`,
-    );
-
     this.route.params.subscribe((params) => {
       console.log('param update, immos');
 
@@ -35,9 +31,5 @@ export class ImmobilienDetail {
     });
   }
 
-  ngOnDestroy() {
-    console.log(
-      `${Math.floor(Math.random() * 100)} Destroyed: ${this.constructor.name}`,
-    );
-  }
+  ngOnDestroy() {}
 }

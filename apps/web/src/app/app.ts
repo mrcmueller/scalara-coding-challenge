@@ -14,15 +14,8 @@ export class App {
   route = inject(ActivatedRoute);
 
   ngOnInit() {
-    console.log(
-      `${Math.floor(Math.random() * 100)} Initialized: ${this.constructor.name}`,
-    );
     // this.router.events.subscribe((e) => console.log(e));
   }
 
-  ngOnDestroy() {
-    console.log(
-      `${Math.floor(Math.random() * 100)} Destroyed: ${this.constructor.name}`,
-    );
-  }
+  ngOnDestroy() {}
 }
