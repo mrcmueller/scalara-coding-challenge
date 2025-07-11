@@ -10,10 +10,7 @@
     <div class="alert text-red-700 text-xs pt-2 pb-2">
       @if (control.hasError('required')) {
         Postleitzahl ist erforderlich.
-      }
-      @if (
-        control.hasError('invalidPostalCode') && !control.hasError('required')
-      ) {
+      } @else if (control.hasError('invalidPostalCode')) {
         Postleitzahl ungültig für ausgewähltes Land.
       }
     </div>

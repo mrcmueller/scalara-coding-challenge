@@ -5,6 +5,8 @@
     <div class="alert text-red-700 text-xs pt-2 pb-2">
       @if (control.hasError('required')) {
         Straße ist erforderlich.
+      } @else if (control.hasError('pattern')) {
+        Ein Straßenname benötigt Buchstaben.
       }
     </div>
   }

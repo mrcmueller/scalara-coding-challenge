@@ -65,7 +65,10 @@ export class KontaktErstellenOderBearbeiten {
       Validators.required,
       Validators.pattern(/.*[A-Za-z].*/),
     ]) as FormControl<string>,
-    strasse: new FormControl('', Validators.required) as FormControl<string>,
+    strasse: new FormControl('', [
+      Validators.pattern(/.*[A-Za-z].*/),
+      Validators.required,
+    ]) as FormControl<string>,
     hausnummer: new FormControl('', [
       Validators.required,
       Validators.pattern(/\d/),
@@ -74,7 +77,10 @@ export class KontaktErstellenOderBearbeiten {
       Validators.required,
       postalCodeValidator(this.getLocale),
     ]) as FormControl<string>,
-    stadt: new FormControl('', Validators.required) as FormControl<string>,
+    stadt: new FormControl('', [
+      Validators.pattern(/.*[A-Za-z].*/),
+      Validators.required,
+    ]) as FormControl<string>,
     land: new FormControl(this.land, Validators.required) as FormControl<Land>,
   });
 

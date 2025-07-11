@@ -11,7 +11,7 @@ export interface DialogData {
 export class ExampleErrorDialog {
   readonly dialogRef = inject(MatDialogRef<ExampleErrorDialog>);
   readonly data = inject<DialogData>(MAT_DIALOG_DATA);
-  readonly error = model(this.data.err);
+  readonly error = model<Error>(this.data.err);
 
   onNoClick(): void {
     this.dialogRef.close();
