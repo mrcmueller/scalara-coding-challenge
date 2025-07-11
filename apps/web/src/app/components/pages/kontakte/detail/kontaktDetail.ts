@@ -1,9 +1,16 @@
-import { Component, inject, Signal } from '@angular/core';
+import {
+  Component,
+  inject,
+  signal,
+  Signal,
+  WritableSignal,
+} from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { KontakteService } from '../../../../api/services';
 import { KontaktAntwortMitBeziehungenDto } from '../../../../api/models';
 import { MatButtonModule } from '@angular/material/button';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'kontakt-detail',
@@ -13,13 +20,21 @@ import { MatButtonModule } from '@angular/material/button';
   imports: [MatButtonModule],
 })
 export class KontaktDetail {
-  id: string;
-  kontaktSignal: Signal<KontaktAntwortMitBeziehungenDto | null>;
-  constructor(kontakteService: KontakteService, route: ActivatedRoute) {
-    this.id = route.snapshot.paramMap.get('id')!;
-    this.kontaktSignal = toSignal(
-      kontakteService.kontakteControllerKontakt({ id: this.id }),
-      { initialValue: null },
-    );
+  route = inject(ActivatedRoute);
+  service = inject(KontakteService);
+  id = '';
+  kontaktSignal: WritableSignal<undefined | KontaktAntwortMitBeziehungenDto> =
+    signal(undefined);
+
+  ngOnInit() {
+    const routeSub = this.route.params.subscribe((params) => {
+      this.id = params['id'];
+    });
+
+    if (this.id) {
+      this.service
+        .kontakteControllerKontakt({ id: this.id })
+        .subscribe((val) => this.kontaktSignal.set(val));
+    }
   }
 }

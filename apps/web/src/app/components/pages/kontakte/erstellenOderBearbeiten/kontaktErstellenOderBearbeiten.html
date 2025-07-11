@@ -1,4 +1,4 @@
-<h1>@if(editMode){Kontakt bearbeiten}@else{Kontakt hinzufügen}</h1>
+<h1>@if(id){Kontakt bearbeiten}@else{Kontakt hinzufügen}</h1>
 
 <!-- {
   "name": "string",
@@ -42,7 +42,7 @@
       matButton="filled"
       class="-mt-1"
     >
-      @if(editMode){Ändern}@else{Hinzufügen}
+      @if(id){Ändern}@else{Hinzufügen}
     </button>
   </form>
 </div>

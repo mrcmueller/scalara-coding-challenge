@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Signal } from '@angular/core';
 import {
   FormsModule,
   ReactiveFormsModule,
@@ -12,7 +12,10 @@ import { HausnummerEditorComponent } from '../../../form/hausnummer/hausnummer-e
 import { StadtEditorComponent } from '../../../form/stadt/stadt-editor.component';
 import { StrasseEditorComponent } from '../../../form/strasse/strasse-editor.component';
 import { ImmobilienService } from '../../../../api/services';
-import { ImmobilieErstellenDto } from '../../../../api/models';
+import {
+  ImmobilieErstellenDto,
+  KontaktAntwortMitBeziehungenDto,
+} from '../../../../api/models';
 import { postalCodeValidator } from '../../../form/postleitzahl/postalCodeValidator.directive';
 import { LandEditorComponent } from '../../../form/land/land-editor.component';
 import { LAENDER, Land, LOCALES } from '../../../form/land/laender';
