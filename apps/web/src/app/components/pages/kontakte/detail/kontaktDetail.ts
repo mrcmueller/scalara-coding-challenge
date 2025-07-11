@@ -6,11 +6,12 @@ import {
   WritableSignal,
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { KontakteService } from '../../../../api/services';
 import { KontaktAntwortMitBeziehungenDto } from '../../../../api/models';
 import { MatButtonModule } from '@angular/material/button';
-import { Observable } from 'rxjs';
+import { delay, Observable, startWith, switchMap } from 'rxjs';
+import { KontaktDetailRefresh } from '../../../../services/kontaktDetailRefresh.service';
 
 @Component({
   selector: 'kontakt-detail',
@@ -20,20 +21,44 @@ import { Observable } from 'rxjs';
   imports: [MatButtonModule],
 })
 export class KontaktDetail {
+  router = inject(Router);
   route = inject(ActivatedRoute);
   service = inject(KontakteService);
-  id = '';
-  kontaktSignal: WritableSignal<null | KontaktAntwortMitBeziehungenDto> =
-    signal(null);
+  refresh = inject(KontaktDetailRefresh);
+  data: WritableSignal<null | KontaktAntwortMitBeziehungenDto> = signal(null);
+  params?: { id?: string };
 
   ngOnInit() {
-    const routeSub = this.route.params.subscribe((params) => {
-      this.id = params['id'];
+    // this.refresh.pipe(
+    //   startWith(null),
+    //   switchMap(() => {
+    //     return this.service.kontakteControllerKontakt({id: ""});
+    //   }),
+    // );
 
-      if (this.id) {
-        this.service
-          .kontakteControllerKontakt({ id: this.id })
-          .subscribe((val) => this.kontaktSignal.set(val));
+    this.route.params.subscribe((params) => {
+      this.params = params;
+      console.log('param update, kontakts');
+      const id = params['id'];
+      console.log(params);
+
+      if (id) {
+        setTimeout(() => {
+          this.service
+            .kontakteControllerKontakt({ id })
+            .subscribe((val) => this.data.set(val));
+        }, 2000);
+      }
+    });
+
+    console.log(this.route.snapshot.routeConfig?.path);
+
+    this.refresh.subscribe(() => {
+      const routeConfig = this.route.snapshot.routeConfig?.path;
+      if (
+        typeof routeConfig === 'string' &&
+        routeConfig.startsWith('kontakte/:id')
+      ) {
       }
     });
   }

@@ -14,17 +14,18 @@ import { MatButtonModule } from '@angular/material/button';
 export class ImmobilienDetail {
   route = inject(ActivatedRoute);
   service = inject(ImmobilienService);
-  id = '';
   immobilienSignal: WritableSignal<null | ImmobilieAntwortMitBeziehungenDto> =
     signal(null);
 
   ngOnInit() {
-    const routeSub = this.route.params.subscribe((params) => {
-      this.id = params['id'];
+    this.route.params.subscribe((params) => {
+      console.log('param update, immos');
 
-      if (this.id) {
+      const id = params['id'];
+
+      if (id) {
         this.service
-          .immobilienControllerImmobilie({ id: this.id })
+          .immobilienControllerImmobilie({ id })
           .subscribe((val) => this.immobilienSignal.set(val));
       }
     });

@@ -1,8 +1,9 @@
 <div class="flex justify-between">
   <h1>Immobilien-Details</h1>
+  @if (immobilienSignal()?.id) {
   <a href="/immobilien/{{ immobilienSignal()?.id }}/bearbeiten"
     ><button matButton="filled" class="-mt-1">Bearbeiten</button></a
-  >
+  >}
 </div>
 
 @if (immobilienSignal()) {
