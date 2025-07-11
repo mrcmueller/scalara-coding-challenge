@@ -23,18 +23,18 @@ export class KontaktDetail {
   route = inject(ActivatedRoute);
   service = inject(KontakteService);
   id = '';
-  kontaktSignal: WritableSignal<undefined | KontaktAntwortMitBeziehungenDto> =
-    signal(undefined);
+  kontaktSignal: WritableSignal<null | KontaktAntwortMitBeziehungenDto> =
+    signal(null);
 
   ngOnInit() {
     const routeSub = this.route.params.subscribe((params) => {
       this.id = params['id'];
-    });
 
-    if (this.id) {
-      this.service
-        .kontakteControllerKontakt({ id: this.id })
-        .subscribe((val) => this.kontaktSignal.set(val));
-    }
+      if (this.id) {
+        this.service
+          .kontakteControllerKontakt({ id: this.id })
+          .subscribe((val) => this.kontaktSignal.set(val));
+      }
+    });
   }
 }

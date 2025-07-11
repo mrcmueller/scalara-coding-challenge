@@ -15,19 +15,18 @@ export class ImmobilienDetail {
   route = inject(ActivatedRoute);
   service = inject(ImmobilienService);
   id = '';
-  immobilienSignal: WritableSignal<
-    undefined | ImmobilieAntwortMitBeziehungenDto
-  > = signal(undefined);
+  immobilienSignal: WritableSignal<null | ImmobilieAntwortMitBeziehungenDto> =
+    signal(null);
 
   ngOnInit() {
     const routeSub = this.route.params.subscribe((params) => {
       this.id = params['id'];
-    });
 
-    if (this.id) {
-      this.service
-        .immobilienControllerImmobilie({ id: this.id })
-        .subscribe((val) => this.immobilienSignal.set(val));
-    }
+      if (this.id) {
+        this.service
+          .immobilienControllerImmobilie({ id: this.id })
+          .subscribe((val) => this.immobilienSignal.set(val));
+      }
+    });
   }
 }

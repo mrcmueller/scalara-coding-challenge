@@ -1,18 +1,18 @@
 <div class="flex justify-between">
   <h1>Kontakt-Details</h1>
-  <a href="/kontakte/{{ kontaktSignal()!.id }}/bearbeiten"
+  <a href="/kontakte/{{ kontaktSignal()?.id }}/bearbeiten"
     ><button matButton="filled" class="-mt-1">Bearbeiten</button></a
   >
 </div>
 
 @if (kontaktSignal()) {
 <div class="mt-4">
-  <p><strong>Name: </strong>{{ kontaktSignal()!.name }}</p>
-  <p><strong>Straße: </strong>{{ kontaktSignal()!.strasse }}</p>
-  <p><strong>Hausnummer: </strong>{{ kontaktSignal()!.hausnummer}}</p>
-  <p><strong>Postleitzahl: </strong>{{ kontaktSignal()!.postleitzahl }}</p>
-  <p><strong>Stadt: </strong>{{kontaktSignal()!.stadt}}</p>
-  <p><strong>Land: </strong>{{ kontaktSignal()!.land }}</p>
+  <p><strong>Name: </strong>{{ kontaktSignal()?.name }}</p>
+  <p><strong>Straße: </strong>{{ kontaktSignal()?.strasse }}</p>
+  <p><strong>Hausnummer: </strong>{{ kontaktSignal()?.hausnummer}}</p>
+  <p><strong>Postleitzahl: </strong>{{ kontaktSignal()?.postleitzahl }}</p>
+  <p><strong>Stadt: </strong>{{kontaktSignal()?.stadt}}</p>
+  <p><strong>Land: </strong>{{ kontaktSignal()?.land }}</p>
 </div>
 } @else {
 <p>Lade Kontakt...</p>

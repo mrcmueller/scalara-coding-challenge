@@ -1,18 +1,18 @@
 <div class="flex justify-between">
   <h1>Immobilien-Details</h1>
-  <a href="/immobilien/{{ immobilienSignal()!.id }}/bearbeiten"
+  <a href="/immobilien/{{ immobilienSignal()?.id }}/bearbeiten"
     ><button matButton="filled" class="-mt-1">Bearbeiten</button></a
   >
 </div>
 
 @if (immobilienSignal()) {
 <div class="mt-4">
-  <p><strong>Name: </strong>{{ immobilienSignal()!.name }}</p>
-  <p><strong>Straße: </strong>{{ immobilienSignal()!.strasse }}</p>
-  <p><strong>Hausnummer: </strong>{{ immobilienSignal()!.hausnummer}}</p>
-  <p><strong>Postleitzahl: </strong>{{ immobilienSignal()!.postleitzahl }}</p>
-  <p><strong>Stadt: </strong>{{immobilienSignal()!.stadt}}</p>
-  <p><strong>Land: </strong>{{ immobilienSignal()!.land }}</p>
+  <p><strong>Name: </strong>{{ immobilienSignal()?.name }}</p>
+  <p><strong>Straße: </strong>{{ immobilienSignal()?.strasse }}</p>
+  <p><strong>Hausnummer: </strong>{{ immobilienSignal()?.hausnummer}}</p>
+  <p><strong>Postleitzahl: </strong>{{ immobilienSignal()?.postleitzahl }}</p>
+  <p><strong>Stadt: </strong>{{immobilienSignal()?.stadt}}</p>
+  <p><strong>Land: </strong>{{ immobilienSignal()?.land }}</p>
   <p><strong>beschreibung: </strong>{{ immobilienSignal()!.beschreibung }}</p>
 </div>
 } @else {
