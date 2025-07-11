@@ -27,11 +27,11 @@ export const routes: Routes = [
     component: ImmobilieErstellenOderBearbeiten,
   },
   {
-    path: 'immobilien/:id',
+    path: 'immobilien/:immobilienId',
     component: ImmobilienDetail,
   },
   {
-    path: 'immobilien/:id/bearbeiten',
+    path: 'immobilien/:immobilienId/bearbeiten',
     component: ImmobilieErstellenOderBearbeiten,
   },
   {

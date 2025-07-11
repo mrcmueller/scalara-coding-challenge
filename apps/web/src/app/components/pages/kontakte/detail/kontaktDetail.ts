@@ -29,6 +29,9 @@ export class KontaktDetail {
   params?: { id?: string };
 
   ngOnInit() {
+    console.log(
+      `${Math.floor(Math.random() * 100)} Initialized: ${this.constructor.name}`,
+    );
     // this.refresh.pipe(
     //   startWith(null),
     //   switchMap(() => {
@@ -38,9 +41,9 @@ export class KontaktDetail {
 
     this.route.params.subscribe((params) => {
       this.params = params;
-      console.log('param update, kontakts');
+      // console.log('param update, kontakts');
       const id = params['id'];
-      console.log(params);
+      // console.log(params);
 
       if (id) {
         setTimeout(() => {
@@ -51,7 +54,7 @@ export class KontaktDetail {
       }
     });
 
-    console.log(this.route.snapshot.routeConfig?.path);
+    // console.log(this.route.snapshot.routeConfig?.path);
 
     this.refresh.subscribe(() => {
       const routeConfig = this.route.snapshot.routeConfig?.path;
@@ -61,5 +64,11 @@ export class KontaktDetail {
       ) {
       }
     });
+  }
+
+  ngOnDestroy() {
+    console.log(
+      `${Math.floor(Math.random() * 100)} Destroyed: ${this.constructor.name}`,
+    );
   }
 }

@@ -92,6 +92,10 @@ export class KontaktErstellenOderBearbeiten {
   });
 
   ngOnInit() {
+    console.log(
+      `${Math.floor(Math.random() * 100)} Initialized: ${this.constructor.name}`,
+    );
+
     const routeSub = this.route.params.subscribe((params) => {
       this.id = params['id'];
     });
@@ -170,5 +174,11 @@ export class KontaktErstellenOderBearbeiten {
       },
     });
     this.goBack();
+  }
+
+  ngOnDestroy() {
+    console.log(
+      `${Math.floor(Math.random() * 100)} Destroyed: ${this.constructor.name}`,
+    );
   }
 }
