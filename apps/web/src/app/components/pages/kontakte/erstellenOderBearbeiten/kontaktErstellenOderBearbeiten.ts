@@ -15,11 +15,12 @@ import { StrasseEditorComponent } from '../../../form/strasse/strasse-editor.com
 import { KontakteService } from '../../../../api/services';
 import { KontaktErstellenDto } from '../../../../api/models';
 import { postalCodeValidator } from '../../../form/postleitzahl/postalCodeValidator.directive';
-import { filter } from 'rxjs';
 import { LandEditorComponent } from '../../../form/land/land-editor.component';
 import { LAENDER, Land, LOCALES } from '../../../form/land/laender';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { KontakteRefresh } from '../../../tables/KontakteTable';
+import { ActivatedRoute, Router } from '@angular/router';
+import { KontakteRefresh } from '../../../../services/kontakteRefresh.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ExampleErrorDialog } from '../../../error/exampleError';
 
 @Component({
   selector: 'kontakt-erstellen-oder-bearbeiten',
@@ -44,9 +45,11 @@ export class KontaktErstellenOderBearbeiten {
   private router = inject(Router);
   private service = inject(KontakteService);
   public kontakteRefresh = inject(KontakteRefresh);
+  readonly dialog = inject(MatDialog);
+
   // passed to Subcomponent
-  laender = LAENDER;
-  locales = LOCALES;
+  laender = [...LAENDER, 'Großbritannien'];
+  locales = [...LOCALES, 'GB'];
   initialLandId = 0;
   //
   land = this.laender[this.initialLandId];
@@ -92,12 +95,33 @@ export class KontaktErstellenOderBearbeiten {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 
-  onSubmit() {
+  openErrorDialog(err: Error): void {
+    const dialogRef = this.dialog.open(ExampleErrorDialog, {
+      data: { err },
+    });
+  }
+
+  onSubmit(): void {
     this.service
       .kontakteControllerErstelleKontakte({
         body: this.kontaktErstellenForm.value as KontaktErstellenDto,
       })
-      .subscribe(() => this.kontakteRefresh.refresh());
+      .subscribe({
+        next: (data) => {
+          console.log(data);
+          this.kontakteRefresh.refresh();
+        },
+        error: (err) => {
+          this.openErrorDialog(err);
+          console.error('Error occurred:', err);
+          if (err?.status) {
+            console.error('Error status:', err.status);
+          }
+          if (err?.response) {
+            console.error('Error body:', err.response);
+          }
+        },
+      });
     this.goBack();
   }
 }
