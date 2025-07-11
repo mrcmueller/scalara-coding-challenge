@@ -1,0 +1,18 @@
+<mat-form-field appearance="outline">
+  <mat-label>Beschreibung</mat-label>
+  <textarea
+    matInput
+    placeholder="Ihre Beschreibung"
+    [formControl]="control"
+    required
+  ></textarea>
+  @if (control.invalid && (control.dirty || control.touched)) {
+    <div class="alert text-red-700 text-xs pt-2 pb-2">
+      @if (control.hasError('required')) {
+        Eine Beschreibung ist erforderlich.
+      } @else if (control.hasError('minlength')) {
+        Die Beschreibung muss mindestens 15 Zeichen lang sein.
+      }
+    </div>
+  }
+</mat-form-field>

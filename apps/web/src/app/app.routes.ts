@@ -6,6 +6,7 @@ import { KontaktePage } from './components/pages/kontakte/kontaktePage';
 import { BeziehungenPage } from './components/pages/beziehungen/beziehungenPage';
 import { KontaktDetail } from './components/pages/kontakte/detail/kontaktDetail';
 import { KontaktErstellenOderBearbeiten } from './components/pages/kontakte/erstellenOderBearbeiten/kontaktErstellenOderBearbeiten';
+import { ImmobilieErstellenOderBearbeiten } from './components/pages/immobilien/erstellenOderBearbeiten/immobilieErstellenOderBearbeiten';
 
 export const routes: Routes = [
   {
@@ -26,6 +27,10 @@ export const routes: Routes = [
   },
   { path: 'kontakte/hinzufuegen', component: KontaktErstellenOderBearbeiten },
   { path: 'kontakte/:id', component: KontaktDetail },
+  {
+    path: 'immobilien/hinzufuegen',
+    component: ImmobilieErstellenOderBearbeiten,
+  },
   //   { path: 'immobilien', component:  },
   //   { path: 'immobilien/:id', component:  },
   //   { path: 'immobilien/neu', component:  },

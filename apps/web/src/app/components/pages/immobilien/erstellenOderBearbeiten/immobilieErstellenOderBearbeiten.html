@@ -1,0 +1,45 @@
+<h1>Immobilie hinzufügen</h1>
+
+<div class="form-container mt-10">
+  <form [formGroup]="immobilieErstellenForm" (ngSubmit)="onSubmit()">
+    <div class="mb-6">
+      <div class="form-fields flex flex-col gap-1">
+        <div class="w-full flex justify-between gap-4">
+          <name-editor [control]="immobilieErstellenForm.controls.name" />
+          <strasse-editor [control]="immobilieErstellenForm.controls.strasse" />
+        </div>
+        <div class="w-full flex justify-between gap-4">
+          <hausnummer-editor
+            [control]="immobilieErstellenForm.controls.hausnummer"
+          />
+          <postleitzahl-editor
+            [control]="immobilieErstellenForm.controls.postleitzahl"
+          />
+        </div>
+        <div class="w-full flex justify-between gap-4">
+          <stadt-editor [control]="immobilieErstellenForm.controls.stadt" />
+          <land-editor
+            [laender]="laender"
+            [locales]="locales"
+            [initalLandId]="initialLandId"
+            [control]="immobilieErstellenForm.controls.land"
+          />
+        </div>
+        <div class="w-full">
+          <beschreibung-editor
+            [control]="immobilieErstellenForm.controls.beschreibung"
+            class="w-full"
+          />
+        </div>
+      </div>
+    </div>
+    <button
+      type="submit"
+      [disabled]="!immobilieErstellenForm.valid"
+      matButton="filled"
+      class="-mt-1"
+    >
+      Hinzufügen
+    </button>
+  </form>
+</div>

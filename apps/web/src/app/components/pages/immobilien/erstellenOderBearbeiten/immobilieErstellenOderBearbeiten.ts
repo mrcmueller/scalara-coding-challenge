@@ -11,23 +11,23 @@ import { PostleitzahlEditorComponent } from '../../../form/postleitzahl/postleit
 import { HausnummerEditorComponent } from '../../../form/hausnummer/hausnummer-editor.component';
 import { StadtEditorComponent } from '../../../form/stadt/stadt-editor.component';
 import { StrasseEditorComponent } from '../../../form/strasse/strasse-editor.component';
-import { KontakteService } from '../../../../api/services';
-import { KontaktErstellenDto } from '../../../../api/models';
+import { ImmobilienService } from '../../../../api/services';
+import { ImmobilieErstellenDto } from '../../../../api/models';
 import { postalCodeValidator } from '../../../form/postleitzahl/postalCodeValidator.directive';
 import { LandEditorComponent } from '../../../form/land/land-editor.component';
 import { LAENDER, Land, LOCALES } from '../../../form/land/laender';
 import { ActivatedRoute, Router } from '@angular/router';
-import { KontakteRefresh } from '../../../../services/kontakteRefresh.service';
+import { ImmobilienRefresh } from '../../../../services/immobilienRefresh.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ExampleErrorDialog } from '../../../error/exampleError';
 import { NameEditorComponent } from '../../../form/name/name-editor.component';
+import { BeschreibungEditorComponent } from '../../../form/beschreibung/beschreibung-editor.component';
 
 @Component({
-  selector: 'kontakt-erstellen-oder-bearbeiten',
+  selector: 'immobilie-erstellen-oder-bearbeiten',
   standalone: true,
-  // imports: [RouterOutlet],
-  templateUrl: './kontaktErstellenOderBearbeiten.html',
-  styleUrl: './kontaktErstellenOderBearbeiten.scss',
+  templateUrl: './immobilieErstellenOderBearbeiten.html',
+  styleUrl: './immobilieErstellenOderBearbeiten.scss',
   imports: [
     MatButtonModule,
     FormsModule,
@@ -38,20 +38,19 @@ import { NameEditorComponent } from '../../../form/name/name-editor.component';
     PostleitzahlEditorComponent,
     StadtEditorComponent,
     LandEditorComponent,
+    BeschreibungEditorComponent,
   ],
 })
-export class KontaktErstellenOderBearbeiten {
+export class ImmobilieErstellenOderBearbeiten {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
-  private service = inject(KontakteService);
-  public kontakteRefresh = inject(KontakteRefresh);
+  private service = inject(ImmobilienService);
+  public immobilienRefresh = inject(ImmobilienRefresh);
   readonly dialog = inject(MatDialog);
 
-  // passed to Subcomponent
   laender = [...LAENDER, 'Großbritannien'];
   locales = [...LOCALES, 'GB'];
   initialLandId = 0;
-  //
   land = this.laender[this.initialLandId];
   locale = this.locales[this.initialLandId];
   valueChanges: any;
@@ -60,7 +59,7 @@ export class KontaktErstellenOderBearbeiten {
     return this.locale;
   };
 
-  kontaktErstellenForm = new FormGroup({
+  immobilieErstellenForm = new FormGroup({
     name: new FormControl('', [
       Validators.required,
       Validators.pattern(/.*[A-Za-z].*/),
@@ -82,6 +81,10 @@ export class KontaktErstellenOderBearbeiten {
       Validators.required,
     ]) as FormControl<string>,
     land: new FormControl(this.land, Validators.required) as FormControl<Land>,
+    beschreibung: new FormControl('', [
+      Validators.required,
+      Validators.minLength(15),
+    ]) as FormControl<string>,
   });
 
   setLocale(newValue: any): string {
@@ -90,10 +93,9 @@ export class KontaktErstellenOderBearbeiten {
   }
 
   constructor() {
-    this.kontaktErstellenForm.controls.land.valueChanges.subscribe((val) => {
+    this.immobilieErstellenForm.controls.land.valueChanges.subscribe((val) => {
       const newLocale = this.setLocale(val);
-      const currentValue =
-        this.kontaktErstellenForm.controls.postleitzahl.updateValueAndValidity();
+      this.immobilieErstellenForm.controls.postleitzahl.updateValueAndValidity();
     });
   }
 
@@ -109,13 +111,13 @@ export class KontaktErstellenOderBearbeiten {
 
   onSubmit(): void {
     this.service
-      .kontakteControllerErstelleKontakte({
-        body: this.kontaktErstellenForm.value as KontaktErstellenDto,
+      .immobilienControllerErstelleImmobilie({
+        body: this.immobilieErstellenForm.value as ImmobilieErstellenDto,
       })
       .subscribe({
         next: (data) => {
           console.log(data);
-          this.kontakteRefresh.refresh();
+          this.immobilienRefresh.refresh();
         },
         error: (err) => {
           this.openErrorDialog(err);

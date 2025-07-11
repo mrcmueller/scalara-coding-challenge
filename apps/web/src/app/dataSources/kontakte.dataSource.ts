@@ -9,10 +9,6 @@ export interface Delete {
   delete: (id: string) => void;
 }
 
-// @InjectService("ServiceName")
-// @InjectTypes("SinglurName", "Pluralname")
-// @Delete()
-// @Create()
 export class KontakteDataSource
   extends DataSource<KontaktAntwortMitBeziehungenDto>
   implements Delete

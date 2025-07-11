@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { KontakteTable } from '../../tables/KontakteTable';
 import { MatButtonModule } from '@angular/material/button';
+import { KontakteTable } from '../../tables/kontakte/KontakteTable';
 // import { RouterOutlet } from '@angular/router';
 
 @Component({

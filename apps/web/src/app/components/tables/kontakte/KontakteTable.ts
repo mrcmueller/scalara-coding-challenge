@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
-import { KontakteDataSource } from '../../dataSources/kontakte.dataSource';
+import { KontakteDataSource } from '../../../dataSources/kontakte.dataSource';
 
 @Component({
   selector: 'kontakte-table',
