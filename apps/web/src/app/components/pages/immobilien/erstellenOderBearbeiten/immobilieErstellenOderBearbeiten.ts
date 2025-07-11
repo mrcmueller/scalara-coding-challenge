@@ -1,4 +1,4 @@
-import { Component, inject, Signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   FormsModule,
   ReactiveFormsModule,
@@ -13,8 +13,8 @@ import { StadtEditorComponent } from '../../../form/stadt/stadt-editor.component
 import { StrasseEditorComponent } from '../../../form/strasse/strasse-editor.component';
 import { ImmobilienService } from '../../../../api/services';
 import {
+  ImmobilieAendernDto,
   ImmobilieErstellenDto,
-  KontaktAntwortMitBeziehungenDto,
 } from '../../../../api/models';
 import { postalCodeValidator } from '../../../form/postleitzahl/postalCodeValidator.directive';
 import { LandEditorComponent } from '../../../form/land/land-editor.component';
@@ -50,6 +50,7 @@ export class ImmobilieErstellenOderBearbeiten {
   private service = inject(ImmobilienService);
   public immobilienRefresh = inject(ImmobilienRefresh);
   readonly dialog = inject(MatDialog);
+  id = '';
 
   laender = [...LAENDER, 'Großbritannien'];
   locales = [...LOCALES, 'GB'];
@@ -95,7 +96,40 @@ export class ImmobilieErstellenOderBearbeiten {
     return this.locale;
   }
 
-  constructor() {
+  ngOnInit() {
+    const routeSub = this.route.params.subscribe((params) => {
+      this.id = params['id'];
+    });
+
+    if (this.id) {
+      this.service
+        .immobilienControllerImmobilie({
+          id: this.id as string,
+        })
+        .subscribe((val) => {
+          this.immobilieErstellenForm.controls.name.setValue(val.name);
+
+          this.immobilieErstellenForm.controls.strasse.setValue(val.strasse);
+
+          this.immobilieErstellenForm.controls.hausnummer.setValue(
+            val.hausnummer,
+          );
+
+          this.immobilieErstellenForm.controls.postleitzahl.setValue(
+            val.postleitzahl,
+          );
+
+          this.immobilieErstellenForm.controls.stadt.setValue(val.stadt);
+
+          this.immobilieErstellenForm.controls.land.setValue(val.land);
+
+          this.immobilieErstellenForm.controls.beschreibung.setValue(
+            val.beschreibung,
+          );
+        });
+    }
+
+    // Validiere Postleitzahl erneut wenn sich Land ändert
     this.immobilieErstellenForm.controls.land.valueChanges.subscribe((val) => {
       const newLocale = this.setLocale(val);
       this.immobilieErstellenForm.controls.postleitzahl.updateValueAndValidity();
@@ -113,27 +147,32 @@ export class ImmobilieErstellenOderBearbeiten {
   }
 
   onSubmit(): void {
-    this.service
-      .immobilienControllerErstelleImmobilie({
-        body: this.immobilieErstellenForm.value as ImmobilieErstellenDto,
-      })
-      .subscribe({
-        next: (data) => {
-          console.log(data);
-          this.immobilienRefresh.refresh();
-        },
-        error: (err) => {
-          this.openErrorDialog(err);
-          console.error('Error occurred:', err);
-          if (err?.status) {
-            console.error('Error status:', err.status);
-          }
-          if (err?.response) {
-            console.error('Error body:', err.response);
-          }
-          this.immobilienRefresh.refresh();
-        },
-      });
+    const request = this.id
+      ? this.service.immobilienControllerAendereImmobilie({
+          id: this.id,
+          body: this.immobilieErstellenForm.value as ImmobilieAendernDto,
+        })
+      : this.service.immobilienControllerErstelleImmobilie({
+          body: this.immobilieErstellenForm.value as ImmobilieErstellenDto,
+        });
+
+    request.subscribe({
+      next: (data) => {
+        console.log(data);
+        this.immobilienRefresh.refresh();
+      },
+      error: (err) => {
+        this.openErrorDialog(err);
+        console.error('Error occurred:', err);
+        if (err?.status) {
+          console.error('Error status:', err.status);
+        }
+        if (err?.response) {
+          console.error('Error body:', err.response);
+        }
+        this.immobilienRefresh.refresh();
+      },
+    });
     this.goBack();
   }
 }

@@ -1,4 +1,4 @@
-<h1>Immobilie hinzufügen</h1>
+<h1>@if(id){Immobilie bearbeiten}@else{Immobilie hinzufügen}</h1>
 
 <div class="form-container mt-10">
   <form [formGroup]="immobilieErstellenForm" (ngSubmit)="onSubmit()">
@@ -39,7 +39,7 @@
       matButton="filled"
       class="-mt-1"
     >
-      Hinzufügen
+      @if(id){Ändern}@else{Hinzufügen}
     </button>
   </form>
 </div>

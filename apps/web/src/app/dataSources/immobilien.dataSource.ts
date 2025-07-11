@@ -5,8 +5,7 @@ import { ImmobilieAntwortMitBeziehungenDto } from '../api/models';
 import { ImmobilienService } from '../api/services';
 import { ImmobilienRefresh } from '../services/immobilienRefresh.service';
 import { Delete } from '../types/interfaces';
-import { ActivatedRoute } from '@angular/router';
-import { Router } from 'express';
+import { ActivatedRoute, Router } from '@angular/router';
 
 export class ImmobilienDataSource
   extends DataSource<ImmobilieAntwortMitBeziehungenDto>
