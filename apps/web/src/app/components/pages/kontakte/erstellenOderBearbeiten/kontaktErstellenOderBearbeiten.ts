@@ -166,6 +166,7 @@ export class KontaktErstellenOderBearbeiten {
         if (err?.response) {
           console.error('Error body:', err.response);
         }
+        this.kontakteRefresh.refresh();
       },
     });
     this.goBack();

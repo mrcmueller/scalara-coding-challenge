@@ -131,6 +131,7 @@ export class ImmobilieErstellenOderBearbeiten {
           if (err?.response) {
             console.error('Error body:', err.response);
           }
+          this.immobilienRefresh.refresh();
         },
       });
     this.goBack();

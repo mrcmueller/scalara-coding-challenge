@@ -105,14 +105,19 @@ body {
     cursor: pointer;
   }
 
-  textarea {
+  .mat-mdc-form-field:has(textarea) {
     width: 100% !important;
+
+    padding-bottom: 1rem !important;
+  }
+
+  textarea {
     min-height: 10rem !important;
   }
 }
 
 kontakt-erstellen,
-kontakt-detail {
+kontakt-details {
   @include mat.button-overrides(
     (
       filled-container-color: #1fb990,
