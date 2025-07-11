@@ -4,9 +4,10 @@ import { startWith, switchMap, Observable } from 'rxjs';
 import { KontaktAntwortMitBeziehungenDto } from '../api/models';
 import { KontakteService } from '../api/services';
 import { KontakteRefresh } from '../services/kontakteRefresh.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 export interface Delete {
-  delete: (id: string) => void;
+  delete: (id: string, event: Event) => void;
 }
 
 export class KontakteDataSource
@@ -18,20 +19,27 @@ export class KontakteDataSource
   }
 
   service = inject(KontakteService);
+  router = inject(Router);
+  route = inject(ActivatedRoute);
   refresh$ = inject(KontakteRefresh);
   data = this.refresh$.pipe(
-    startWith(null),
+    startWith([]),
     switchMap(() => {
       return this.service['kontakteControllerKontakte']();
     }),
   );
 
-  delete(id: string) {
+  delete(id: string, event: Event) {
+    event.stopPropagation();
     const sub = this.service
       .kontakteControllerLoescheKontakte({ id })
       .subscribe(() => {
         this.refresh$.refresh();
       });
+  }
+
+  visit(id: string, event: Event) {
+    this.router.navigate([`./${id}`], { relativeTo: this.route });
   }
 
   connect(): Observable<KontaktAntwortMitBeziehungenDto[]> {

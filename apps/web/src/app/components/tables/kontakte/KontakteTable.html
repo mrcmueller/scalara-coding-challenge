@@ -26,14 +26,18 @@
         <img
           src="/icons/Delete.svg"
           class="h-4 cursor-pointer"
-          (click)="dataSource.delete(element.id)"
+          (click)="dataSource.delete(element.id, $event)"
         />
       </div>
     </td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  <tr
+    mat-row
+    *matRowDef="let row; columns: displayedColumns;"
+    (click)="dataSource.visit(row.id, $event)"
+  ></tr>
 </table>
 
 }
