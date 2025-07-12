@@ -1,4 +1,10 @@
-import { Component, inject, Signal } from '@angular/core';
+import {
+  Component,
+  inject,
+  signal,
+  Signal,
+  WritableSignal,
+} from '@angular/core';
 import {
   FormsModule,
   ReactiveFormsModule,
@@ -26,7 +32,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ExampleErrorDialog } from '../../../error/exampleError';
 import { NameEditorComponent } from '../../../form/name/name-editor.component';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { of } from 'rxjs';
+import { of, take } from 'rxjs';
 
 @Component({
   selector: 'kontakt-erstellen-oder-bearbeiten',
@@ -50,22 +56,24 @@ export class KontaktErstellenOderBearbeiten {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private service = inject(KontakteService);
-  public kontakteRefresh = inject(KontakteRefresh);
+  private refresh$ = inject(KontakteRefresh);
   readonly dialog = inject(MatDialog);
-  id = '';
-
-  // passed to Subcomponent
   laender = [...LAENDER, 'Großbritannien'];
   locales = [...LOCALES, 'GB'];
   initialLandId = 0;
-  //
   land = this.laender[this.initialLandId];
   locale = this.locales[this.initialLandId];
   valueChanges: any;
+  id = this.getId();
+  data: WritableSignal<null | KontaktAntwortMitBeziehungenDto> = signal(null);
 
   getLocale = () => {
     return this.locale;
   };
+
+  getId(): string {
+    return this.route.snapshot.params['id'];
+  }
 
   kontaktErstellenForm = new FormGroup({
     name: new FormControl('', [
@@ -91,30 +99,41 @@ export class KontaktErstellenOderBearbeiten {
     land: new FormControl(this.land, Validators.required) as FormControl<Land>,
   });
 
+  fetchData() {
+    this.service
+      .kontakteControllerKontakt({ id: this.id })
+      .pipe(take(1))
+      .subscribe({
+        next: (val) => this.data.set(val),
+        error: (error) => this.handleError(error),
+      });
+  }
+
+  handleError(err: Error) {
+    // error not handled fully because of time
+    this.openErrorDialog(err);
+  }
+
   ngOnInit() {
-    if (this.id) {
-      this.service
-        .kontakteControllerKontakt({
-          id: this.id as string,
-        })
-        .subscribe((val) => {
-          this.kontaktErstellenForm.controls.name.setValue(val.name);
+    this.service
+      .kontakteControllerKontakt({
+        id: this.id as string,
+      })
+      .subscribe((val) => {
+        this.kontaktErstellenForm.controls.name.setValue(val.name);
 
-          this.kontaktErstellenForm.controls.strasse.setValue(val.strasse);
+        this.kontaktErstellenForm.controls.strasse.setValue(val.strasse);
 
-          this.kontaktErstellenForm.controls.hausnummer.setValue(
-            val.hausnummer,
-          );
+        this.kontaktErstellenForm.controls.hausnummer.setValue(val.hausnummer);
 
-          this.kontaktErstellenForm.controls.postleitzahl.setValue(
-            val.postleitzahl,
-          );
+        this.kontaktErstellenForm.controls.postleitzahl.setValue(
+          val.postleitzahl,
+        );
 
-          this.kontaktErstellenForm.controls.stadt.setValue(val.stadt);
+        this.kontaktErstellenForm.controls.stadt.setValue(val.stadt);
 
-          this.kontaktErstellenForm.controls.land.setValue(val.land);
-        });
-    }
+        this.kontaktErstellenForm.controls.land.setValue(val.land);
+      });
 
     // Validiere Postleitzahl erneut wenn sich Land ändert
     this.kontaktErstellenForm.controls.land.valueChanges.subscribe((val) => {
@@ -133,9 +152,15 @@ export class KontaktErstellenOderBearbeiten {
   }
 
   openErrorDialog(err: Error): void {
-    const dialogRef = this.dialog.open(ExampleErrorDialog, {
+    this.dialog.open(ExampleErrorDialog, {
       data: { err },
     });
+  }
+
+  handleUpdate(val: KontaktAntwortMitBeziehungenDto) {
+    // Notify others
+    this.refresh$.next();
+    this.goBack();
   }
 
   onSubmit(): void {
@@ -149,10 +174,7 @@ export class KontaktErstellenOderBearbeiten {
         });
 
     request.subscribe({
-      next: (data) => {
-        console.log(data);
-        this.kontakteRefresh.refresh();
-      },
+      next: (res) => this.handleUpdate(res),
       error: (err) => {
         this.openErrorDialog(err);
         console.error('Error occurred:', err);
@@ -162,7 +184,7 @@ export class KontaktErstellenOderBearbeiten {
         if (err?.response) {
           console.error('Error body:', err.response);
         }
-        this.kontakteRefresh.refresh();
+        this.refresh$.refresh();
       },
     });
     this.goBack();

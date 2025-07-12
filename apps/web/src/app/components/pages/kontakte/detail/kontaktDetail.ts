@@ -1,17 +1,12 @@
-import {
-  Component,
-  inject,
-  signal,
-  Signal,
-  WritableSignal,
-} from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { KontakteService } from '../../../../api/services';
 import { KontaktAntwortMitBeziehungenDto } from '../../../../api/models';
 import { MatButtonModule } from '@angular/material/button';
-import { delay, Observable, startWith, switchMap } from 'rxjs';
-import { KontaktDetailRefresh } from '../../../../services/kontaktDetailRefresh.service';
+import { KontakteRefresh } from '../../../../services/kontakteRefresh.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ExampleErrorDialog } from '../../../error/exampleError';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'kontakt-detail',
@@ -21,47 +16,44 @@ import { KontaktDetailRefresh } from '../../../../services/kontaktDetailRefresh.
   imports: [MatButtonModule],
 })
 export class KontaktDetail {
-  router = inject(Router);
-  route = inject(ActivatedRoute);
-  service = inject(KontakteService);
-  refresh = inject(KontaktDetailRefresh);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  private service = inject(KontakteService);
+  private refresh$ = inject(KontakteRefresh);
+  private id = this.getId();
   data: WritableSignal<null | KontaktAntwortMitBeziehungenDto> = signal(null);
-  params?: { id?: string };
+  readonly dialog = inject(MatDialog);
 
-  ngOnInit() {
-    // this.refresh.pipe(
-    //   startWith(null),
-    //   switchMap(() => {
-    //     return this.service.kontakteControllerKontakt({id: ""});
-    //   }),
-    // );
+  getId(): string {
+    return this.route.snapshot.params['id'];
+  }
 
-    this.route.params.subscribe((params) => {
-      this.params = params;
-      // console.log('param update, kontakts');
-      const id = params['id'];
-      // console.log(params);
+  fetchData() {
+    this.service
+      .kontakteControllerKontakt({ id: this.id })
+      .pipe(take(1))
+      .subscribe({
+        next: (res) => this.data.set(res),
+        error: (error) => this.handleError(error),
+      });
+  }
 
-      if (id) {
-        setTimeout(() => {
-          this.service
-            .kontakteControllerKontakt({ id })
-            .subscribe((val) => this.data.set(val));
-        }, 2000);
-      }
-    });
-
-    // console.log(this.route.snapshot.routeConfig?.path);
-
-    this.refresh.subscribe(() => {
-      const routeConfig = this.route.snapshot.routeConfig?.path;
-      if (
-        typeof routeConfig === 'string' &&
-        routeConfig.startsWith('kontakte/:id')
-      ) {
-      }
+  openErrorDialog(err: Error): void {
+    this.dialog.open(ExampleErrorDialog, {
+      data: { err },
     });
   }
 
-  ngOnDestroy() {}
+  handleError(err: Error) {
+    // error not handled fully because of time
+    this.openErrorDialog(err);
+  }
+
+  ngOnInit() {
+    this.fetchData();
+  }
+
+  ngOnDestroy() {
+    this.refresh$.unsubscribe();
+  }
 }

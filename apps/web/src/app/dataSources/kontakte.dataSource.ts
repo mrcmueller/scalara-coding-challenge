@@ -19,6 +19,7 @@ export class KontakteDataSource
   router = inject(Router);
   route = inject(ActivatedRoute);
   refresh$ = inject(KontakteRefresh);
+
   data = this.refresh$.pipe(
     startWith([]),
     switchMap(() => {

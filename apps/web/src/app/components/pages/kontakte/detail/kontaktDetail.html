@@ -1,6 +1,6 @@
 <div class="flex justify-between">
   <h1>Kontakt-Details</h1>
-  @if (data()?.id) {
+  @if (data() && data()?.id) {
   <a href="/kontakte/{{ data()?.id }}/bearbeiten"
     ><button matButton="filled" class="-mt-1">Bearbeiten</button></a
   >
@@ -9,8 +9,8 @@
 
 @if (data()) {
 <div class="mt-4">
-  <p><strong>Name: </strong>{{ data()?.name }}</p>
-  <p><strong>Straße: </strong>{{ data()?.strasse }}</p>
+  <p><strong>Name: </strong>{{ data()!.name }}</p>
+  <p><strong>Straße: </strong>{{ data()!.strasse }}</p>
   <p><strong>Hausnummer: </strong>{{ data()?.hausnummer}}</p>
   <p><strong>Postleitzahl: </strong>{{ data()?.postleitzahl }}</p>
   <p><strong>Stadt: </strong>{{data()?.stadt}}</p>
