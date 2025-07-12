@@ -23,11 +23,9 @@ export class KontaktDetail {
   private id = this.getId();
   data: WritableSignal<null | KontaktAntwortMitBeziehungenDto> = signal(null);
   readonly dialog = inject(MatDialog);
-
   getId(): string {
     return this.route.snapshot.params['id'];
   }
-
   fetchData() {
     this.service
       .kontakteControllerKontakt({ id: this.id })
@@ -37,28 +35,21 @@ export class KontaktDetail {
         error: (error) => this.handleError(error),
       });
   }
-
   openErrorDialog(err: Error): void {
     this.dialog.open(ExampleErrorDialog, {
       data: { err },
     });
   }
-
   handleError(err: Error) {
     // error not handled fully because of time
     this.openErrorDialog(err);
   }
-
   subscribeToChanges() {
     this.refresh$.subscribe(() => this.fetchData());
   }
-
   ngOnInit() {
     this.fetchData();
     this.subscribeToChanges();
   }
-
-  ngOnDestroy() {
-    this.refresh$.unsubscribe();
-  }
+  ngOnDestroy() {}
 }

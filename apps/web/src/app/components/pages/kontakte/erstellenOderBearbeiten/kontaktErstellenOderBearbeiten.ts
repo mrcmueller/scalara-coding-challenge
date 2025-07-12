@@ -169,7 +169,7 @@ export class KontaktErstellenOderBearbeiten {
         });
 
     request.pipe(take(1)).subscribe({
-      next: (res) => this.handleCreationOrUpdate(),
+      next: () => this.handleCreationOrUpdate(),
       error: (err) => this.handleError(err),
     });
     this.goBack();
