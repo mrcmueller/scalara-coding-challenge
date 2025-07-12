@@ -1,10 +1,4 @@
-import {
-  Component,
-  inject,
-  signal,
-  Signal,
-  WritableSignal,
-} from '@angular/core';
+import { Component, inject, signal, WritableSignal } from '@angular/core';
 import {
   FormsModule,
   ReactiveFormsModule,
@@ -26,18 +20,16 @@ import {
 import { postalCodeValidator } from '../../../form/postleitzahl/postalCodeValidator.directive';
 import { LandEditorComponent } from '../../../form/land/land-editor.component';
 import { LAENDER, Land, LOCALES } from '../../../form/land/laender';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouteReuseStrategy } from '@angular/router';
 import { KontakteRefresh } from '../../../../services/kontakteRefresh.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ExampleErrorDialog } from '../../../error/exampleError';
 import { NameEditorComponent } from '../../../form/name/name-editor.component';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { of, take } from 'rxjs';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'kontakt-erstellen-oder-bearbeiten',
   standalone: true,
-  // imports: [RouterOutlet],
   templateUrl: './kontaktErstellenOderBearbeiten.html',
   styleUrl: './kontaktErstellenOderBearbeiten.scss',
   imports: [
@@ -64,14 +56,14 @@ export class KontaktErstellenOderBearbeiten {
   land = this.laender[this.initialLandId];
   locale = this.locales[this.initialLandId];
   valueChanges: any;
+
   id = this.getId();
-  data: WritableSignal<null | KontaktAntwortMitBeziehungenDto> = signal(null);
 
   getLocale = () => {
     return this.locale;
   };
 
-  getId(): string {
+  getId(): string | undefined {
     return this.route.snapshot.params['id'];
   }
 
@@ -100,13 +92,28 @@ export class KontaktErstellenOderBearbeiten {
   });
 
   fetchData() {
-    this.service
-      .kontakteControllerKontakt({ id: this.id })
-      .pipe(take(1))
-      .subscribe({
-        next: (val) => this.data.set(val),
-        error: (error) => this.handleError(error),
-      });
+    if (this.id) {
+      this.service
+        .kontakteControllerKontakt({ id: this.id })
+        .pipe(take(1))
+        .subscribe({
+          next: (res) => this.handleFetchedData(res),
+          error: (error) => this.handleError(error),
+        });
+    }
+  }
+
+  handleFetchedData(res: KontaktAntwortMitBeziehungenDto) {
+    // fill forms with fetched data
+    const controls = this.kontaktErstellenForm.controls;
+
+    for (const key in controls) {
+      if (key in res) {
+        const formControl = (controls as any)[key];
+        const newValue = (res as any)[key];
+        formControl.setValue(newValue);
+      }
+    }
   }
 
   handleError(err: Error) {
@@ -115,27 +122,13 @@ export class KontaktErstellenOderBearbeiten {
   }
 
   ngOnInit() {
-    this.service
-      .kontakteControllerKontakt({
-        id: this.id as string,
-      })
-      .subscribe((val) => {
-        this.kontaktErstellenForm.controls.name.setValue(val.name);
+    // Only executes if id is existing in URL which means we want to edit an Kontakt
+    this.fetchData();
 
-        this.kontaktErstellenForm.controls.strasse.setValue(val.strasse);
+    this.revalidatePostalCodeOnCountryChange();
+  }
 
-        this.kontaktErstellenForm.controls.hausnummer.setValue(val.hausnummer);
-
-        this.kontaktErstellenForm.controls.postleitzahl.setValue(
-          val.postleitzahl,
-        );
-
-        this.kontaktErstellenForm.controls.stadt.setValue(val.stadt);
-
-        this.kontaktErstellenForm.controls.land.setValue(val.land);
-      });
-
-    // Validiere Postleitzahl erneut wenn sich Land ändert
+  revalidatePostalCodeOnCountryChange() {
     this.kontaktErstellenForm.controls.land.valueChanges.subscribe((val) => {
       this.setLocale(val);
       this.kontaktErstellenForm.controls.postleitzahl.updateValueAndValidity();
@@ -157,13 +150,15 @@ export class KontaktErstellenOderBearbeiten {
     });
   }
 
-  handleUpdate(val: KontaktAntwortMitBeziehungenDto) {
+  handleCreationOrUpdate() {
     // Notify others
     this.refresh$.next();
+
     this.goBack();
   }
 
   onSubmit(): void {
+    // Different request for different intention - Create Kontakt OR Edit Kontakt
     const request = this.id
       ? this.service.kontakteControllerAendereKontakte({
           id: this.id,
@@ -173,19 +168,9 @@ export class KontaktErstellenOderBearbeiten {
           body: this.kontaktErstellenForm.value as KontaktErstellenDto,
         });
 
-    request.subscribe({
-      next: (res) => this.handleUpdate(res),
-      error: (err) => {
-        this.openErrorDialog(err);
-        console.error('Error occurred:', err);
-        if (err?.status) {
-          console.error('Error status:', err.status);
-        }
-        if (err?.response) {
-          console.error('Error body:', err.response);
-        }
-        this.refresh$.refresh();
-      },
+    request.pipe(take(1)).subscribe({
+      next: (res) => this.handleCreationOrUpdate(),
+      error: (err) => this.handleError(err),
     });
     this.goBack();
   }

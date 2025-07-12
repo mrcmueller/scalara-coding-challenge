@@ -49,8 +49,13 @@ export class KontaktDetail {
     this.openErrorDialog(err);
   }
 
+  subscribeToChanges() {
+    this.refresh$.subscribe(() => this.fetchData());
+  }
+
   ngOnInit() {
     this.fetchData();
+    this.subscribeToChanges();
   }
 
   ngOnDestroy() {
