@@ -39,9 +39,9 @@ export const routes: Routes = [
     component: KontaktePage,
   },
   { path: 'kontakte/hinzufuegen', component: KontaktErstellenOderBearbeiten },
-  { path: 'kontakte/:id', component: KontaktDetail },
+  { path: 'kontakte/:kontaktId', component: KontaktDetail },
   {
-    path: 'kontakte/:id/bearbeiten',
+    path: 'kontakte/:kontaktId/bearbeiten',
     component: KontaktErstellenOderBearbeiten,
   },
 

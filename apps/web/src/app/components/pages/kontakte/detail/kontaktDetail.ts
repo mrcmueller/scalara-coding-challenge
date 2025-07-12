@@ -1,5 +1,5 @@
 import { Component, inject, signal, WritableSignal } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { KontakteService } from '../../../../api/services';
 import { KontaktAntwortMitBeziehungenDto } from '../../../../api/models';
 import { MatButtonModule } from '@angular/material/button';
@@ -16,7 +16,6 @@ import { take } from 'rxjs';
   imports: [MatButtonModule],
 })
 export class KontaktDetail {
-  private router = inject(Router);
   private route = inject(ActivatedRoute);
   private service = inject(KontakteService);
   private refresh$ = inject(KontakteRefresh);
@@ -24,7 +23,7 @@ export class KontaktDetail {
   data: WritableSignal<null | KontaktAntwortMitBeziehungenDto> = signal(null);
   readonly dialog = inject(MatDialog);
   getId(): string {
-    return this.route.snapshot.params['id'];
+    return this.route.snapshot.params['kontaktId'];
   }
   fetchData() {
     this.service

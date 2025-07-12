@@ -1,14 +1,5 @@
 <h1>@if(id){Kontakt bearbeiten}@else{Kontakt hinzufügen}</h1>
 
-<!-- {
-  "name": "string",
-  "strasse": "string",
-  "hausnummer": "string",
-  "postleitzahl": "string",
-  "stadt": "string",
-  "land": "string"
-} -->
-
 <div class="form-container mt-10">
   <form [formGroup]="kontaktErstellenForm" (ngSubmit)="onSubmit()">
     <div class="mb-6">

@@ -1,20 +1,21 @@
 <div class="flex justify-between">
   <h1>Immobilien-Details</h1>
-  @if (immobilienSignal()?.id) {
-  <a href="/immobilien/{{ immobilienSignal()?.id }}/bearbeiten"
+  @if (data() && data()?.id) {
+  <a href="/immobilien/{{ data()?.id }}/bearbeiten"
     ><button matButton="filled" class="-mt-1">Bearbeiten</button></a
-  >}
+  >
+  }
 </div>
 
-@if (immobilienSignal()) {
+@if (data()) {
 <div class="mt-4">
-  <p><strong>Name: </strong>{{ immobilienSignal()?.name }}</p>
-  <p><strong>Straße: </strong>{{ immobilienSignal()?.strasse }}</p>
-  <p><strong>Hausnummer: </strong>{{ immobilienSignal()?.hausnummer}}</p>
-  <p><strong>Postleitzahl: </strong>{{ immobilienSignal()?.postleitzahl }}</p>
-  <p><strong>Stadt: </strong>{{immobilienSignal()?.stadt}}</p>
-  <p><strong>Land: </strong>{{ immobilienSignal()?.land }}</p>
-  <p><strong>beschreibung: </strong>{{ immobilienSignal()!.beschreibung }}</p>
+  <p><strong>Name: </strong>{{ data()!.name }}</p>
+  <p><strong>Straße: </strong>{{ data()!.strasse }}</p>
+  <p><strong>Hausnummer: </strong>{{ data()?.hausnummer}}</p>
+  <p><strong>Postleitzahl: </strong>{{ data()?.postleitzahl }}</p>
+  <p><strong>Stadt: </strong>{{data()?.stadt}}</p>
+  <p><strong>Land: </strong>{{ data()?.land }}</p>
+  <p><strong>Land: </strong>{{ data()?.beschreibung }}</p>
 </div>
 } @else {
 <p>Lade Immobilie...</p>

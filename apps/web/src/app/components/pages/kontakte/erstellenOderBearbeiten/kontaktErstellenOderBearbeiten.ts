@@ -64,7 +64,7 @@ export class KontaktErstellenOderBearbeiten {
   };
 
   getId(): string | undefined {
-    return this.route.snapshot.params['id'];
+    return this.route.snapshot.params['kontaktId'];
   }
 
   kontaktErstellenForm = new FormGroup({

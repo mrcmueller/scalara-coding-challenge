@@ -14,6 +14,7 @@ import { StrasseEditorComponent } from '../../../form/strasse/strasse-editor.com
 import { ImmobilienService } from '../../../../api/services';
 import {
   ImmobilieAendernDto,
+  ImmobilieAntwortDto,
   ImmobilieErstellenDto,
 } from '../../../../api/models';
 import { postalCodeValidator } from '../../../form/postleitzahl/postalCodeValidator.directive';
@@ -25,6 +26,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ExampleErrorDialog } from '../../../error/exampleError';
 import { NameEditorComponent } from '../../../form/name/name-editor.component';
 import { BeschreibungEditorComponent } from '../../../form/beschreibung/beschreibung-editor.component';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'immobilie-erstellen-oder-bearbeiten',
@@ -48,20 +50,23 @@ export class ImmobilieErstellenOderBearbeiten {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private service = inject(ImmobilienService);
-  public immobilienRefresh = inject(ImmobilienRefresh);
+  private refresh$ = inject(ImmobilienRefresh);
   readonly dialog = inject(MatDialog);
-  id = '';
-
   laender = [...LAENDER, 'Großbritannien'];
   locales = [...LOCALES, 'GB'];
   initialLandId = 0;
   land = this.laender[this.initialLandId];
   locale = this.locales[this.initialLandId];
-  valueChanges: any;
+
+  id = this.getId();
 
   getLocale = () => {
     return this.locale;
   };
+
+  getId(): string | undefined {
+    return this.route.snapshot.params['immobilienId'];
+  }
 
   immobilieErstellenForm = new FormGroup({
     name: new FormControl('', [
@@ -91,49 +96,54 @@ export class ImmobilieErstellenOderBearbeiten {
     ]) as FormControl<string>,
   });
 
-  setLocale(newValue: any): string {
-    this.locale = this.locales[this.laender.findIndex((el) => el === newValue)];
-    return this.locale;
+  fetchData() {
+    if (this.id) {
+      this.service
+        .immobilienControllerImmobilie({ id: this.id })
+        .pipe(take(1))
+        .subscribe({
+          next: (res) => this.handleFetchedData(res),
+          error: (error) => this.handleError(error),
+        });
+    }
+  }
+
+  handleFetchedData(res: ImmobilieAntwortDto) {
+    // fill forms with fetched data
+    const controls = this.immobilieErstellenForm.controls;
+
+    for (const key in controls) {
+      if (key in res) {
+        const formControl = (controls as any)[key];
+        const newValue = (res as any)[key];
+        formControl.setValue(newValue);
+      }
+    }
+  }
+
+  handleError(err: Error) {
+    // error not handled fully because of time
+    this.openErrorDialog(err);
   }
 
   ngOnInit() {
-    const routeSub = this.route.params.subscribe((params) => {
-      this.id = params['id'];
-    });
+    // Only executes if id is existing in URL which means we want to edit an Immobilie
+    this.fetchData();
 
-    if (this.id) {
-      this.service
-        .immobilienControllerImmobilie({
-          id: this.id as string,
-        })
-        .subscribe((val) => {
-          this.immobilieErstellenForm.controls.name.setValue(val.name);
+    this.revalidatePostalCodeOnCountryChange();
+  }
 
-          this.immobilieErstellenForm.controls.strasse.setValue(val.strasse);
-
-          this.immobilieErstellenForm.controls.hausnummer.setValue(
-            val.hausnummer,
-          );
-
-          this.immobilieErstellenForm.controls.postleitzahl.setValue(
-            val.postleitzahl,
-          );
-
-          this.immobilieErstellenForm.controls.stadt.setValue(val.stadt);
-
-          this.immobilieErstellenForm.controls.land.setValue(val.land);
-
-          this.immobilieErstellenForm.controls.beschreibung.setValue(
-            val.beschreibung,
-          );
-        });
-    }
-
+  revalidatePostalCodeOnCountryChange() {
     // Validiere Postleitzahl erneut wenn sich Land ändert
     this.immobilieErstellenForm.controls.land.valueChanges.subscribe((val) => {
-      const newLocale = this.setLocale(val);
+      this.setLocale(val);
       this.immobilieErstellenForm.controls.postleitzahl.updateValueAndValidity();
     });
+  }
+
+  setLocale(newValue: any): string {
+    this.locale = this.locales[this.laender.findIndex((el) => el === newValue)];
+    return this.locale;
   }
 
   goBack(): void {
@@ -141,12 +151,20 @@ export class ImmobilieErstellenOderBearbeiten {
   }
 
   openErrorDialog(err: Error): void {
-    const dialogRef = this.dialog.open(ExampleErrorDialog, {
+    this.dialog.open(ExampleErrorDialog, {
       data: { err },
     });
   }
 
+  handleCreationOrUpdate() {
+    // Notify others
+    this.refresh$.refresh();
+
+    this.goBack();
+  }
+
   onSubmit(): void {
+    // Different request for different intention - Create Immobilie OR Edit Immobilie
     const request = this.id
       ? this.service.immobilienControllerAendereImmobilie({
           id: this.id,
@@ -156,24 +174,10 @@ export class ImmobilieErstellenOderBearbeiten {
           body: this.immobilieErstellenForm.value as ImmobilieErstellenDto,
         });
 
-    request.subscribe({
-      next: (data) => {
-        console.log(data);
-        this.immobilienRefresh.refresh();
-      },
-      error: (err) => {
-        this.openErrorDialog(err);
-        console.error('Error occurred:', err);
-        if (err?.status) {
-          console.error('Error status:', err.status);
-        }
-        if (err?.response) {
-          console.error('Error body:', err.response);
-        }
-        this.immobilienRefresh.refresh();
-      },
+    request.pipe(take(1)).subscribe({
+      next: () => this.handleCreationOrUpdate(),
+      error: (err) => this.handleError(err),
     });
-    this.goBack();
   }
 
   ngOnDestroy() {}
