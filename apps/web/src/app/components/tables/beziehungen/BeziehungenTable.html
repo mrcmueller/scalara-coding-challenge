@@ -1,0 +1,53 @@
+@if(dataSource){
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <ng-container matColumnDef="kontakt">
+    <th mat-header-cell *matHeaderCellDef>Kontakt</th>
+    <td mat-cell *matCellDef="let element">{{element.kontakt.name}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="immobilie">
+    <th mat-header-cell *matHeaderCellDef>Immobilie</th>
+    <td mat-cell *matCellDef="let element">{{element.immobilie.id}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="beziehungstyp">
+    <th mat-header-cell *matHeaderCellDef>Beziehungstyp</th>
+    <td mat-cell *matCellDef="let element">
+      @switch (element.beziehungstyp) { @case (1) { Eigentümer }@case (2) {
+      Mieter } @case (3) { Dienstleister } }/td>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="dienstleistungstyp">
+    <th mat-header-cell *matHeaderCellDef>Dienstleistungstyp</th>
+    <td mat-cell *matCellDef="let element">
+      @switch (element.dienstleistungstyp) { @case (1) { Gartenarbeit }@case (2)
+      { Reinigung } @case (3) { Sanitär } }/td>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="action">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td mat-cell *matCellDef="let element">
+      <div class="flex flex-row h-full gap-6 justify-end">
+        <img
+          src="/icons/Delete.svg"
+          class="h-4 cursor-pointer"
+          (click)="dataSource.delete(element.id, $event)"
+        />
+      </div>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr
+    mat-row
+    *matRowDef="let row; columns: displayedColumns;"
+    (click)="dataSource.visit(row.id, $event)"
+  ></tr>
+</table>
+
+}@else {
+<p>Loading...</p>
+}
