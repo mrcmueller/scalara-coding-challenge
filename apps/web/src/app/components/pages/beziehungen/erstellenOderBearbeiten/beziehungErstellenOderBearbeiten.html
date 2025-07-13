@@ -1,0 +1,39 @@
+<h1>@if(id){Kontakt bearbeiten}@else{Kontakt hinzufügen}</h1>
+
+<div class="form-container mt-10">
+  <form [formGroup]="kontaktErstellenForm" (ngSubmit)="onSubmit()">
+    <div class="mb-6">
+      <div class="form-fields flex flex-col gap-1">
+        <div class="w-full flex justify-between gap-4">
+          <name-editor [control]="kontaktErstellenForm.controls.name" />
+          <strasse-editor [control]="kontaktErstellenForm.controls.strasse" />
+        </div>
+        <div class="w-full flex justify-between gap-4">
+          <hausnummer-editor
+            [control]="kontaktErstellenForm.controls.hausnummer"
+          />
+          <postleitzahl-editor
+            [control]="kontaktErstellenForm.controls.postleitzahl"
+          />
+        </div>
+        <div class="w-full flex justify-between gap-4">
+          <stadt-editor [control]="kontaktErstellenForm.controls.stadt" />
+          <land-editor
+            [laender]="laender"
+            [locales]="locales"
+            [initalLandId]="initialLandId"
+            [control]="kontaktErstellenForm.controls.land"
+          />
+        </div>
+      </div>
+    </div>
+    <button
+      type="submit"
+      [disabled]="!kontaktErstellenForm.valid"
+      matButton="filled"
+      class="-mt-1"
+    >
+      @if(id){Ändern}@else{Hinzufügen}
+    </button>
+  </form>
+</div>

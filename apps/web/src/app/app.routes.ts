@@ -9,6 +9,7 @@ import { KontaktErstellenOderBearbeiten } from './components/pages/kontakte/erst
 import { ImmobilieErstellenOderBearbeiten } from './components/pages/immobilien/erstellenOderBearbeiten/immobilieErstellenOderBearbeiten';
 import { ImmobilienDetail } from './components/pages/immobilien/detail/immobilienDetail';
 import { BeziehungDetail } from './components/pages/beziehungen/detail/beziehungDetail';
+import { BeziehungErstellenOderBearbeiten } from './components/pages/beziehungen/erstellenOderBearbeiten/beziehungErstellenOderBearbeiten';
 
 export const routes: Routes = [
   {
@@ -21,12 +22,12 @@ export const routes: Routes = [
   },
   {
     path: 'beziehungen/hinzufuegen',
-    component: KontaktErstellenOderBearbeiten,
+    component: BeziehungErstellenOderBearbeiten,
   },
   { path: 'beziehungen/:beziehungId', component: BeziehungDetail },
   {
     path: 'beziehungen/:beziehungId/bearbeiten',
-    component: KontaktErstellenOderBearbeiten,
+    component: BeziehungErstellenOderBearbeiten,
   },
   {
     path: 'immobilien',
@@ -54,14 +55,4 @@ export const routes: Routes = [
     path: 'kontakte/:kontaktId/bearbeiten',
     component: KontaktErstellenOderBearbeiten,
   },
-
-  //   { path: 'immobilien', component:  },
-  //   { path: 'immobilien/:id', component:  },
-  //   { path: 'immobilien/neu', component:  },
-  //   { path: 'beziehungen', component:  },
-  //   { path: 'beziehungen/:id', component:  },
-  //   { path: 'beziehungen/neu', component:  },
-  //   { path: 'kontakte', component:  },
-  //   { path: 'kontakte/:id', component:  },
-  //   { path: 'kontakte/neu', component:  },
 ];
