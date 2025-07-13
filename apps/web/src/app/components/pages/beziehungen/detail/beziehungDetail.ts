@@ -30,10 +30,27 @@ export class BeziehungDetail {
       .beziehungenControllerBeziehung({ id: this.id })
       .pipe(take(1))
       .subscribe({
-        next: (res) => this.data.set(res),
+        next: (res) => this.handleFetchedData(res),
         error: (error) => this.handleError(error),
       });
   }
+
+  dateStringToDatum(dateString: string) {
+    const date = new Date(dateString);
+    const formattedDate = date.toLocaleDateString('de-DE', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    });
+    return formattedDate;
+  }
+
+  handleFetchedData(res: BeziehungAntwortDto) {
+    res.startdatum = this.dateStringToDatum(res.startdatum);
+    res.enddatum = this.dateStringToDatum(res.enddatum);
+    this.data.set(res);
+  }
+
   openErrorDialog(err: Error): void {
     this.dialog.open(ExampleErrorDialog, {
       data: { err },

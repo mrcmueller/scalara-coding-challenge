@@ -19,15 +19,19 @@
       >{{ data()!.immobilie.name }}</a
     >
   </p>
-  <p><strong>beziehungstyp: </strong>{{ data()?.beziehungstyp}}</p>
+  <p>
+    <strong>Beziehungstyp: </strong>@switch (data()?.beziehungstyp) { @case (1)
+    { Eigentümer }@case (2) { Mieter } @case (3) { Dienstleister } }
+  </p>
   @if (data()?.beziehungstyp === 3 && data()?.dienstleistungstyp){
   <p>
     <strong>Dienstleistungstyp: </strong>
-    {{data()!.dienstleistungstyp}}
+    @switch (data()?.dienstleistungstyp) { @case (1) { Gartenarbeit }@case (2) {
+    Reinigung } @case (3) { Sanitär } }
   </p>
   }
   <p><strong>Startdatum: </strong>{{data()!.startdatum}}</p>
-  <p><strong>enddatum: </strong>{{ data()?.enddatum }}</p>
+  <p><strong>enddatum: </strong>{{ data()!.enddatum }}</p>
 </div>
 } @else {
 <p>Lade Beziehung...</p>
