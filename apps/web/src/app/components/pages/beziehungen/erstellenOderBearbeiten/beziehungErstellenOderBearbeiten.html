@@ -31,7 +31,11 @@
           }
         </div>
         <div class="w-full flex justify-between gap-4">
-          <date-picker />
+          <date-range-picker
+            [hint]="null"
+            [controlStartdatum]="beziehungErstellenForm.controls.startDatum"
+            [controlEnddatum]="beziehungErstellenForm.controls.endDatum"
+          />
         </div>
       </div>
     </div>

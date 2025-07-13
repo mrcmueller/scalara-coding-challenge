@@ -26,7 +26,7 @@ import {
   SelectionComponent,
   SelectItems,
 } from '../../../form/selection/selection.component';
-import { DatumComponent } from '../../../form/datum/datum.component';
+import { ZeitraumComponent } from '../../../form/datum/zeitraum.component';
 
 type BeziehungstypValue = 1 | 2 | 3;
 type DienstleistungstypValue = 1 | 2 | 3;
@@ -41,7 +41,7 @@ type DienstleistungstypValue = 1 | 2 | 3;
     FormsModule,
     ReactiveFormsModule,
     SelectionComponent,
-    DatumComponent,
+    ZeitraumComponent,
   ],
 })
 export class BeziehungErstellenOderBearbeiten {
@@ -84,6 +84,8 @@ export class BeziehungErstellenOderBearbeiten {
     dienstleistungstyp: new FormControl(null, [
       this.nullable,
     ]) as FormControl<DienstleistungstypValue | null>,
+    startDatum: new FormControl<Date | null>(null, [Validators.required]),
+    endDatum: new FormControl<Date | null>(null, [Validators.required]),
   });
 
   getId(): string | undefined {

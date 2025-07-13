@@ -9,7 +9,7 @@ import { take } from 'rxjs';
 import { ImmobilienRefresh } from '../../../../services/immobilienRefresh.service';
 
 @Component({
-  selector: 'immobilien-detail',
+  selector: 'immobilie-detail',
   styleUrl: './immobilienDetail.scss',
   standalone: true,
   templateUrl: './immobilienDetail.html',

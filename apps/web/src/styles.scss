@@ -116,8 +116,9 @@ body {
   }
 }
 
-kontakt-erstellen,
-kontakt-details {
+kontakt-erstellen-oder-bearbeiten,
+immobilie-erstellen-oder-bearbeiten,
+beziehung-erstellen-oder-bearbeiten {
   @include mat.button-overrides(
     (
       filled-container-color: #1fb990,
