@@ -26,6 +26,7 @@ import {
   SelectionComponent,
   SelectItems,
 } from '../../../form/selection/selection.component';
+import { DatumComponent } from '../../../form/datum/datum.component';
 
 type BeziehungstypValue = 1 | 2 | 3;
 type DienstleistungstypValue = 1 | 2 | 3;
@@ -40,6 +41,7 @@ type DienstleistungstypValue = 1 | 2 | 3;
     FormsModule,
     ReactiveFormsModule,
     SelectionComponent,
+    DatumComponent,
   ],
 })
 export class BeziehungErstellenOderBearbeiten {
