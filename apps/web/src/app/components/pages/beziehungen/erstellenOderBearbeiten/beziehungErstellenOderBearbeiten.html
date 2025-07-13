@@ -1,39 +1,45 @@
-<h1>@if(id){Kontakt bearbeiten}@else{Kontakt hinzufügen}</h1>
+<h1>@if(id){Beziehung bearbeiten}@else{Beziehung erstellen}</h1>
 
 <div class="form-container mt-10">
-  <form [formGroup]="kontaktErstellenForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="beziehungErstellenForm" (ngSubmit)="onSubmit()">
     <div class="mb-6">
       <div class="form-fields flex flex-col gap-1">
         <div class="w-full flex justify-between gap-4">
-          <name-editor [control]="kontaktErstellenForm.controls.name" />
-          <strasse-editor [control]="kontaktErstellenForm.controls.strasse" />
+          <selection
+            [control]="beziehungErstellenForm.controls.kontaktId"
+            label="Kontakt"
+            [items]="kontakte"
+          />
+          <selection
+            [control]="beziehungErstellenForm.controls.immobilienId"
+            label="Immobilie"
+            [items]="immobilien"
+          />
         </div>
         <div class="w-full flex justify-between gap-4">
-          <hausnummer-editor
-            [control]="kontaktErstellenForm.controls.hausnummer"
+          <selection
+            [control]="beziehungErstellenForm.controls.beziehungstyp"
+            label="Beziehungstyp"
+            [items]="beziehungstypen"
           />
-          <postleitzahl-editor
-            [control]="kontaktErstellenForm.controls.postleitzahl"
+          @if (showDienstleistungstyp) {
+          <selection
+            [control]="beziehungErstellenForm.controls.dienstleistungstyp"
+            label="Dienstleistungstyp"
+            [items]="dienstleistungstypen"
           />
-        </div>
-        <div class="w-full flex justify-between gap-4">
-          <stadt-editor [control]="kontaktErstellenForm.controls.stadt" />
-          <land-editor
-            [laender]="laender"
-            [locales]="locales"
-            [initalLandId]="initialLandId"
-            [control]="kontaktErstellenForm.controls.land"
-          />
+          }
         </div>
       </div>
     </div>
+
     <button
       type="submit"
-      [disabled]="!kontaktErstellenForm.valid"
+      [disabled]="!beziehungErstellenForm.valid"
       matButton="filled"
       class="-mt-1"
     >
-      @if(id){Ändern}@else{Hinzufügen}
+      @if(id){Ändern}@else{Erstellen}
     </button>
   </form>
 </div>

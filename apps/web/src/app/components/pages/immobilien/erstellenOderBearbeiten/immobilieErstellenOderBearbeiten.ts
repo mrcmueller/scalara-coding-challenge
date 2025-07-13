@@ -58,7 +58,7 @@ export class ImmobilieErstellenOderBearbeiten {
   land = this.laender[this.initialLandId];
   locale = this.locales[this.initialLandId];
 
-  id = this.getId();
+  public id = this.getId();
 
   getLocale = () => {
     return this.locale;
@@ -68,7 +68,7 @@ export class ImmobilieErstellenOderBearbeiten {
     return this.route.snapshot.params['immobilienId'];
   }
 
-  immobilieErstellenForm = new FormGroup({
+  public immobilieErstellenForm = new FormGroup({
     name: new FormControl('', [
       Validators.required,
       Validators.pattern(/.*[A-Za-z].*/),

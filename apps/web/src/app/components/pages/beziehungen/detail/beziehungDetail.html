@@ -1,7 +1,7 @@
 <div class="flex justify-between">
   <h1>Beziehung-Details</h1>
   @if (data() && data()?.id) {
-  <a href="/beziehung/{{ data()?.id }}/bearbeiten"
+  <a href="/beziehungen/{{ data()?.id }}/bearbeiten"
     ><button matButton="filled" class="-mt-1">Bearbeiten</button></a
   >
   }
@@ -20,7 +20,7 @@
     >
   </p>
   <p><strong>beziehungstyp: </strong>{{ data()?.beziehungstyp}}</p>
-  @if (data()?.beziehungstyp === 2 && data()?.dienstleistungstyp){
+  @if (data()?.beziehungstyp === 3 && data()?.dienstleistungstyp){
   <p>
     <strong>Dienstleistungstyp: </strong>
     {{data()!.dienstleistungstyp}}

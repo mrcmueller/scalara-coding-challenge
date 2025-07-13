@@ -57,7 +57,7 @@ export class KontaktErstellenOderBearbeiten {
   locale = this.locales[this.initialLandId];
   valueChanges: any;
 
-  id = this.getId();
+  public id = this.getId();
 
   getLocale = () => {
     return this.locale;
@@ -67,7 +67,7 @@ export class KontaktErstellenOderBearbeiten {
     return this.route.snapshot.params['kontaktId'];
   }
 
-  kontaktErstellenForm = new FormGroup({
+  public kontaktErstellenForm = new FormGroup({
     name: new FormControl('', [
       Validators.required,
       Validators.pattern(/.*[A-Za-z].*/),
