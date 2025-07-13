@@ -22,8 +22,8 @@ export class ZeitraumComponent {
   @Input() placeholderStart = 'Startdatum';
   @Input() placeholderEnd = 'Enddatum';
   @Input() hint: string | null = 'MM/DD/YYYY – MM/DD/YYYY';
-  @Input() startDatum: Date | null = null;
-  @Input() endDatum: Date | null = null;
+  @Input() startdatum: Date | null = null;
+  @Input() enddatum: Date | null = null;
   @Input() controlStartdatum = new FormControl() as FormControl<Date | null>;
   @Input() controlEnddatum = new FormControl() as FormControl<Date | null>;
 

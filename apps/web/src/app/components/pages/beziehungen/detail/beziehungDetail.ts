@@ -46,9 +46,11 @@ export class BeziehungDetail {
   }
 
   handleFetchedData(res: BeziehungAntwortDto) {
-    res.startdatum = this.dateStringToDatum(res.startdatum);
-    res.enddatum = this.dateStringToDatum(res.enddatum);
-    this.data.set(res);
+    const newVal = { ...res };
+    newVal.startdatum = this.dateStringToDatum(res.startdatum);
+    newVal.enddatum = this.dateStringToDatum(res.enddatum);
+    this.data.set(newVal);
+    console.log(newVal);
   }
 
   openErrorDialog(err: Error): void {

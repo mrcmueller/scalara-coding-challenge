@@ -15,6 +15,7 @@ import {
 import {
   BeziehungAntwortDto,
   ImmobilieAntwortMitBeziehungenDto,
+  KontaktAntwortDto,
   KontaktAntwortMitBeziehungenDto,
 } from '../../../../api/models';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -84,8 +85,8 @@ export class BeziehungErstellenOderBearbeiten {
     dienstleistungstyp: new FormControl(null, [
       this.nullable,
     ]) as FormControl<DienstleistungstypValue | null>,
-    startDatum: new FormControl<Date | null>(null, [Validators.required]),
-    endDatum: new FormControl<Date | null>(null, [Validators.required]),
+    startdatum: new FormControl<Date | null>(null, [Validators.required]),
+    enddatum: new FormControl<Date | null>(null, [Validators.required]),
   });
 
   getId(): string | undefined {
@@ -148,13 +149,23 @@ export class BeziehungErstellenOderBearbeiten {
   }
 
   handleFetchedData(res: BeziehungAntwortDto) {
+    const formattedData = {
+      id: res.id,
+      kontaktId: res.kontakt.id,
+      immobilienId: res.immobilie.id,
+      beziehungstyp: res.beziehungstyp,
+      dienstleistungstyp: res.dienstleistungstyp,
+      startdatum: res.startdatum,
+      enddatum: res.enddatum,
+    };
+
     // fill forms with fetched data
     const controls = this.beziehungErstellenForm.controls;
 
     for (const key in controls) {
-      if (key in res) {
+      if (key in formattedData) {
         const formControl = (controls as any)[key];
-        const newValue = (res as any)[key];
+        const newValue = (formattedData as any)[key];
         formControl.setValue(newValue);
       }
     }
@@ -182,13 +193,12 @@ export class BeziehungErstellenOderBearbeiten {
   }
 
   ngOnInit() {
+    this.controlDienstleistungstyp();
     // Only executes if id is existing in URL which means we want to edit an Beziehung
     this.fetchData();
 
     this.fetchKontakte();
     this.fetchImmobilien();
-
-    this.controlDienstleistungstyp();
   }
 
   goBack(): void {

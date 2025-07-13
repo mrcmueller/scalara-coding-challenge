@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { BeziehungenTable } from '../../tables/beziehungen/BeziehungenTable';
+import { MatButtonModule } from '@angular/material/button';
 // import { RouterOutlet } from '@angular/router';
 
 @Component({
@@ -8,7 +9,7 @@ import { BeziehungenTable } from '../../tables/beziehungen/BeziehungenTable';
   // imports: [RouterOutlet],
   templateUrl: './beziehungenPage.html',
   styleUrl: './beziehungenPage.scss',
-  imports: [BeziehungenTable],
+  imports: [MatButtonModule, BeziehungenTable],
 })
 export class BeziehungenPage {
   protected title = 'web';

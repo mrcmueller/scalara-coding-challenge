@@ -20,6 +20,7 @@ export class BeziehungenTable {
     'immobilie',
     'beziehungstyp',
     'dienstleistungstyp',
+    'action',
   ];
 
   ngOnInit() {}
