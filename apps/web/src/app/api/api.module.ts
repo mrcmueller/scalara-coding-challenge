@@ -6,6 +6,7 @@ import { NgModule, ModuleWithProviders, SkipSelf, Optional } from '@angular/core
 import { HttpClient } from '@angular/common/http';
 import { ApiConfiguration, ApiConfigurationParams } from './api-configuration';
 
+import { MieterUeberschneidungService } from './services/mieter-ueberschneidung.service';
 import { AppService } from './services/app.service';
 import { BeziehungenService } from './services/beziehungen.service';
 import { ImmobilienService } from './services/immobilien.service';
@@ -19,6 +20,7 @@ import { KontakteService } from './services/kontakte.service';
   exports: [],
   declarations: [],
   providers: [
+    MieterUeberschneidungService,
     AppService,
     BeziehungenService,
     ImmobilienService,

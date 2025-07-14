@@ -1,5 +1,24 @@
 openapi: 3.0.0
 paths:
+  /validatoren/mieterueberschneidung:
+    get:
+      operationId: MieterUeberschneidungController_beziehungen
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MieterUeberschneidungAnfrageDTO'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MieterUeberschneidungAntwortDTO'
+      tags:
+        - MieterUeberschneidung
   /:
     get:
       operationId: AppController_getHello
@@ -293,6 +312,31 @@ tags:
 servers: []
 components:
   schemas:
+    MieterUeberschneidungAnfrageDTO:
+      type: object
+      properties:
+        id:
+          type: string
+        immobilienId:
+          type: string
+        startdatum:
+          format: date-time
+          type: string
+        enddatum:
+          format: date-time
+          type: string
+      required:
+        - id
+        - immobilienId
+        - startdatum
+        - enddatum
+    MieterUeberschneidungAntwortDTO:
+      type: object
+      properties:
+        ueberschneidung:
+          type: boolean
+      required:
+        - ueberschneidung
     KontaktAntwortDto:
       type: object
       properties:

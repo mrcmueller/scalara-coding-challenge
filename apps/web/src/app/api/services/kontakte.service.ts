@@ -38,10 +38,7 @@ export class KontakteService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  kontakteControllerKontakte$Response(
-    params?: KontakteControllerKontakte$Params,
-    context?: HttpContext,
-  ): Observable<StrictHttpResponse<Array<KontaktAntwortMitBeziehungenDto>>> {
+  kontakteControllerKontakte$Response(params?: KontakteControllerKontakte$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<KontaktAntwortMitBeziehungenDto>>> {
     return kontakteControllerKontakte(this.http, this.rootUrl, params, context);
   }
 
@@ -51,16 +48,9 @@ export class KontakteService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  kontakteControllerKontakte(
-    params?: KontakteControllerKontakte$Params,
-    context?: HttpContext,
-  ): Observable<Array<KontaktAntwortMitBeziehungenDto>> {
+  kontakteControllerKontakte(params?: KontakteControllerKontakte$Params, context?: HttpContext): Observable<Array<KontaktAntwortMitBeziehungenDto>> {
     return this.kontakteControllerKontakte$Response(params, context).pipe(
-      map(
-        (
-          r: StrictHttpResponse<Array<KontaktAntwortMitBeziehungenDto>>,
-        ): Array<KontaktAntwortMitBeziehungenDto> => r.body,
-      ),
+      map((r: StrictHttpResponse<Array<KontaktAntwortMitBeziehungenDto>>): Array<KontaktAntwortMitBeziehungenDto> => r.body)
     );
   }
 
@@ -73,16 +63,8 @@ export class KontakteService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  kontakteControllerErstelleKontakte$Response(
-    params: KontakteControllerErstelleKontakte$Params,
-    context?: HttpContext,
-  ): Observable<StrictHttpResponse<KontaktAntwortMitBeziehungenDto>> {
-    return kontakteControllerErstelleKontakte(
-      this.http,
-      this.rootUrl,
-      params,
-      context,
-    );
+  kontakteControllerErstelleKontakte$Response(params: KontakteControllerErstelleKontakte$Params, context?: HttpContext): Observable<StrictHttpResponse<KontaktAntwortMitBeziehungenDto>> {
+    return kontakteControllerErstelleKontakte(this.http, this.rootUrl, params, context);
   }
 
   /**
@@ -91,19 +73,9 @@ export class KontakteService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  kontakteControllerErstelleKontakte(
-    params: KontakteControllerErstelleKontakte$Params,
-    context?: HttpContext,
-  ): Observable<KontaktAntwortMitBeziehungenDto> {
-    return this.kontakteControllerErstelleKontakte$Response(
-      params,
-      context,
-    ).pipe(
-      map(
-        (
-          r: StrictHttpResponse<KontaktAntwortMitBeziehungenDto>,
-        ): KontaktAntwortMitBeziehungenDto => r.body,
-      ),
+  kontakteControllerErstelleKontakte(params: KontakteControllerErstelleKontakte$Params, context?: HttpContext): Observable<KontaktAntwortMitBeziehungenDto> {
+    return this.kontakteControllerErstelleKontakte$Response(params, context).pipe(
+      map((r: StrictHttpResponse<KontaktAntwortMitBeziehungenDto>): KontaktAntwortMitBeziehungenDto => r.body)
     );
   }
 
@@ -116,10 +88,7 @@ export class KontakteService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  kontakteControllerKontakt$Response(
-    params: KontakteControllerKontakt$Params,
-    context?: HttpContext,
-  ): Observable<StrictHttpResponse<KontaktAntwortMitBeziehungenDto>> {
+  kontakteControllerKontakt$Response(params: KontakteControllerKontakt$Params, context?: HttpContext): Observable<StrictHttpResponse<KontaktAntwortMitBeziehungenDto>> {
     return kontakteControllerKontakt(this.http, this.rootUrl, params, context);
   }
 
@@ -129,16 +98,9 @@ export class KontakteService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  kontakteControllerKontakt(
-    params: KontakteControllerKontakt$Params,
-    context?: HttpContext,
-  ): Observable<KontaktAntwortMitBeziehungenDto> {
+  kontakteControllerKontakt(params: KontakteControllerKontakt$Params, context?: HttpContext): Observable<KontaktAntwortMitBeziehungenDto> {
     return this.kontakteControllerKontakt$Response(params, context).pipe(
-      map(
-        (
-          r: StrictHttpResponse<KontaktAntwortMitBeziehungenDto>,
-        ): KontaktAntwortMitBeziehungenDto => r.body,
-      ),
+      map((r: StrictHttpResponse<KontaktAntwortMitBeziehungenDto>): KontaktAntwortMitBeziehungenDto => r.body)
     );
   }
 
@@ -151,16 +113,8 @@ export class KontakteService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  kontakteControllerLoescheKontakte$Response(
-    params: KontakteControllerLoescheKontakte$Params,
-    context?: HttpContext,
-  ): Observable<StrictHttpResponse<KontaktAntwortMitBeziehungenDto>> {
-    return kontakteControllerLoescheKontakte(
-      this.http,
-      this.rootUrl,
-      params,
-      context,
-    );
+  kontakteControllerLoescheKontakte$Response(params: KontakteControllerLoescheKontakte$Params, context?: HttpContext): Observable<StrictHttpResponse<KontaktAntwortMitBeziehungenDto>> {
+    return kontakteControllerLoescheKontakte(this.http, this.rootUrl, params, context);
   }
 
   /**
@@ -169,19 +123,9 @@ export class KontakteService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  kontakteControllerLoescheKontakte(
-    params: KontakteControllerLoescheKontakte$Params,
-    context?: HttpContext,
-  ): Observable<KontaktAntwortMitBeziehungenDto> {
-    return this.kontakteControllerLoescheKontakte$Response(
-      params,
-      context,
-    ).pipe(
-      map(
-        (
-          r: StrictHttpResponse<KontaktAntwortMitBeziehungenDto>,
-        ): KontaktAntwortMitBeziehungenDto => r.body,
-      ),
+  kontakteControllerLoescheKontakte(params: KontakteControllerLoescheKontakte$Params, context?: HttpContext): Observable<KontaktAntwortMitBeziehungenDto> {
+    return this.kontakteControllerLoescheKontakte$Response(params, context).pipe(
+      map((r: StrictHttpResponse<KontaktAntwortMitBeziehungenDto>): KontaktAntwortMitBeziehungenDto => r.body)
     );
   }
 
@@ -194,16 +138,8 @@ export class KontakteService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  kontakteControllerAendereKontakte$Response(
-    params: KontakteControllerAendereKontakte$Params,
-    context?: HttpContext,
-  ): Observable<StrictHttpResponse<KontaktAntwortMitBeziehungenDto>> {
-    return kontakteControllerAendereKontakte(
-      this.http,
-      this.rootUrl,
-      params,
-      context,
-    );
+  kontakteControllerAendereKontakte$Response(params: KontakteControllerAendereKontakte$Params, context?: HttpContext): Observable<StrictHttpResponse<KontaktAntwortMitBeziehungenDto>> {
+    return kontakteControllerAendereKontakte(this.http, this.rootUrl, params, context);
   }
 
   /**
@@ -212,19 +148,10 @@ export class KontakteService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  kontakteControllerAendereKontakte(
-    params: KontakteControllerAendereKontakte$Params,
-    context?: HttpContext,
-  ): Observable<KontaktAntwortMitBeziehungenDto> {
-    return this.kontakteControllerAendereKontakte$Response(
-      params,
-      context,
-    ).pipe(
-      map(
-        (
-          r: StrictHttpResponse<KontaktAntwortMitBeziehungenDto>,
-        ): KontaktAntwortMitBeziehungenDto => r.body,
-      ),
+  kontakteControllerAendereKontakte(params: KontakteControllerAendereKontakte$Params, context?: HttpContext): Observable<KontaktAntwortMitBeziehungenDto> {
+    return this.kontakteControllerAendereKontakte$Response(params, context).pipe(
+      map((r: StrictHttpResponse<KontaktAntwortMitBeziehungenDto>): KontaktAntwortMitBeziehungenDto => r.body)
     );
   }
+
 }

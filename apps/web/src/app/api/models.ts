@@ -14,3 +14,5 @@ export type { KontaktAendernDto } from './models/kontakt-aendern-dto';
 export type { KontaktAntwortDto } from './models/kontakt-antwort-dto';
 export type { KontaktAntwortMitBeziehungenDto } from './models/kontakt-antwort-mit-beziehungen-dto';
 export type { KontaktErstellenDto } from './models/kontakt-erstellen-dto';
+export type { MieterUeberschneidungAnfrageDto } from './models/mieter-ueberschneidung-anfrage-dto';
+export type { MieterUeberschneidungAntwortDto } from './models/mieter-ueberschneidung-antwort-dto';

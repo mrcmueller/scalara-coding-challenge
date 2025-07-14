@@ -14,33 +14,20 @@ export interface KontakteControllerLoescheKontakte$Params {
   id: string;
 }
 
-export function kontakteControllerLoescheKontakte(
-  http: HttpClient,
-  rootUrl: string,
-  params: KontakteControllerLoescheKontakte$Params,
-  context?: HttpContext,
-): Observable<StrictHttpResponse<KontaktAntwortMitBeziehungenDto>> {
-  const rb = new RequestBuilder(
-    rootUrl,
-    kontakteControllerLoescheKontakte.PATH,
-    'delete',
-  );
+export function kontakteControllerLoescheKontakte(http: HttpClient, rootUrl: string, params: KontakteControllerLoescheKontakte$Params, context?: HttpContext): Observable<StrictHttpResponse<KontaktAntwortMitBeziehungenDto>> {
+  const rb = new RequestBuilder(rootUrl, kontakteControllerLoescheKontakte.PATH, 'delete');
   if (params) {
     rb.path('id', params.id, {});
   }
 
-  console.log('I also get executed');
-
-  return http
-    .request(
-      rb.build({ responseType: 'json', accept: 'application/json', context }),
-    )
-    .pipe(
-      filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
-      map((r: HttpResponse<any>) => {
-        return r as StrictHttpResponse<KontaktAntwortMitBeziehungenDto>;
-      }),
-    );
+  return http.request(
+    rb.build({ responseType: 'json', accept: 'application/json', context })
+  ).pipe(
+    filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
+    map((r: HttpResponse<any>) => {
+      return r as StrictHttpResponse<KontaktAntwortMitBeziehungenDto>;
+    })
+  );
 }
 
 kontakteControllerLoescheKontakte.PATH = '/kontakte/{id}';

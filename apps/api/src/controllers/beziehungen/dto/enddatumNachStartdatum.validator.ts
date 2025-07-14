@@ -67,7 +67,7 @@ export class EnddatumNachStartdatumValidator
     return true;
   }
 
-  defaultMessage(args: ValidationArguments) {
+  defaultMessage() {
     return errorMessage;
   }
 }
