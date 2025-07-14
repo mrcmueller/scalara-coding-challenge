@@ -38,8 +38,16 @@ export class BeziehungenService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  beziehungenControllerBeziehungen$Response(params?: BeziehungenControllerBeziehungen$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<BeziehungAntwortDto>>> {
-    return beziehungenControllerBeziehungen(this.http, this.rootUrl, params, context);
+  beziehungenControllerBeziehungen$Response(
+    params?: BeziehungenControllerBeziehungen$Params,
+    context?: HttpContext,
+  ): Observable<StrictHttpResponse<Array<BeziehungAntwortDto>>> {
+    return beziehungenControllerBeziehungen(
+      this.http,
+      this.rootUrl,
+      params,
+      context,
+    );
   }
 
   /**
@@ -48,9 +56,16 @@ export class BeziehungenService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  beziehungenControllerBeziehungen(params?: BeziehungenControllerBeziehungen$Params, context?: HttpContext): Observable<Array<BeziehungAntwortDto>> {
+  beziehungenControllerBeziehungen(
+    params?: BeziehungenControllerBeziehungen$Params,
+    context?: HttpContext,
+  ): Observable<Array<BeziehungAntwortDto>> {
     return this.beziehungenControllerBeziehungen$Response(params, context).pipe(
-      map((r: StrictHttpResponse<Array<BeziehungAntwortDto>>): Array<BeziehungAntwortDto> => r.body)
+      map(
+        (
+          r: StrictHttpResponse<Array<BeziehungAntwortDto>>,
+        ): Array<BeziehungAntwortDto> => r.body,
+      ),
     );
   }
 
@@ -63,8 +78,16 @@ export class BeziehungenService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  beziehungenControllerErstelleBeziehung$Response(params: BeziehungenControllerErstelleBeziehung$Params, context?: HttpContext): Observable<StrictHttpResponse<BeziehungAntwortDto>> {
-    return beziehungenControllerErstelleBeziehung(this.http, this.rootUrl, params, context);
+  beziehungenControllerErstelleBeziehung$Response(
+    params: BeziehungenControllerErstelleBeziehung$Params,
+    context?: HttpContext,
+  ): Observable<StrictHttpResponse<BeziehungAntwortDto>> {
+    return beziehungenControllerErstelleBeziehung(
+      this.http,
+      this.rootUrl,
+      params,
+      context,
+    );
   }
 
   /**
@@ -73,9 +96,18 @@ export class BeziehungenService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  beziehungenControllerErstelleBeziehung(params: BeziehungenControllerErstelleBeziehung$Params, context?: HttpContext): Observable<BeziehungAntwortDto> {
-    return this.beziehungenControllerErstelleBeziehung$Response(params, context).pipe(
-      map((r: StrictHttpResponse<BeziehungAntwortDto>): BeziehungAntwortDto => r.body)
+  beziehungenControllerErstelleBeziehung(
+    params: BeziehungenControllerErstelleBeziehung$Params,
+    context?: HttpContext,
+  ): Observable<BeziehungAntwortDto> {
+    return this.beziehungenControllerErstelleBeziehung$Response(
+      params,
+      context,
+    ).pipe(
+      map(
+        (r: StrictHttpResponse<BeziehungAntwortDto>): BeziehungAntwortDto =>
+          r.body,
+      ),
     );
   }
 
@@ -88,8 +120,16 @@ export class BeziehungenService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  beziehungenControllerBeziehung$Response(params: BeziehungenControllerBeziehung$Params, context?: HttpContext): Observable<StrictHttpResponse<BeziehungAntwortDto>> {
-    return beziehungenControllerBeziehung(this.http, this.rootUrl, params, context);
+  beziehungenControllerBeziehung$Response(
+    params: BeziehungenControllerBeziehung$Params,
+    context?: HttpContext,
+  ): Observable<StrictHttpResponse<BeziehungAntwortDto>> {
+    return beziehungenControllerBeziehung(
+      this.http,
+      this.rootUrl,
+      params,
+      context,
+    );
   }
 
   /**
@@ -98,14 +138,21 @@ export class BeziehungenService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  beziehungenControllerBeziehung(params: BeziehungenControllerBeziehung$Params, context?: HttpContext): Observable<BeziehungAntwortDto> {
+  beziehungenControllerBeziehung(
+    params: BeziehungenControllerBeziehung$Params,
+    context?: HttpContext,
+  ): Observable<BeziehungAntwortDto> {
     return this.beziehungenControllerBeziehung$Response(params, context).pipe(
-      map((r: StrictHttpResponse<BeziehungAntwortDto>): BeziehungAntwortDto => r.body)
+      map(
+        (r: StrictHttpResponse<BeziehungAntwortDto>): BeziehungAntwortDto =>
+          r.body,
+      ),
     );
   }
 
   /** Path part for operation `beziehungenControllerLoescheBeziehung()` */
-  static readonly BeziehungenControllerLoescheBeziehungPath = '/beziehungen/{id}';
+  static readonly BeziehungenControllerLoescheBeziehungPath =
+    '/beziehungen/{id}';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
@@ -113,8 +160,16 @@ export class BeziehungenService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  beziehungenControllerLoescheBeziehung$Response(params: BeziehungenControllerLoescheBeziehung$Params, context?: HttpContext): Observable<StrictHttpResponse<BeziehungAntwortDto>> {
-    return beziehungenControllerLoescheBeziehung(this.http, this.rootUrl, params, context);
+  beziehungenControllerLoescheBeziehung$Response(
+    params: BeziehungenControllerLoescheBeziehung$Params,
+    context?: HttpContext,
+  ): Observable<StrictHttpResponse<BeziehungAntwortDto>> {
+    return beziehungenControllerLoescheBeziehung(
+      this.http,
+      this.rootUrl,
+      params,
+      context,
+    );
   }
 
   /**
@@ -123,14 +178,24 @@ export class BeziehungenService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  beziehungenControllerLoescheBeziehung(params: BeziehungenControllerLoescheBeziehung$Params, context?: HttpContext): Observable<BeziehungAntwortDto> {
-    return this.beziehungenControllerLoescheBeziehung$Response(params, context).pipe(
-      map((r: StrictHttpResponse<BeziehungAntwortDto>): BeziehungAntwortDto => r.body)
+  beziehungenControllerLoescheBeziehung(
+    params: BeziehungenControllerLoescheBeziehung$Params,
+    context?: HttpContext,
+  ): Observable<BeziehungAntwortDto> {
+    return this.beziehungenControllerLoescheBeziehung$Response(
+      params,
+      context,
+    ).pipe(
+      map(
+        (r: StrictHttpResponse<BeziehungAntwortDto>): BeziehungAntwortDto =>
+          r.body,
+      ),
     );
   }
 
   /** Path part for operation `beziehungenControllerAendereBeziehung()` */
-  static readonly BeziehungenControllerAendereBeziehungPath = '/beziehungen/{id}';
+  static readonly BeziehungenControllerAendereBeziehungPath =
+    '/beziehungen/{id}';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
@@ -138,8 +203,16 @@ export class BeziehungenService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  beziehungenControllerAendereBeziehung$Response(params: BeziehungenControllerAendereBeziehung$Params, context?: HttpContext): Observable<StrictHttpResponse<BeziehungAntwortDto>> {
-    return beziehungenControllerAendereBeziehung(this.http, this.rootUrl, params, context);
+  beziehungenControllerAendereBeziehung$Response(
+    params: BeziehungenControllerAendereBeziehung$Params,
+    context?: HttpContext,
+  ): Observable<StrictHttpResponse<BeziehungAntwortDto>> {
+    return beziehungenControllerAendereBeziehung(
+      this.http,
+      this.rootUrl,
+      params,
+      context,
+    );
   }
 
   /**
@@ -148,10 +221,18 @@ export class BeziehungenService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  beziehungenControllerAendereBeziehung(params: BeziehungenControllerAendereBeziehung$Params, context?: HttpContext): Observable<BeziehungAntwortDto> {
-    return this.beziehungenControllerAendereBeziehung$Response(params, context).pipe(
-      map((r: StrictHttpResponse<BeziehungAntwortDto>): BeziehungAntwortDto => r.body)
+  beziehungenControllerAendereBeziehung(
+    params: BeziehungenControllerAendereBeziehung$Params,
+    context?: HttpContext,
+  ): Observable<BeziehungAntwortDto> {
+    return this.beziehungenControllerAendereBeziehung$Response(
+      params,
+      context,
+    ).pipe(
+      map(
+        (r: StrictHttpResponse<BeziehungAntwortDto>): BeziehungAntwortDto =>
+          r.body,
+      ),
     );
   }
-
 }

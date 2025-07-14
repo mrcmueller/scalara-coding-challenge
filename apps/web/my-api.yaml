@@ -31,7 +31,12 @@ paths:
   /beziehungen:
     get:
       operationId: BeziehungenController_beziehungen
-      parameters: []
+      parameters:
+        - name: kontaktId
+          required: true
+          in: query
+          schema:
+            type: string
       responses:
         '200':
           description: ''

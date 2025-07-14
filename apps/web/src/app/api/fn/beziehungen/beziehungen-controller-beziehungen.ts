@@ -11,21 +11,34 @@ import { RequestBuilder } from '../../request-builder';
 import { BeziehungAntwortDto } from '../../models/beziehung-antwort-dto';
 
 export interface BeziehungenControllerBeziehungen$Params {
+  kontaktId?: string;
 }
 
-export function beziehungenControllerBeziehungen(http: HttpClient, rootUrl: string, params?: BeziehungenControllerBeziehungen$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<BeziehungAntwortDto>>> {
-  const rb = new RequestBuilder(rootUrl, beziehungenControllerBeziehungen.PATH, 'get');
+export function beziehungenControllerBeziehungen(
+  http: HttpClient,
+  rootUrl: string,
+  params?: BeziehungenControllerBeziehungen$Params,
+  context?: HttpContext,
+): Observable<StrictHttpResponse<Array<BeziehungAntwortDto>>> {
+  const rb = new RequestBuilder(
+    rootUrl,
+    beziehungenControllerBeziehungen.PATH,
+    'get',
+  );
   if (params) {
+    rb.query('kontaktId', params.kontaktId, {});
   }
 
-  return http.request(
-    rb.build({ responseType: 'json', accept: 'application/json', context })
-  ).pipe(
-    filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
-    map((r: HttpResponse<any>) => {
-      return r as StrictHttpResponse<Array<BeziehungAntwortDto>>;
-    })
-  );
+  return http
+    .request(
+      rb.build({ responseType: 'json', accept: 'application/json', context }),
+    )
+    .pipe(
+      filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<Array<BeziehungAntwortDto>>;
+      }),
+    );
 }
 
 beziehungenControllerBeziehungen.PATH = '/beziehungen';
