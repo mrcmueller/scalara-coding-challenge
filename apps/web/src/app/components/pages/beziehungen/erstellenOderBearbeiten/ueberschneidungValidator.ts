@@ -5,7 +5,7 @@ import {
 } from '@angular/forms';
 import { MieterUeberschneidungService } from '../../../../api/services';
 import { inject, Injectable } from '@angular/core';
-import { catchError, map, Observable, of, switchMap, timer } from 'rxjs';
+import { map, Observable, switchMap, timer } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -21,17 +21,7 @@ export class UeberschneidungValidationService {
       const endDatum = control.get('enddatum')?.value;
       const immobilienId = control.get('immobilienId')?.value;
 
-      console.log('updates: ', {
-        beziehungstyp,
-        startDatum,
-        endDatum,
-        immobilienId,
-      });
-
       if (!(beziehungstyp === 2) || !startDatum || !endDatum || !immobilienId) {
-        console.log('nulled');
-
-        return of(null);
       }
 
       return timer(400).pipe(
@@ -46,14 +36,13 @@ export class UeberschneidungValidationService {
               },
             })
             .pipe(
-              map((val) =>
-                val.ueberschneidung
-                  ? {
-                      ueberschneidung:
-                        'Der Zeitraum überschneidet sich mit einem anderen Mietvertrag.',
-                    }
-                  : null,
-              ),
+              map((val) => {
+                const ueberschneidungError = {
+                  ueberschneidung:
+                    'Der Zeitraum überschneidet sich mit einem anderen Mietvertrag.',
+                };
+                return val.ueberschneidung ? ueberschneidungError : null;
+              }),
             );
         }),
       );

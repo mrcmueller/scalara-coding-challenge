@@ -1,6 +1,6 @@
 <mat-form-field appearance="outline">
   <mat-label>{{ label }}</mat-label>
-  <mat-date-range-input [rangePicker]="picker">
+  <mat-date-range-input [formGroup]="formGroup" [rangePicker]="picker">
     <input
       matStartDate
       [placeholder]="placeholderStart"
@@ -11,19 +11,26 @@
       [placeholder]="placeholderEnd"
       [formControl]="controlEnddatum"
     />
-    @if (
-      formGroup && formGroup.invalid && (formGroup.dirty || formGroup.touched)
-    ) {
-      <div class="alert text-red-700 text-xs pt-2 pb-2">
-        @if (formGroup.hasError('required')) {
-          Ein Zeitraum ist erforderlich.
-        } @else if (formGroup.hasError('ueberschneidung')) {
-          Der Zeitraum überschneidet sich mit einem anderen Mietvertrag.
-        }
-      </div>
-    }
   </mat-date-range-input>
-  <mat-hint>{{ hint }}</mat-hint>
+  @if (
+    formGroup &&
+    formGroup.invalid &&
+    (controlStartdatum.dirty ||
+      controlEnddatum.dirty ||
+      controlStartdatum.touched ||
+      controlEnddatum.touched)
+  ) {
+    <div class="alert text-red-700 text-xs pt-2 pb-2">
+      @if (
+        controlStartdatum.hasError('required') ||
+        controlEnddatum.hasError('required')
+      ) {
+        Ein Zeitraum ist erforderlich.
+      } @else if (formGroup.hasError('ueberschneidung')) {
+        Der Zeitraum überschneidet sich mit einem anderen Mietvertrag.
+      }
+    </div>
+  }
   <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
   <mat-date-range-picker #picker></mat-date-range-picker>
 </mat-form-field>

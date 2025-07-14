@@ -124,6 +124,7 @@ export class BeziehungErstellenOderBearbeiten {
   setNullable() {
     const control = this.beziehungErstellenForm.controls.dienstleistungstyp;
     control.setValidators(this.nullable);
+    control.setValue(null);
     control.updateValueAndValidity();
   }
 

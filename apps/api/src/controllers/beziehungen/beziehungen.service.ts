@@ -61,7 +61,6 @@ export class BeziehungenService {
     if (beziehungstyp === 3 && !dienstleistungstyp) {
       throw new BadRequestException(['Bitte gib eine Dienstleistung an']);
     }
-
     if (beziehungstyp === 2 && typeGuard(input)) {
       const ueberschneidung =
         await this.ueberschneidungsService.einenMieterProZeitraum(input);

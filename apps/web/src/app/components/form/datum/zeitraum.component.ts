@@ -4,10 +4,11 @@ import {
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatError, MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'date-range-picker',
@@ -19,6 +20,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatDatepickerModule,
     FormsModule,
     ReactiveFormsModule,
+    MatError,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -31,7 +33,10 @@ export class ZeitraumComponent {
   @Input() enddatum: Date | null = null;
   @Input() controlStartdatum = new FormControl() as FormControl<Date | null>;
   @Input() controlEnddatum = new FormControl() as FormControl<Date | null>;
-  @Input() formGroup?: FormGroup;
+  @Input() formGroup: FormGroup<any> = new FormGroup({
+    startdatum: new FormControl<Date | null>(null, [Validators.required]),
+    enddatum: new FormControl<Date | null>(null, [Validators.required]),
+  });
 
   constructor() {}
 }
