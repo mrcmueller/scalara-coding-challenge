@@ -1,5 +1,10 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -26,6 +31,7 @@ export class ZeitraumComponent {
   @Input() enddatum: Date | null = null;
   @Input() controlStartdatum = new FormControl() as FormControl<Date | null>;
   @Input() controlEnddatum = new FormControl() as FormControl<Date | null>;
+  @Input() formGroup?: FormGroup;
 
   constructor() {}
 }

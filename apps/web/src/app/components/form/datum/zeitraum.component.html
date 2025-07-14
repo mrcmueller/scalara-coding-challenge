@@ -11,6 +11,17 @@
       [placeholder]="placeholderEnd"
       [formControl]="controlEnddatum"
     />
+    @if (
+      formGroup && formGroup.invalid && (formGroup.dirty || formGroup.touched)
+    ) {
+      <div class="alert text-red-700 text-xs pt-2 pb-2">
+        @if (formGroup.hasError('required')) {
+          Ein Zeitraum ist erforderlich.
+        } @else if (formGroup.hasError('ueberschneidung')) {
+          Der Zeitraum überschneidet sich mit einem anderen Mietvertrag.
+        }
+      </div>
+    }
   </mat-date-range-input>
   <mat-hint>{{ hint }}</mat-hint>
   <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>

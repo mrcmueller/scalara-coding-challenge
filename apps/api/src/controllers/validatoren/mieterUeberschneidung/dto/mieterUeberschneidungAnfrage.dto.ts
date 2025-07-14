@@ -4,8 +4,8 @@ import { ApiProperty } from '@nestjs/swagger';
 import { EnddatumNachStartdatumValidator } from '@/src/controllers/beziehungen/dto/enddatumNachStartdatum.validator';
 
 export class MieterUeberschneidungAnfrageDTO {
-  @IsOptional()
   @ApiProperty()
+  @IsOptional()
   @IsMongoId()
   id?: string;
 

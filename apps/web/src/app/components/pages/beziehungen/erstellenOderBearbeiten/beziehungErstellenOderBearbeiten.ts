@@ -28,6 +28,7 @@ import {
   SelectItems,
 } from '../../../form/selection/selection.component';
 import { ZeitraumComponent } from '../../../form/datum/zeitraum.component';
+import { UeberschneidungValidationService } from './ueberschneidungValidator';
 
 type BeziehungstypValue = 1 | 2 | 3;
 type DienstleistungstypValue = 1 | 2 | 3;
@@ -56,6 +57,11 @@ export class BeziehungErstellenOderBearbeiten {
   public readonly id = this.getId();
   private readonly required = Validators.required;
   private readonly nullable = Validators.nullValidator;
+  private readonly ueberschneidungValidationService = inject(
+    UeberschneidungValidationService,
+  );
+  private readonly ueberschneidungValidator =
+    this.ueberschneidungValidationService.validator;
 
   public showDienstleistungstyp: boolean = false;
 
@@ -72,22 +78,27 @@ export class BeziehungErstellenOderBearbeiten {
     { value: 3, name: 'Sanitär' },
   ];
 
-  public beziehungErstellenForm = new FormGroup({
-    kontaktId: new FormControl(null, [Validators.required]) as FormControl<
-      string | null
-    >,
-    immobilienId: new FormControl(null, [Validators.required]) as FormControl<
-      string | null
-    >,
-    beziehungstyp: new FormControl(null, [
-      Validators.required,
-    ]) as FormControl<BeziehungstypValue | null>,
-    dienstleistungstyp: new FormControl(null, [
-      this.nullable,
-    ]) as FormControl<DienstleistungstypValue | null>,
-    startdatum: new FormControl<Date | null>(null, [Validators.required]),
-    enddatum: new FormControl<Date | null>(null, [Validators.required]),
-  });
+  public beziehungErstellenForm = new FormGroup(
+    {
+      kontaktId: new FormControl(null, [Validators.required]) as FormControl<
+        string | null
+      >,
+      immobilienId: new FormControl(null, [Validators.required]) as FormControl<
+        string | null
+      >,
+      beziehungstyp: new FormControl(null, [
+        Validators.required,
+      ]) as FormControl<BeziehungstypValue | null>,
+      dienstleistungstyp: new FormControl(null, [
+        this.nullable,
+      ]) as FormControl<DienstleistungstypValue | null>,
+      startdatum: new FormControl<Date | null>(null, [Validators.required]),
+      enddatum: new FormControl<Date | null>(null, {
+        validators: [Validators.required],
+      }),
+    },
+    { asyncValidators: [this.ueberschneidungValidator(this.id)] },
+  );
 
   getId(): string | undefined {
     return this.route.snapshot.params['beziehungId'];
