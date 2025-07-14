@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { BeziehungenService } from './beziehungen.service';
 import { BeziehungErstellenDto } from './dto/beziehungErstellen.dto';
@@ -28,8 +29,10 @@ export class BeziehungenController {
   })
   @ApiExtraModels(KontaktAntwortDto, ImmobilieAntwortDto)
   @Get()
-  async beziehungen(): Promise<BeziehungAntwortDto[]> {
-    const antwort = await this.beziehungenService.beziehungen();
+  async beziehungen(
+    @Query('kontaktId') kontaktId?: string,
+  ): Promise<BeziehungAntwortDto[]> {
+    const antwort = await this.beziehungenService.beziehungen(kontaktId);
     return plainToInstance(BeziehungAntwortDto, antwort, {
       enableImplicitConversion: true,
     });

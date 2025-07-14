@@ -72,8 +72,9 @@ export class BeziehungenService {
     }
   }
 
-  async beziehungen(): Promise<BeziehungMitPayloadsQuery[]> {
+  async beziehungen(kontaktId?: string): Promise<BeziehungMitPayloadsQuery[]> {
     return await this.prisma.beziehung.findMany({
+      where: { kontaktId: kontaktId ?? {} },
       include: { immobilie: true, kontakt: true },
     });
   }
