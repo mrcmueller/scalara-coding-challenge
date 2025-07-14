@@ -9,15 +9,26 @@ const istZeitraumUeberlappend = (
   startdatumB: Date,
   enddatumB: Date,
 ) => {
-  const startA = startdatumA.setHours(0, 0, 0, 0);
-  const endA = enddatumA.setHours(0, 0, 0, 0);
-  const startB = startdatumB.setHours(0, 0, 0, 0);
-  const endB = enddatumB.setHours(0, 0, 0, 0);
+  // durch voherige Checks wissen wir bereits, dass das Enddatum nicht vor dem Startdatum liegt
 
-  const startAueberlappungB = startA >= startB && startA <= endB;
-  const endAueberlappungB = endA >= startB && endA <= endB;
+  const zeitraumA = {
+    start: startdatumA.getTime(),
+    ende: enddatumA.getTime(),
+  };
 
-  return startAueberlappungB && endAueberlappungB;
+  const zeitraumB = {
+    start: startdatumB.getTime(),
+    ende: enddatumB.getTime(),
+  };
+
+  const laengeZeitraumA = zeitraumA.ende - zeitraumA.start;
+  const laengeZeitraumB = zeitraumB.ende - zeitraumB.start;
+
+  return !(
+    Math.max(zeitraumA.ende, zeitraumB.ende) -
+      Math.min(zeitraumA.start, zeitraumB.start) >
+    laengeZeitraumA + laengeZeitraumB
+  );
 };
 
 @Injectable()
@@ -35,7 +46,11 @@ export class MieterUeberschneidungService {
     const { immobilienId, startdatum, enddatum, id } = input;
 
     const relevanteMietungenImmobilie = await this.prisma.beziehung.findMany({
-      where: { immobilienId, beziehungstyp: 2, id: { not: id } },
+      where: {
+        immobilienId,
+        beziehungstyp: 2,
+        id: id ? { not: id } : {},
+      },
       // Der not filter sorgt dafür, dass die zu ändernde Mietbeziehung für die Überschneidungsüberprüfung
       // ignoriert wird
       // Die id wird nämlich nur bei Änderungen mitgesendet

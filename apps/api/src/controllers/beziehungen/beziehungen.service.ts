@@ -1,4 +1,4 @@
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from '@/src/prisma.service';
 import { BeziehungErstellenDto } from './dto/beziehungErstellen.dto';
 import { BeziehungAendernDto } from './dto/beziehungAendern.dto';
