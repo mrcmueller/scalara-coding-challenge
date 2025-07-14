@@ -1,4 +1,4 @@
-import { Body, Controller, Get } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { ApiOkResponse } from '@nestjs/swagger';
 import { plainToInstance } from 'class-transformer';
 import { MieterUeberschneidungAntwortDTO } from './dto/mieterUeberschneidungAntwort.dto';
@@ -10,8 +10,8 @@ export class MieterUeberschneidungController {
   constructor(private readonly service: MieterUeberschneidungService) {}
 
   @ApiOkResponse({ type: MieterUeberschneidungAntwortDTO })
-  @Get()
-  async beziehungen(
+  @Post()
+  async ueberschneidung(
     @Body()
     input: MieterUeberschneidungAnfrageDTO,
   ): Promise<MieterUeberschneidungAntwortDTO> {

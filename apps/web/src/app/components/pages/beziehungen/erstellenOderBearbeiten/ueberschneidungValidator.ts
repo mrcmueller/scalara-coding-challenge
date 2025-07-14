@@ -37,7 +37,7 @@ export class UeberschneidungValidationService {
       return timer(400).pipe(
         switchMap(() => {
           return this.service
-            .mieterUeberschneidungControllerBeziehungen({
+            .mieterUeberschneidungControllerUeberschneidung({
               body: {
                 id: id as string,
                 immobilienId,

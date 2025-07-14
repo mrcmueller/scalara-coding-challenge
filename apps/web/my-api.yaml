@@ -1,8 +1,8 @@
 openapi: 3.0.0
 paths:
   /validatoren/mieterueberschneidung:
-    get:
-      operationId: MieterUeberschneidungController_beziehungen
+    post:
+      operationId: MieterUeberschneidungController_ueberschneidung
       parameters: []
       requestBody:
         required: true

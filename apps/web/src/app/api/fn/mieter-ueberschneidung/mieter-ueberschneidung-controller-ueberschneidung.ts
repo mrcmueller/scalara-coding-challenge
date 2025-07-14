@@ -11,12 +11,12 @@ import { RequestBuilder } from '../../request-builder';
 import { MieterUeberschneidungAnfrageDto } from '../../models/mieter-ueberschneidung-anfrage-dto';
 import { MieterUeberschneidungAntwortDto } from '../../models/mieter-ueberschneidung-antwort-dto';
 
-export interface MieterUeberschneidungControllerBeziehungen$Params {
+export interface MieterUeberschneidungControllerUeberschneidung$Params {
       body: MieterUeberschneidungAnfrageDto
 }
 
-export function mieterUeberschneidungControllerBeziehungen(http: HttpClient, rootUrl: string, params: MieterUeberschneidungControllerBeziehungen$Params, context?: HttpContext): Observable<StrictHttpResponse<MieterUeberschneidungAntwortDto>> {
-  const rb = new RequestBuilder(rootUrl, mieterUeberschneidungControllerBeziehungen.PATH, 'get');
+export function mieterUeberschneidungControllerUeberschneidung(http: HttpClient, rootUrl: string, params: MieterUeberschneidungControllerUeberschneidung$Params, context?: HttpContext): Observable<StrictHttpResponse<MieterUeberschneidungAntwortDto>> {
+  const rb = new RequestBuilder(rootUrl, mieterUeberschneidungControllerUeberschneidung.PATH, 'post');
   if (params) {
     rb.body(params.body, 'application/json');
   }
@@ -31,4 +31,4 @@ export function mieterUeberschneidungControllerBeziehungen(http: HttpClient, roo
   );
 }
 
-mieterUeberschneidungControllerBeziehungen.PATH = '/validatoren/mieterueberschneidung';
+mieterUeberschneidungControllerUeberschneidung.PATH = '/validatoren/mieterueberschneidung';

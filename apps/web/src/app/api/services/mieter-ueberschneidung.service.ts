@@ -12,8 +12,8 @@ import { ApiConfiguration } from '../api-configuration';
 import { StrictHttpResponse } from '../strict-http-response';
 
 import { MieterUeberschneidungAntwortDto } from '../models/mieter-ueberschneidung-antwort-dto';
-import { mieterUeberschneidungControllerBeziehungen } from '../fn/mieter-ueberschneidung/mieter-ueberschneidung-controller-beziehungen';
-import { MieterUeberschneidungControllerBeziehungen$Params } from '../fn/mieter-ueberschneidung/mieter-ueberschneidung-controller-beziehungen';
+import { mieterUeberschneidungControllerUeberschneidung } from '../fn/mieter-ueberschneidung/mieter-ueberschneidung-controller-ueberschneidung';
+import { MieterUeberschneidungControllerUeberschneidung$Params } from '../fn/mieter-ueberschneidung/mieter-ueberschneidung-controller-ueberschneidung';
 
 @Injectable({ providedIn: 'root' })
 export class MieterUeberschneidungService extends BaseService {
@@ -21,27 +21,27 @@ export class MieterUeberschneidungService extends BaseService {
     super(config, http);
   }
 
-  /** Path part for operation `mieterUeberschneidungControllerBeziehungen()` */
-  static readonly MieterUeberschneidungControllerBeziehungenPath = '/validatoren/mieterueberschneidung';
+  /** Path part for operation `mieterUeberschneidungControllerUeberschneidung()` */
+  static readonly MieterUeberschneidungControllerUeberschneidungPath = '/validatoren/mieterueberschneidung';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `mieterUeberschneidungControllerBeziehungen()` instead.
+   * To access only the response body, use `mieterUeberschneidungControllerUeberschneidung()` instead.
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  mieterUeberschneidungControllerBeziehungen$Response(params: MieterUeberschneidungControllerBeziehungen$Params, context?: HttpContext): Observable<StrictHttpResponse<MieterUeberschneidungAntwortDto>> {
-    return mieterUeberschneidungControllerBeziehungen(this.http, this.rootUrl, params, context);
+  mieterUeberschneidungControllerUeberschneidung$Response(params: MieterUeberschneidungControllerUeberschneidung$Params, context?: HttpContext): Observable<StrictHttpResponse<MieterUeberschneidungAntwortDto>> {
+    return mieterUeberschneidungControllerUeberschneidung(this.http, this.rootUrl, params, context);
   }
 
   /**
    * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `mieterUeberschneidungControllerBeziehungen$Response()` instead.
+   * To access the full response (for headers, for example), `mieterUeberschneidungControllerUeberschneidung$Response()` instead.
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  mieterUeberschneidungControllerBeziehungen(params: MieterUeberschneidungControllerBeziehungen$Params, context?: HttpContext): Observable<MieterUeberschneidungAntwortDto> {
-    return this.mieterUeberschneidungControllerBeziehungen$Response(params, context).pipe(
+  mieterUeberschneidungControllerUeberschneidung(params: MieterUeberschneidungControllerUeberschneidung$Params, context?: HttpContext): Observable<MieterUeberschneidungAntwortDto> {
+    return this.mieterUeberschneidungControllerUeberschneidung$Response(params, context).pipe(
       map((r: StrictHttpResponse<MieterUeberschneidungAntwortDto>): MieterUeberschneidungAntwortDto => r.body)
     );
   }
