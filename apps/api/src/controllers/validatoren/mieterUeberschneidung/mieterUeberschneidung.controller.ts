@@ -3,6 +3,7 @@ import { ApiOkResponse } from '@nestjs/swagger';
 import { plainToInstance } from 'class-transformer';
 import { MieterUeberschneidungAntwortDTO } from './dto/mieterUeberschneidungAntwort.dto';
 import { MieterUeberschneidungAnfrageDTO } from './dto/mieterUeberschneidungAnfrage.dto';
+import { MieterUeberschneidungService } from './mieterUeberschneidung.service';
 
 @Controller('validatoren/mieterueberschneidung')
 export class MieterUeberschneidungController {

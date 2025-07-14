@@ -40,9 +40,9 @@ export class EnddatumNachStartdatumValidator
     // 1.2 Wenn ja, checken ob die types auch stimmen (beinhaltet auch runtime checks)
 
     // typecheck beinhaltet Konvertierung, so spare ich mir zweimal zu konvertieren (bei check für pot. Fehlermeldung und für Konvertierung nach bestandenem Typecheck)
-    const startdatum = zuValidemDateOderFalse(object.startdatum);
+    const validStartdatum = zuValidemDateOderFalse(object.startdatum);
 
-    if (!startdatum) {
+    if (!validStartdatum) {
       errorMessage = 'Das Startdatum ist ungültig oder fehlt';
       return false;
     }
@@ -56,7 +56,8 @@ export class EnddatumNachStartdatumValidator
 
     // 3. Eigentliche Validierung
 
-    const enddatumVorStartdatum = enddatum.getTime() < startdatum.getTime();
+    const enddatumVorStartdatum =
+      enddatum.getTime() < validStartdatum.getTime();
 
     if (enddatumVorStartdatum) {
       errorMessage = 'Das Enddatum darf nicht vor dem Startdatum liegen';

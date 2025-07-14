@@ -1,8 +1,7 @@
-import { BadRequestException, Injectable, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@/src/prisma.service';
-import { BeziehungErstellenDto } from './dto/beziehungErstellen.dto';
-import { BeziehungAendernDto } from './dto/mieterUeberschneidungAnfrage.dto';
-import { BeziehungMitPayloadsQuery } from './beziehungen.types';
+import { MieterUeberschneidungAnfrageDTO } from './dto/mieterUeberschneidungAnfrage.dto';
+import { MieterUeberschneidungAntwortDTO } from './dto/mieterUeberschneidungAntwort.dto';
 
 const istZeitraumUeberlappend = (
   startdatumA: Date,
@@ -21,148 +20,45 @@ const istZeitraumUeberlappend = (
   return startAueberlappungB && endAueberlappungB;
 };
 
-type Potentials = {
-  beziehungstyp?: number;
-  dienstleistungstyp?: number | null;
-  startdatum?: Date;
-  enddatum?: Date;
-  immobilienId?: string;
-};
-
-type Ueberpruefbar = {
-  beziehungstyp: number;
-  dienstleistungstyp: number;
-  startdatum: Date;
-  enddatum: Date;
-  immobilienId: string;
-};
-
 @Injectable()
-export class BeziehungenService {
-  private readonly logger = new Logger(BeziehungenService.name);
-
+export class MieterUeberschneidungService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async einenMieterProZeitraum(
-    input: {
-      startdatum: Date;
-      enddatum: Date;
-      immobilienId: string;
-    },
-    id?: string,
-  ) {
+  async einenMieterProZeitraum(input: {
+    id?: string;
+    immobilienId: string;
+    startdatum: Date;
+    enddatum: Date;
+  }) {
     // Pro Immobilie nur einen Mieter pro Zeitraum
-    let ueberschneidungGefunden = false;
 
-    const alleMieterImmobilie = await this.prisma.beziehung.findMany({
-      where: { immobilienId: input.immobilienId, beziehungstyp: 2 },
+    const { immobilienId, startdatum, enddatum, id } = input;
+
+    const relevanteMietungenImmobilie = await this.prisma.beziehung.findMany({
+      where: { immobilienId, beziehungstyp: 2, id: { not: id } },
+      // Der not filter sorgt dafür, dass die zu ändernde Mietbeziehung für die Überschneidungsüberprüfung
+      // ignoriert wird
+      // Die id wird nämlich nur bei Änderungen mitgesendet
     });
 
-    if (id) {
-      const indexToRemove = alleMieterImmobilie.findIndex((el) => el.id === id);
-      alleMieterImmobilie.splice(indexToRemove, 1);
+    // Wenn keine für Überschneidungen relevante Mietungen existieren, dann gibt es auch keine Überschneidung
+
+    if (!relevanteMietungenImmobilie.length) {
+      return false;
     }
 
-    for (let i = 0; i < alleMieterImmobilie.length; i += 1) {
-      const el = alleMieterImmobilie[i];
-      if (
-        istZeitraumUeberlappend(
-          el.startdatum,
-          el.enddatum,
-          input.startdatum,
-          input.enddatum,
-        )
-      ) {
-        ueberschneidungGefunden = true;
-        break;
-      }
-    }
+    const ersteUeberschneidung = relevanteMietungenImmobilie.find((el) =>
+      istZeitraumUeberlappend(el.startdatum, el.enddatum, startdatum, enddatum),
+    );
 
-    if (ueberschneidungGefunden) {
-      throw new BadRequestException([
-        'Die Immobilie hat bereits einen Mieter an diesem Zeitraum',
-      ]);
-    }
+    return Boolean(ersteUeberschneidung);
   }
 
-  async checks(input: Potentials, id?: string) {
-    let loaded;
-    let merged;
+  async mieterUeberschneidung(
+    input: MieterUeberschneidungAnfrageDTO,
+  ): Promise<MieterUeberschneidungAntwortDTO> {
+    const result = await this.einenMieterProZeitraum(input);
 
-    if (id) {
-      // Da fast alle props für Validations benötigt werden -> fetch wenn Änderung
-      loaded = await this.prisma.beziehung.findUniqueOrThrow({
-        where: { id },
-      });
-
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      merged = Object.assign({}, loaded, input);
-
-      if (
-        (merged as Potentials)?.beziehungstyp === 3 &&
-        !(merged as Potentials).dienstleistungstyp
-      ) {
-        throw new BadRequestException(['Bitte gib eine Dienstleistung an']);
-      }
-
-      if ((merged as Ueberpruefbar).beziehungstyp === 2) {
-        await this.einenMieterProZeitraum(merged as Ueberpruefbar, id);
-      }
-    } else if (input?.beziehungstyp === 3 && !input?.dienstleistungstyp) {
-      throw new BadRequestException(['Bitte gib eine Dienstleistung an']);
-    } else if (input?.beziehungstyp === 2) {
-      await this.einenMieterProZeitraum(input as Ueberpruefbar);
-    }
-
-    // Pro Immobilie nur einen Mieter pro Zeitraum
-  }
-
-  async beziehungen(): Promise<BeziehungMitPayloadsQuery[]> {
-    this.logger.log('Hello');
-
-    return await this.prisma.beziehung.findMany({
-      include: { immobilie: true, kontakt: true },
-    });
-  }
-
-  async beziehung(id: string): Promise<BeziehungMitPayloadsQuery | null> {
-    const antwort = await this.prisma.beziehung.findUnique({
-      where: { id },
-      include: { immobilie: true, kontakt: true },
-    });
-
-    return antwort;
-  }
-
-  async erstelleBeziehung(
-    input: BeziehungErstellenDto,
-  ): Promise<BeziehungMitPayloadsQuery> {
-    await this.checks(input);
-
-    return await this.prisma.beziehung.create({
-      data: input,
-      include: { immobilie: true, kontakt: true },
-    });
-  }
-
-  async aendereBeziehung(
-    id: string,
-    input: BeziehungAendernDto,
-  ): Promise<BeziehungMitPayloadsQuery> {
-    await this.checks({ ...input }, id);
-
-    const result = await this.prisma.beziehung.update({
-      where: { id },
-      data: input,
-      include: { immobilie: true, kontakt: true },
-    });
-    return result;
-  }
-
-  async loescheBeziehung(id: string): Promise<BeziehungMitPayloadsQuery> {
-    return await this.prisma.beziehung.delete({
-      where: { id },
-      include: { immobilie: true, kontakt: true },
-    });
+    return { ueberschneidung: result };
   }
 }

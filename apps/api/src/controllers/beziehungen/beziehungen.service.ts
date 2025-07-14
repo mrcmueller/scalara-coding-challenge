@@ -1,27 +1,13 @@
-import { BadRequestException, Injectable, Logger } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from '@/src/prisma.service';
 import { BeziehungErstellenDto } from './dto/beziehungErstellen.dto';
 import { BeziehungAendernDto } from './dto/beziehungAendern.dto';
 import { BeziehungMitPayloadsQuery } from './beziehungen.types';
-
-const istZeitraumUeberlappend = (
-  startdatumA: Date,
-  enddatumA: Date,
-  startdatumB: Date,
-  enddatumB: Date,
-) => {
-  const startA = startdatumA.setHours(0, 0, 0, 0);
-  const endA = enddatumA.setHours(0, 0, 0, 0);
-  const startB = startdatumB.setHours(0, 0, 0, 0);
-  const endB = enddatumB.setHours(0, 0, 0, 0);
-
-  const startAueberlappungB = startA >= startB && startA <= endB;
-  const endAueberlappungB = endA >= startB && endA <= endB;
-
-  return startAueberlappungB && endAueberlappungB;
-};
+import { MieterUeberschneidungService } from '../validatoren/mieterUeberschneidung/mieterUeberschneidung.service';
+import { MieterUeberschneidungAnfrageDTO } from '../validatoren/mieterUeberschneidung/dto/mieterUeberschneidungAnfrage.dto';
 
 type Potentials = {
+  id?: string;
   beziehungstyp?: number;
   dienstleistungstyp?: number | null;
   startdatum?: Date;
@@ -29,97 +15,65 @@ type Potentials = {
   immobilienId?: string;
 };
 
-type Ueberpruefbar = {
-  beziehungstyp: number;
-  dienstleistungstyp: number;
-  startdatum: Date;
-  enddatum: Date;
-  immobilienId: string;
+const typeGuard = (input: any): input is MieterUeberschneidungAnfrageDTO => {
+  return (
+    typeof input === 'object' &&
+    input !== null &&
+    'immobilienId' in input &&
+    'startdatum' in input &&
+    'enddatum' in input
+  );
 };
 
 @Injectable()
 export class BeziehungenService {
-  private readonly logger = new Logger(BeziehungenService.name);
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly ueberschneidungsService: MieterUeberschneidungService,
+  ) {}
 
-  constructor(private readonly prisma: PrismaService) {}
+  async checks(input: Potentials) {
+    const { id } = input;
 
-  async einenMieterProZeitraum(
-    input: {
-      startdatum: Date;
-      enddatum: Date;
-      immobilienId: string;
-    },
-    id?: string,
-  ) {
-    // Pro Immobilie nur einen Mieter pro Zeitraum
-    let ueberschneidungGefunden = false;
-
-    const alleMieterImmobilie = await this.prisma.beziehung.findMany({
-      where: { immobilienId: input.immobilienId, beziehungstyp: 2 },
-    });
+    // Lade fehlende Props
 
     if (id) {
-      const indexToRemove = alleMieterImmobilie.findIndex((el) => el.id === id);
-      alleMieterImmobilie.splice(indexToRemove, 1);
-    }
-
-    for (let i = 0; i < alleMieterImmobilie.length; i += 1) {
-      const el = alleMieterImmobilie[i];
-      if (
-        istZeitraumUeberlappend(
-          el.startdatum,
-          el.enddatum,
-          input.startdatum,
-          input.enddatum,
-        )
-      ) {
-        ueberschneidungGefunden = true;
-        break;
-      }
-    }
-
-    if (ueberschneidungGefunden) {
-      throw new BadRequestException([
-        'Die Immobilie hat bereits einen Mieter an diesem Zeitraum',
-      ]);
-    }
-  }
-
-  async checks(input: Potentials, id?: string) {
-    let loaded;
-    let merged;
-
-    if (id) {
-      // Da fast alle props für Validations benötigt werden -> fetch wenn Änderung
-      loaded = await this.prisma.beziehung.findUniqueOrThrow({
+      // id wird nur bei Änderungen mitgesendet
+      // Falls eine Änderung stattfindet, lade die props der Beziehung, die im Body der Änderungsrequest
+      // nicht mitgesendet wurden, aber dennoch für Überprüfung relevant sind
+      const beziehung = await this.prisma.beziehung.findUniqueOrThrow({
         where: { id },
       });
 
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      merged = Object.assign({}, loaded, input);
+      // Erstelle Props auf input falls nicht vorhanden
 
-      if (
-        (merged as Potentials)?.beziehungstyp === 3 &&
-        !(merged as Potentials).dienstleistungstyp
-      ) {
-        throw new BadRequestException(['Bitte gib eine Dienstleistung an']);
-      }
-
-      if ((merged as Ueberpruefbar).beziehungstyp === 2) {
-        await this.einenMieterProZeitraum(merged as Ueberpruefbar, id);
-      }
-    } else if (input?.beziehungstyp === 3 && !input?.dienstleistungstyp) {
-      throw new BadRequestException(['Bitte gib eine Dienstleistung an']);
-    } else if (input?.beziehungstyp === 2) {
-      await this.einenMieterProZeitraum(input as Ueberpruefbar);
+      input.immobilienId = input?.immobilienId ?? beziehung?.immobilienId;
+      input.beziehungstyp = input?.beziehungstyp ?? beziehung?.beziehungstyp;
+      input.startdatum = input?.startdatum ?? beziehung?.startdatum;
+      input.enddatum = input?.enddatum ?? beziehung?.enddatum;
     }
 
-    // Pro Immobilie nur einen Mieter pro Zeitraum
+    // wenn id nicht auf input, dann sind alle für Prüfung relevanten Props bereits so oder so
+    // sicher durch andere voherigen Checks auf input
+
+    const { beziehungstyp, dienstleistungstyp } = input;
+
+    if (beziehungstyp === 3 && !dienstleistungstyp) {
+      throw new BadRequestException(['Bitte gib eine Dienstleistung an']);
+    }
+
+    if (beziehungstyp === 2 && typeGuard(input)) {
+      const ueberschneidung =
+        await this.ueberschneidungsService.einenMieterProZeitraum(input);
+
+      if (ueberschneidung)
+        throw new BadRequestException([
+          'Die Immobilie hat bereits eine Mietung für diesen Zeitraum',
+        ]);
+    }
   }
 
   async beziehungen(): Promise<BeziehungMitPayloadsQuery[]> {
-    this.logger.log('Hello');
-
     return await this.prisma.beziehung.findMany({
       include: { immobilie: true, kontakt: true },
     });
@@ -149,7 +103,7 @@ export class BeziehungenService {
     id: string,
     input: BeziehungAendernDto,
   ): Promise<BeziehungMitPayloadsQuery> {
-    await this.checks({ ...input }, id);
+    await this.checks({ ...input, id });
 
     const result = await this.prisma.beziehung.update({
       where: { id },
