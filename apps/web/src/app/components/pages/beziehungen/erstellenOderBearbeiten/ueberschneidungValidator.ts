@@ -5,7 +5,17 @@ import {
 } from '@angular/forms';
 import { MieterUeberschneidungService } from '../../../../api/services';
 import { inject, Injectable } from '@angular/core';
-import { map, Observable, switchMap, timer } from 'rxjs';
+import {
+  catchError,
+  debounce,
+  debounceTime,
+  map,
+  Observable,
+  of,
+  switchMap,
+  take,
+  timer,
+} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -22,6 +32,7 @@ export class UeberschneidungValidationService {
       const immobilienId = control.get('immobilienId')?.value;
 
       if (!(beziehungstyp === 2) || !startDatum || !endDatum || !immobilienId) {
+        return of(null);
       }
 
       return timer(400).pipe(
