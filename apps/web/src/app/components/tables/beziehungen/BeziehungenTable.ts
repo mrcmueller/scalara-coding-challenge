@@ -1,8 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { BeziehungenDataSource } from '../../../dataSources/beziehungen.dataSource';
-import { DataSource } from '@angular/cdk/table';
-import { ListDataSource } from '../../../types/interfaces';
 
 @Component({
   selector: 'beziehungen-table',
@@ -19,11 +17,15 @@ export class BeziehungenTable {
     'kontakt',
     'immobilie',
     'beziehungstyp',
+    'startdatum',
+    'enddatum',
     'dienstleistungstyp',
     'action',
   ];
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.dataSource.getBeziehungen();
+  }
 
   ngOnDestroy() {}
 }

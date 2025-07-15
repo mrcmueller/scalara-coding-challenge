@@ -15,7 +15,6 @@ import {
 import {
   BeziehungAntwortDto,
   ImmobilieAntwortMitBeziehungenDto,
-  KontaktAntwortDto,
   KontaktAntwortMitBeziehungenDto,
 } from '../../../../api/models';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -225,6 +224,7 @@ export class BeziehungErstellenOderBearbeiten {
 
   handleCreationOrUpdate() {
     // Notify others
+    console.log('Update done');
     this.refresh$.next();
 
     this.goBack();

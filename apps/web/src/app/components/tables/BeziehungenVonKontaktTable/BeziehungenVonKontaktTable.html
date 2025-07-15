@@ -1,11 +1,6 @@
 @if(dataSource && !dataSource.loadingSubject.getValue()){
 
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-  <ng-container matColumnDef="kontakt">
-    <th mat-header-cell *matHeaderCellDef>Kontakt</th>
-    <td mat-cell *matCellDef="let element">{{element.kontakt.name}}</td>
-  </ng-container>
-
   <ng-container matColumnDef="immobilie">
     <th mat-header-cell *matHeaderCellDef>Immobilie</th>
     <td mat-cell *matCellDef="let element">{{element.immobilie.name}}</td>

@@ -1,18 +1,15 @@
 import { Component, Input } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { BeziehungenDataSource } from '../../../dataSources/beziehungen.dataSource';
-import { DataSource } from '@angular/cdk/table';
-import { ListDataSource } from '../../../types/interfaces';
-import { ExperimentalDataSource } from '../../../dataSources/experimental.dataSource';
 
 @Component({
-  selector: 'experimental-table',
-  styleUrl: './ExperimentalTable.scss',
-  templateUrl: './ExperimentalTable.html',
+  selector: 'beziehungen-von-kontakt-table',
+  styleUrl: './BeziehungenVonKontaktTable.scss',
+  templateUrl: './BeziehungenVonKontaktTable.html',
   imports: [MatTableModule],
 })
-export class ExperimentalTable {
-  @Input() dataSource = new ExperimentalDataSource();
+export class BeziehungenVonKontakteTable {
+  @Input() dataSource = new BeziehungenDataSource();
 
   constructor() {}
 

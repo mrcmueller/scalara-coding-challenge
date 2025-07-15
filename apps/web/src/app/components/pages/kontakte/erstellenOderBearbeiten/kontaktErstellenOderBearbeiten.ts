@@ -50,8 +50,8 @@ export class KontaktErstellenOderBearbeiten {
   private service = inject(KontakteService);
   private refresh$ = inject(KontakteRefresh);
   readonly dialog = inject(MatDialog);
-  laender = [...LAENDER, 'Großbritannien'];
-  locales = [...LOCALES, 'GB'];
+  laender = LAENDER;
+  locales = LOCALES;
   initialLandId = 0;
   land = this.laender[this.initialLandId];
   locale = this.locales[this.initialLandId];

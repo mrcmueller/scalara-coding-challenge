@@ -7,22 +7,22 @@ import { KontakteRefresh } from '../../../../services/kontakteRefresh.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ExampleErrorDialog } from '../../../error/exampleError';
 import { take } from 'rxjs';
-import { ExperimentalDataSource } from '../../../../dataSources/experimental.dataSource';
-import { ExperimentalTable } from '../../../tables/experimental/ExperimentalTable';
+import { BeziehungenDataSource } from '../../../../dataSources/beziehungen.dataSource';
+import { BeziehungenVonKontakteTable } from '../../../tables/BeziehungenVonKontaktTable/BeziehungenVonKontaktTable';
 
 @Component({
   selector: 'kontakt-detail',
   styleUrl: './kontaktDetail.scss',
   standalone: true,
   templateUrl: './kontaktDetail.html',
-  imports: [MatButtonModule, ExperimentalTable],
+  imports: [MatButtonModule, BeziehungenVonKontakteTable],
 })
 export class KontaktDetail {
   private route = inject(ActivatedRoute);
   private service = inject(KontakteService);
   private refresh$ = inject(KontakteRefresh);
   private id = this.getId();
-  public dataSource = new ExperimentalDataSource();
+  public dataSource = new BeziehungenDataSource();
   data: WritableSignal<null | KontaktAntwortMitBeziehungenDto> = signal(null);
   readonly dialog = inject(MatDialog);
   getId(): string {

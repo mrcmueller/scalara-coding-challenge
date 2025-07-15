@@ -47,10 +47,10 @@ export class BeziehungDetail {
 
   handleFetchedData(res: BeziehungAntwortDto) {
     const newVal = { ...res };
+
     newVal.startdatum = this.dateStringToDatum(res.startdatum);
     newVal.enddatum = this.dateStringToDatum(res.enddatum);
     this.data.set(newVal);
-    console.log(newVal);
   }
 
   openErrorDialog(err: Error): void {
