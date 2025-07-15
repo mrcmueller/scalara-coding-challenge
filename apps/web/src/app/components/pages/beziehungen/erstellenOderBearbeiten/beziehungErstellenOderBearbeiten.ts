@@ -224,7 +224,6 @@ export class BeziehungErstellenOderBearbeiten {
 
   handleCreationOrUpdate() {
     // Notify others
-    console.log('Update done');
     this.refresh$.next();
 
     this.goBack();

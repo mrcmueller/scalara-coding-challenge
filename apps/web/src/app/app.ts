@@ -13,9 +13,7 @@ export class App {
   router = inject(Router);
   route = inject(ActivatedRoute);
 
-  ngOnInit() {
-    // this.router.events.subscribe((e) => console.log(e));
-  }
+  ngOnInit() {}
 
   ngOnDestroy() {}
 }

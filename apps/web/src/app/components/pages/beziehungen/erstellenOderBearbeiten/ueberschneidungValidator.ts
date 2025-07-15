@@ -24,7 +24,6 @@ export class UeberschneidungValidationService {
   service = inject(MieterUeberschneidungService);
 
   public validator = (id?: string): AsyncValidatorFn => {
-    console.log('exec1');
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
       const beziehungstyp = control.get('beziehungstyp')?.value;
       const startDatum = control.get('startdatum')?.value;
