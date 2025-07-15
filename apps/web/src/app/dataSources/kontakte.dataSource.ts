@@ -5,7 +5,7 @@ import { KontaktAntwortMitBeziehungenDto } from '../api/models';
 import { KontakteService } from '../api/services';
 import { KontakteRefresh } from '../services/kontakteRefresh.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Delete } from '../types/interfaces';
+import { Delete, ListDataSource } from '../types/interfaces';
 
 export class KontakteDataSource
   extends DataSource<KontaktAntwortMitBeziehungenDto>

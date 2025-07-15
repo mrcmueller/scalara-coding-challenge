@@ -4,7 +4,7 @@ import { startWith, switchMap, Observable } from 'rxjs';
 import { ImmobilieAntwortMitBeziehungenDto } from '../api/models';
 import { ImmobilienService } from '../api/services';
 import { ImmobilienRefresh } from '../services/immobilienRefresh.service';
-import { Delete } from '../types/interfaces';
+import { Delete, ListDataSource } from '../types/interfaces';
 import { ActivatedRoute, Router } from '@angular/router';
 
 export class ImmobilienDataSource

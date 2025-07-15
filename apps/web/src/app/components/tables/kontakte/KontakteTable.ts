@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { KontakteDataSource } from '../../../dataSources/kontakte.dataSource';
+import { DataSource } from '@angular/cdk/table';
 
 @Component({
   selector: 'kontakte-table',
@@ -9,11 +10,9 @@ import { KontakteDataSource } from '../../../dataSources/kontakte.dataSource';
   imports: [MatTableModule],
 })
 export class KontakteTable {
-  dataSource: KontakteDataSource;
+  @Input() dataSource = new KontakteDataSource();
 
-  constructor() {
-    this.dataSource = new KontakteDataSource();
-  }
+  constructor() {}
 
   displayedColumns: string[] = ['name', 'adresse', 'land', 'action'];
 

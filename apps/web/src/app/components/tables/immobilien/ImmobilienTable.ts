@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { ImmobilienDataSource } from '../../../dataSources/immobilien.dataSource';
+import { DataSource } from '@angular/cdk/table';
 
 @Component({
   selector: 'immobilien-table',
@@ -9,11 +10,9 @@ import { ImmobilienDataSource } from '../../../dataSources/immobilien.dataSource
   imports: [MatTableModule],
 })
 export class ImmobilienTable {
-  dataSource: ImmobilienDataSource;
+  @Input() dataSource = new ImmobilienDataSource();
 
-  constructor() {
-    this.dataSource = new ImmobilienDataSource();
-  }
+  constructor() {}
 
   ngOnInit() {}
 

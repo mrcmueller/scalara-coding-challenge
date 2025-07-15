@@ -3,23 +3,25 @@ import { MatTableModule } from '@angular/material/table';
 import { BeziehungenDataSource } from '../../../dataSources/beziehungen.dataSource';
 import { DataSource } from '@angular/cdk/table';
 import { ListDataSource } from '../../../types/interfaces';
+import { ExperimentalDataSource } from '../../../dataSources/experimental.dataSource';
 
 @Component({
-  selector: 'beziehungen-table',
-  styleUrl: './BeziehungenTable.scss',
-  templateUrl: './BeziehungenTable.html',
+  selector: 'experimental-table',
+  styleUrl: './ExperimentalTable.scss',
+  templateUrl: './ExperimentalTable.html',
   imports: [MatTableModule],
 })
-export class BeziehungenTable {
-  @Input() dataSource = new BeziehungenDataSource();
+export class ExperimentalTable {
+  @Input() dataSource = new ExperimentalDataSource();
 
   constructor() {}
 
   displayedColumns: string[] = [
-    'kontakt',
     'immobilie',
     'beziehungstyp',
     'dienstleistungstyp',
+    'startdatum',
+    'enddatum',
     'action',
   ];
 

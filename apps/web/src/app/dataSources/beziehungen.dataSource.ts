@@ -2,7 +2,7 @@ import { DataSource } from '@angular/cdk/table';
 import { inject } from '@angular/core';
 import { startWith, switchMap, Observable } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Delete } from '../types/interfaces';
+import { Delete, ListDataSource } from '../types/interfaces';
 import { BeziehungAntwortDto } from '../api/models';
 import { BeziehungenService } from '../api/services';
 import { BeziehungenRefresh } from '../services/beziehungenRefresh.service';
@@ -20,7 +20,7 @@ export class BeziehungenDataSource
   route = inject(ActivatedRoute);
   refresh$ = inject(BeziehungenRefresh);
 
-  data = this.refresh$.pipe(
+  private data = this.refresh$.pipe(
     startWith([]),
     switchMap(() => {
       return this.service.beziehungenControllerBeziehungen();

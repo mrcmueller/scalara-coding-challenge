@@ -7,19 +7,22 @@ import { KontakteRefresh } from '../../../../services/kontakteRefresh.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ExampleErrorDialog } from '../../../error/exampleError';
 import { take } from 'rxjs';
+import { ExperimentalDataSource } from '../../../../dataSources/experimental.dataSource';
+import { ExperimentalTable } from '../../../tables/experimental/ExperimentalTable';
 
 @Component({
   selector: 'kontakt-detail',
   styleUrl: './kontaktDetail.scss',
   standalone: true,
   templateUrl: './kontaktDetail.html',
-  imports: [MatButtonModule],
+  imports: [MatButtonModule, ExperimentalTable],
 })
 export class KontaktDetail {
   private route = inject(ActivatedRoute);
   private service = inject(KontakteService);
   private refresh$ = inject(KontakteRefresh);
   private id = this.getId();
+  public dataSource = new ExperimentalDataSource();
   data: WritableSignal<null | KontaktAntwortMitBeziehungenDto> = signal(null);
   readonly dialog = inject(MatDialog);
   getId(): string {
@@ -47,6 +50,7 @@ export class KontaktDetail {
     this.refresh$.subscribe(() => this.fetchData());
   }
   ngOnInit() {
+    this.dataSource.getBeziehungen(this.id);
     this.fetchData();
     this.subscribeToChanges();
   }

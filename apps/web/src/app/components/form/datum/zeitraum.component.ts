@@ -20,7 +20,6 @@ import { MatError, MatFormFieldModule } from '@angular/material/form-field';
     MatDatepickerModule,
     FormsModule,
     ReactiveFormsModule,
-    MatError,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

@@ -19,4 +19,5 @@
 } @else {
 <p>Lade Kontakt...</p>
 }
-<h2>Beziehungen von {{data()!.name}}</h2>
+<h2>Beziehungen von {{data()?.name}}</h2>
+<experimental-table [dataSource]="dataSource" />
